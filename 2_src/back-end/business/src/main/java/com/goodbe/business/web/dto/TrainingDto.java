@@ -1,12 +1,20 @@
 package com.goodbe.business.web.dto;
 
+import com.goodbe.business.domain.TrainingType;
+import com.goodbe.business.domain.Training;
 import lombok.Data;
 
 @Data
 public class TrainingDto {
-    private Long id;
-    private String title;
-    private String training_name;
-    private String institution_name;
+    private String title; // 교육명
+    private String name; // 기관명
+    private TrainingType trainingType; // 대면 여부
+    private String time; // 주 n일
 
+    public TrainingDto(Training entity) {
+        this.title = entity.getTitle();
+        this.name = entity.getName();
+        this.trainingType = entity.getTrainingType();
+        this.time = entity.getTime();
+    }
 }

@@ -1,4 +1,17 @@
-#swagger ??
+spring:
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+#  session:
+#    store-type: redis
+
+
+
+#swagger
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
