@@ -1,6 +1,6 @@
 package com.goodbe.business.web.repository;
 
-import com.goodbe.business.domain.Training;
+import com.goodbe.business.domain.training.Training;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,6 +1,6 @@
 package com.goodbe.business.web.service;
 
-import com.goodbe.business.domain.Training;
+import com.goodbe.business.domain.training.Training;
 import com.goodbe.business.web.repository.TrainingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

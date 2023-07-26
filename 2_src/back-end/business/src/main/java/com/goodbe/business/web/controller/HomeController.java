@@ -1,9 +1,7 @@
 package com.goodbe.business.web.controller;
 
-import com.goodbe.business.domain.Training;
-import com.goodbe.business.web.dto.MemberDto;
+import com.goodbe.business.domain.training.Training;
 import com.goodbe.business.web.dto.TrainingDto;
-import com.goodbe.business.web.repository.TrainingRepository;
 import com.goodbe.business.web.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

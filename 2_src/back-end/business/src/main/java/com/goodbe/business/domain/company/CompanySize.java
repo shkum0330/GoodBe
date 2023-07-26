@@ -1,4 +1,4 @@
-package com.goodbe.business.domain;
+package com.goodbe.business.domain.company;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,5 +10,4 @@ import lombok.Getter;
 public enum CompanySize {
     LARGE("대기업"),MIDDLE("중견기업"),SMALL("중소기업");
     private String krName;
-
 }

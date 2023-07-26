@@ -1,8 +1,10 @@
-package com.goodbe.business.domain;
+package com.goodbe.business.domain.training;
 
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -11,9 +13,12 @@ public class Training { // 국비교육 엔티티
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-//    @ManyToOne
-    private Long school_id; // 교육기관id
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    private School school;
+
+    @OneToMany(mappedBy = "training")
+    private List<TrainingReview> trainingReviews=new ArrayList<>();
 
     @Column(nullable = false)
     private String title; // 교육명

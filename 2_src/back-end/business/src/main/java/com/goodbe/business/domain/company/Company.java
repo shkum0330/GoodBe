@@ -1,4 +1,4 @@
-package com.goodbe.business.domain;
+package com.goodbe.business.domain.company;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Company { // 기업 엔티
+public class Company { // 기업 엔티티
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="company_id")
     private Long id;

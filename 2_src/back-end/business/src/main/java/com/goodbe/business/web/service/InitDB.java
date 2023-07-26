@@ -1,7 +1,7 @@
 package com.goodbe.business.web.service;
 
-import com.goodbe.business.domain.TrainingType;
-import com.goodbe.business.domain.Training;
+import com.goodbe.business.domain.training.TrainingType;
+import com.goodbe.business.domain.training.Training;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

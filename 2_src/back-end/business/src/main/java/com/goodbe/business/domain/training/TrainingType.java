@@ -1,4 +1,4 @@
-package com.goodbe.business.domain;
+package com.goodbe.business.domain.training;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
