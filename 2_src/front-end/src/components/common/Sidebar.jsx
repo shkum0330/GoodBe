@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import profilecircle from '../../assets/MyInfoChange/profilecircle.svg';
-import book from '../../assets/MyInfoChange/book.svg';
-import edit from '../../assets/MyInfoChange/edit.svg';
-import happy from '../../assets/MyInfoChange/happy.svg';
-import infocircle from '../../assets/MyInfoChange/infocircle.svg';
-import personalcard from '../../assets/MyInfoChange/personalcard.svg';
-import ticksquare from '../../assets/MyInfoChange/ticksquare.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStarAndCrescent } from '@fortawesome/free-solid-svg-icons';
+import { CgProfile } from "react-icons/cg";
+import { BsFillPersonVcardFill } from "react-icons/bs";
+import { AiFillCheckSquare } from "react-icons/ai";
+import { FaBookOpen } from "react-icons/fa";
+import { GiRoyalLove } from "react-icons/gi";
+import { BsPencilSquare } from "react-icons/bs";
+import { AiFillInfoCircle } from "react-icons/ai";
 
 const SidebarContainer = styled.div`
   width: 250px;
@@ -24,10 +22,13 @@ const SidebarContainer = styled.div`
   padding-top: 50px;
 `;
 
-const SidebarItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
 
+const SidebarItemWrapper = styled.div`
+  color: #333;
+  font-size: 19px;
+  text-decoration: none;
+  padding: 10px 20px;
+  cursor: pointer;
 
   &:hover {
     border: 1px groove #007bff;
@@ -51,13 +52,6 @@ const SidebarItemText = styled.a`
 
 `;
 
-const SidebarItemImage = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-left : 10px;
-`;
-
-
 
 export default function Sidebar() {
 
@@ -66,38 +60,43 @@ export default function Sidebar() {
  
         <SidebarContainer>
         <SidebarItemWrapper>
-            <FontAwesomeIcon icon="fa-regular fa-user" />
-          {/* <SidebarItemImage src={profilecircle} alt="Profile" /> */}
-          <SidebarItemText href="#">홈</SidebarItemText>
+          {/* <SidebarItem> */}
+            <CgProfile />
+            <SidebarItemText href="#">홈</SidebarItemText>
+
+          {/* </SidebarItem> */}
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-          <SidebarItemImage src={personalcard} alt="Profile" />
+        {/* <SidebarItem> */}
+
+          <BsFillPersonVcardFill />
           <SidebarItemText href="#">개인정보 수정</SidebarItemText>
+        {/* </SidebarItem> */}
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-          <SidebarItemImage src={ticksquare} alt="Profile" />
+          <AiFillCheckSquare />
           <SidebarItemText href="#">교육 상담 내역</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-          <SidebarItemImage src={book} alt="Profile" />
-          <SidebarItemText href="#">관심 교육 관리</SidebarItemText>
+          <FaBookOpen/>
+          <SidebarItemText href="#">관심 교육</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-          <SidebarItemImage src={happy} alt="Profile" />
-          <SidebarItemText href="#">관심 채용공고 관리</SidebarItemText>
+          <GiRoyalLove/>
+          <SidebarItemText href="#">관심 채용공고</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-          <SidebarItemImage src={edit} alt="Profile" />
+          <BsPencilSquare />
           <SidebarItemText href="#">내가 쓴 글</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-          <SidebarItemImage src={infocircle} alt="Profile" />
+          <AiFillInfoCircle />
           <SidebarItemText href="#">정보</SidebarItemText>
         </SidebarItemWrapper>
      
