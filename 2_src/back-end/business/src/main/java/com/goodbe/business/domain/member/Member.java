@@ -1,5 +1,6 @@
-package com.goodbe.business.domain;
+package com.goodbe.business.domain.member;
 
+import com.goodbe.business.domain.BaseTimeEntity;
 import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.training.TrainingReview;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member { // 일반회원 엔티티
+public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_id")
@@ -45,14 +46,11 @@ public class Member { // 일반회원 엔티티
     @Column(nullable = true)
     private int age;
 
-    @Column(nullable = false)
-    private LocalDateTime registerdTime;
 
-    public Member(String email, String password, String name, String nickname, LocalDateTime registerdTime) {
+    public Member(String email, String password, String name, String nickname) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.nickname = nickname;
-        this.registerdTime = registerdTime;
     }
 }

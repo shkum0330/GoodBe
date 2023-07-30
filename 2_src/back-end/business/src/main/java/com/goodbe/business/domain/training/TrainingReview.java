@@ -1,7 +1,7 @@
 package com.goodbe.business.domain.training;
 
 
-import com.goodbe.business.domain.Member;
+import com.goodbe.business.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

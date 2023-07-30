@@ -7,8 +7,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class PostsResponse {
-
+public class PostUpdateRequest {
     private Long id;
     private Member member;
     private Long memberId;
@@ -20,17 +19,16 @@ public class PostsResponse {
     private LocalDateTime lastModifiedDate; // 마지막 수정 시간
     private int likeCount;
 
-    public PostsResponse(Post entity) {
+    public PostUpdateRequest(Post entity) {
         this.id = entity.getId();
-//        this.member = entity.getMember();
-        this.memberId = entity.getMember().getId();
-        this.nickname = entity.getMember().getNickname();
+        this.member = entity.getMember();
+        this.memberId = this.member.getId();
+        this.nickname = this.member.getNickname();
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.registerDate = entity.getRegisterDate();
-//        this.lastModifiedDate = entity.getLastModifiedDate();
+        this.lastModifiedDate = LocalDateTime.now();
         this.likeCount = entity.getLikeCount();
     }
-
 }

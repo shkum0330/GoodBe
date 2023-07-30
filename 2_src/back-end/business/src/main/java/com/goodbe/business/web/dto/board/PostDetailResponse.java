@@ -1,6 +1,6 @@
 package com.goodbe.business.web.dto.board;
 
-import com.goodbe.business.domain.Member;
+import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.board.Post;
 import lombok.Data;
 
@@ -21,9 +21,7 @@ public class PostDetailResponse {
 
     public PostDetailResponse(Post entity) {
         this.id = entity.getId();
-        this.member = entity.getMember();
-        this.memberId = this.member.getId();
-        this.nickname = this.member.getNickname();
+        this.nickname = entity.getMember().getNickname();
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
