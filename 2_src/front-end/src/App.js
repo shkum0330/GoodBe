@@ -9,8 +9,8 @@ import Footer from './components/common/Footer';
 function App() {
   return (
     <div className="App">
-      {/* <AccountFindHeader /> */}
-      {/* <EduHeader /> */}
+      <AccountFindHeader />
+      <EduHeader />
       <AccountHeader />
     </div>
   );
