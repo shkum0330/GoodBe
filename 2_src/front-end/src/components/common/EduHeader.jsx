@@ -2,6 +2,14 @@ import React from 'react';
 import eduimage from '../../assets/EduDetail/eduimage.svg';
 
 const EduHeader = () => {
+    const imgContainer = {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+        margin: '0',
+        display: 'flex'
+    };
 
     const headerStyle = {
         width: '100wh',
@@ -10,6 +18,7 @@ const EduHeader = () => {
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative', 
+    
     };
 
     const textStyle = {
@@ -27,11 +36,12 @@ const EduHeader = () => {
         lineheight: 'normal',
         texttransform: 'capitalize',
     };
+
     const buttonContainerStyle = {
         display: 'flex',
         justifyContent: 'center',
-        position: 'absolute', 
-        bottom: '180px', 
+        alignItems: 'center',
+        bottom: '30px',
         left: '50%', 
         transform: 'translateX(-50%)'
     };
@@ -52,7 +62,7 @@ const EduHeader = () => {
             <img 
               src={eduimage}
               alt='Logo'
-              className='d-inline-block align-top'
+              style={imgContainer}
             />
             <div style={textStyle}>
                 <div>멀티캠퍼스</div>
