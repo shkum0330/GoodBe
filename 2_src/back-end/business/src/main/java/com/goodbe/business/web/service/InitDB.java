@@ -31,9 +31,9 @@ public class InitDB {
 
         public void dbInit(){
 
-            Member m1=new Member("abc@naver.com","1234","김민지","kmj", now());
+            Member m1=new Member("abc@naver.com","1234","김민지","kmj");
             em.persist(m1);
-            Member m2=new Member("fgd@gmail.com","1234","강해린","khr", now());
+            Member m2=new Member("fgd@gmail.com","1234","강해린","khr");
             em.persist(m2);
 
             Training t1=new Training("aaa","aaa", TrainingType.ONLINE,"주5일");
@@ -47,15 +47,15 @@ public class InitDB {
             Training t5=new Training("eee","eee", TrainingType.ONLINE,"주4일");
             em.persist(t5);
 
-            Post p1=new Post(m1,"취업준비","aaa","aaa", now(), now(),0);
+            Post p1=new Post(m1,"취업준비","aaa","aaa",0);
             em.persist(p1);
-            Post p2=new Post(m1,"국비교육","bbb","bbb", LocalDateTime.of(2023, 7, 13, 14, 25, 00), now(),5);
+            Post p2=new Post(m1,"국비교육","bbb","bbb", 5);
             em.persist(p2);
-            Post p3=new Post(m2,"학습공유","ccc","ccc", LocalDateTime.of(2023, 7, 15, 14, 25, 00), now(),3);
+            Post p3=new Post(m2,"학습공유","ccc","ccc",3);
             em.persist(p3);
-            Post p4=new Post(m2,"취뽀후기","ddd","ddd", LocalDateTime.of(2023, 7, 23, 14, 25, 00), now(),25);
+            Post p4=new Post(m2,"취뽀후기","ddd","ddd", 25);
             em.persist(p4);
-            Post p5=new Post(m1,"취업준비","eee","eee", LocalDateTime.of(2023, 6, 13, 14, 25, 00), now(),150);
+            Post p5=new Post(m1,"취업준비","eee","eee",150);
             em.persist(p5);
         }
     }

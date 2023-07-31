@@ -5,6 +5,7 @@ import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.training.TrainingReview;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,7 +47,13 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Column(nullable = true)
     private int age;
 
+    @Column(nullable = true)
+    private String profileImage; // 프로필사진
 
+    @Column
+    private boolean isWithdrawn; // 탈퇴 여부
+
+    @Builder
     public Member(String email, String password, String name, String nickname) {
         this.email = email;
         this.password = password;

@@ -16,8 +16,6 @@ public class PostsResponse {
     private String boardType; // 게시판 종류
     private String title;
     private String content;
-    private LocalDateTime registerDate; // 등록 시간
-    private LocalDateTime lastModifiedDate; // 마지막 수정 시간
     private int likeCount;
 
     public PostsResponse(Post entity) {
@@ -28,8 +26,6 @@ public class PostsResponse {
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.registerDate = entity.getRegisterDate();
-//        this.lastModifiedDate = entity.getLastModifiedDate();
         this.likeCount = entity.getLikeCount();
     }
 

@@ -26,9 +26,6 @@ public class TrainingReview {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(nullable = false)
-    private LocalDateTime registerDate; // 작성일
-
     @Column
     private int rate; // 평점
 

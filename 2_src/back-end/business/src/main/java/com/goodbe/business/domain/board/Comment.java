@@ -1,5 +1,6 @@
 package com.goodbe.business.domain.board;
 
+import com.goodbe.business.domain.BaseTimeEntity;
 import com.goodbe.business.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
@@ -23,9 +24,6 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
-    @Column(nullable = false)
-    private LocalDateTime registerDate;
 
     @Column(nullable = false)
     private String content;

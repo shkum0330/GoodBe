@@ -2,13 +2,13 @@ package com.goodbe.business.domain.board;
 
 import com.goodbe.business.domain.BaseTimeEntity;
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.domain.file.UploadFile;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +27,10 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post")
     private List<UploadFile> files=new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "file_id")
+    private UploadFile attachFile;
+
     @Column(nullable = false)
     private String boardType; // 게시판 종류
 
@@ -43,6 +47,17 @@ public class Post extends BaseTimeEntity {
     @Builder
     public Post(Member member, String boardType, String title, String content, int likeCount) {
         this.member = member;
+        this.boardType = boardType;
+        this.title = title;
+        this.content = content;
+        this.likeCount = likeCount;
+    }
+
+    @Builder
+    public Post(Member member, List<UploadFile> files, UploadFile attachFile, String boardType, String title, String content, int likeCount) {
+        this.member = member;
+        this.files = files;
+        this.attachFile = attachFile;
         this.boardType = boardType;
         this.title = title;
         this.content = content;

@@ -15,8 +15,6 @@ public class PostUpdateRequest {
     private String boardType; // 게시판 종류
     private String title;
     private String content;
-    private LocalDateTime registerDate; // 등록 시간
-    private LocalDateTime lastModifiedDate; // 마지막 수정 시간
     private int likeCount;
 
     public PostUpdateRequest(Post entity) {
@@ -27,8 +25,6 @@ public class PostUpdateRequest {
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.registerDate = entity.getRegisterDate();
-        this.lastModifiedDate = LocalDateTime.now();
         this.likeCount = entity.getLikeCount();
     }
 }
