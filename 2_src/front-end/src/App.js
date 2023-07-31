@@ -1,12 +1,17 @@
 
 import './App.css';
-import Navbar from './components/common/Navbar';
-import EduList from './components/EduList/EduList';
+import AccountHeader from './components/common/AccountHeader';
+import EduHeader from './components/common/EduHeader';
+
+
+
 
 function App() {
   return (
     <div className="App">
-      <EduList />
+      {/* <AccountFindHeader /> */}
+      {/* <EduHeader /> */}
+      <AccountHeader />
     </div>
   );
 }
