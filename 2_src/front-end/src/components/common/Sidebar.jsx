@@ -60,19 +60,13 @@ export default function Sidebar() {
  
         <SidebarContainer>
         <SidebarItemWrapper>
-          {/* <SidebarItem> */}
             <CgProfile />
             <SidebarItemText href="#">홈</SidebarItemText>
-
-          {/* </SidebarItem> */}
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
-        {/* <SidebarItem> */}
-
           <BsFillPersonVcardFill />
           <SidebarItemText href="#">개인정보 수정</SidebarItemText>
-        {/* </SidebarItem> */}
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>

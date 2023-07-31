@@ -1,13 +1,12 @@
 
 import './App.css';
 import Navbar from './components/common/Navbar';
-import Sidebar from './components/common/Sidebar';
+import EduList from './components/EduList/EduList';
 
 function App() {
   return (
     <div className="App">
-      {/* <Navbar />  */}
-      <Sidebar />
+      <EduList />
     </div>
   );
 }
