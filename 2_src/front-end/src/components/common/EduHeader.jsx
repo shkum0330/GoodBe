@@ -10,7 +10,7 @@ const EduHeader = () => {
         alignItems: 'center',
         position: 'relative', // Add position relative
     };
-
+   
     const textStyle = {
         color: 'white',
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
