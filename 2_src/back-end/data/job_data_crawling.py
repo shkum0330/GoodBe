@@ -16,8 +16,11 @@ occupation = ['023', # 컴퓨터시스템
               '056', # 미디어콘텐츠·UX/UI 디자이너
               ]
 
+# 경로
+# job_api_path = r"job_api_key.txt"
+job_api_path = r"C:\SH\공통프로젝트\job_api_key.txt"
 # api key
-with open(r"job_api_key.txt", "r") as f:
+with open(job_api_path, "r") as f:
     api_key = f.read()
 
 # 채용공고 아이디 리스트 받아오기
