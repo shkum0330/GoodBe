@@ -2,16 +2,17 @@ import React from 'react';
 import eduimage from '../../assets/EduDetail/eduimage.svg';
 
 const EduHeader = () => {
-
     const headerStyle = {
         width: '100wh',
         height: '90vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative', 
+        position: 'relative', // Add position relative
     };
-   
+    const img = {
+        
+    }
     const textStyle = {
         color: 'white',
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
@@ -32,10 +33,10 @@ const EduHeader = () => {
         display: 'flex',
         flexDirection: 'row', // Change to 'row' to align buttons horizontally
         justifyContent: 'center',
-        position: 'absolute', 
-        bottom: '180px', 
-        left: '50%', 
-        transform: 'translateX(-50%)'
+        position: 'relative', // Add position absolute
+        top: '300%', // Align to the center vertically
+        left: '50%', // Align to the center horizontally
+        transform: 'translate(-50%, 50%)', // Move the container to the center
     };
 
     const buttonStyle = {
@@ -49,11 +50,7 @@ const EduHeader = () => {
 
     return (
         <div style={headerStyle}>
-            <img 
-              src={eduimage}
-              alt='Logo'
-              className='d-inline-block align-top'
-            />
+            <img src={eduimage} alt='Logo' className='d-inline-block align-top' />
             <div style={textStyle}>
                 <div>멀티캠퍼스</div>
                 <div>AI 백엔드 취업캠프(Python)</div>
