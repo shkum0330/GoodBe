@@ -28,6 +28,13 @@ const AccountFindHeader = () => {
         texttransform: 'capitalize',
         textAlign: 'left',
     }
+
+    const linkStyle = {
+        display: 'inline-block',
+        marginRight: '20px',
+        cursor: 'pointer',
+    }
+
     return (
         <div style={accountFindContainer}>
 
@@ -37,7 +44,8 @@ const AccountFindHeader = () => {
         <div style={accountFindDetail}>
             계정정보를 잊으셨나요? 계정찾기 서비스를 통해 GoodBe를 이용할 수 있습니다.
         </div>
-
+        <a href="#" style={linkStyle}>이메일 찾기</a>
+        <a href="#" style={linkStyle}>비밀번호 찾기</a>
         </div>
     );
 };
