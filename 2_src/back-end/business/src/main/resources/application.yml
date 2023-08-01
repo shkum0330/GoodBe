@@ -9,26 +9,26 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-      #   show_sql: true
+        show_sql: true
         format_sql: true
         default_batch_fetch_size: 1000
   #    open-in-view: false
 
   servlet:
     multipart:
-      max-file-size: 5MB
-      max-request-size: 20MB
+      max-file-size: 20MB
+      max-request-size: 30MB
 file:
   dir: /Users/sehyun/study/file/
 
 #  session:
 #    store-type: redis
-logging:
-  level:
-    org:
-      apache:
-        coyote:
-          http11: debug
+#logging:
+#  level:
+#    org:
+#      apache:
+#        coyote:
+#          http11: debug
 
 
 #swagger

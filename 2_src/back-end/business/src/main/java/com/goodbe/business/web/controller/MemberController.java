@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MemberController {
     private final MemberService memberService;
     WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8081")
+            .baseUrl("http://localhost:8082")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)// 기본 해더
             .build();
 //    @PostMapping("/register")

@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,14 +22,14 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<UploadFile> files=new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = LAZY)
     @JoinColumn(name = "file_id")
     private UploadFile attachFile;
 
@@ -44,7 +46,7 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private int likeCount;
 
-    @Builder
+//    @Builder
     public Post(Member member, String boardType, String title, String content, int likeCount) {
         this.member = member;
         this.boardType = boardType;
@@ -63,4 +65,13 @@ public class Post extends BaseTimeEntity {
         this.content = content;
         this.likeCount = likeCount;
     }
+
+    public void update(String boardType, String title, String content, List<UploadFile> files, UploadFile attachFile) {
+        this.boardType = boardType;
+        this.title = title;
+        this.content = content;
+        this.files = files;
+        this.attachFile = attachFile;
+    }
+
 }
