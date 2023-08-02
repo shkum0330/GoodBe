@@ -11,13 +11,14 @@ import profile from '../../assets/navbar/profile.svg';
 export default function CustomNavbar() {
 
   const navbarIconStyle = {
-    marginRight: '3px', // 이미지 사이의 간격을 10px로 설정
+    marginRight: '3px', 
+    // zIndex: 999,
   }
 
   return (
     <div className="App">
       
-      <Navbar bg="light" variant="light" >
+      <Navbar bg="light" variant="light">
           <Navbar.Brand href="#home">
             <img 
               src={goodbelogo}
