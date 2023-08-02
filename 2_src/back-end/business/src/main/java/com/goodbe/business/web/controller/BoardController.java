@@ -75,7 +75,7 @@ public class BoardController {
     }
 
     @GetMapping("/attach/{postId}")
-    @Operation(summary = "[GET] 파일 다운로드", description = "이미지 id를 요청하도록 했다.")
+    @Operation(summary = "[GET] 파일 다운로드", description = "게시글 id를 요청하도록 했다.")
     public ResponseEntity<Resource> downloadAttach(@PathVariable Long postId)
             throws MalformedURLException {
         return boardService.downloadAttach(postId);

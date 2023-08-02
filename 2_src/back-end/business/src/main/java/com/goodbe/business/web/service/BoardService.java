@@ -83,9 +83,9 @@ public class BoardService {
 
     public ResponseEntity<Resource> downloadAttach(Long postId)
             throws MalformedURLException {
-        Post item = boardRepository.findById(postId).get();
-        String storeFileName = item.getAttachFile().getStoreFileName();
-        String uploadFileName = item.getAttachFile().getUploadFileName();
+        Post post = boardRepository.findById(postId).get();
+        String storeFileName = post.getAttachFile().getStoreFileName();
+        String uploadFileName = post.getAttachFile().getUploadFileName();
         UrlResource resource = new UrlResource("file:" + fileStore.getFullPath(storeFileName));
         log.info("uploadFileName={}", uploadFileName);
         String encodedUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
