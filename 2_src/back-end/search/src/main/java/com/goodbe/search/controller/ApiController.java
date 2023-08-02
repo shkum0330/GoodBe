@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.goodbe.search.dto.Item;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -26,7 +29,7 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/api/es")
 public class ApiController {
     // Create the low-level client
     RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200)).build();
