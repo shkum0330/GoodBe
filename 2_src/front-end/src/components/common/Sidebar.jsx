@@ -15,11 +15,11 @@ const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* 왼쪽 정렬로 변경 */
-  padding-top: 50px;
+  padding-top: 100px;
 `;
 
 
