@@ -8,13 +8,13 @@ import SearchJob from './components/JobMain/SearchJob';
 
 function App() {
   return (
-    <div>
+   <div>
+
+    <Sidebar/>
     <Navbar/>
-    <SearchJob/>
-    {/* <JobTab/> */}
-    <JobList/>
-    <Footer/>
-    </div>
+    <MyPageHomeHeader />
+    <MypageHome />
+   </div>
   );
 }
 
