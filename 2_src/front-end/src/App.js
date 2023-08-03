@@ -1,17 +1,19 @@
 
 import './App.css';
-import AccountHeader from './components/common/AccountHeader';
-import EduHeader from './components/common/EduHeader';
-import AccountFindHeader from  './components/common/AccountFindHeader';
+import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
-
+import JobList from './components/JobMain/JobList';
+import JobTab from './components/JobMain/JobTab';
+import SearchJob from './components/JobMain/SearchJob';
 
 function App() {
   return (
-    <div className="App">
-      <AccountFindHeader />
-      <EduHeader />
-      <AccountHeader />
+    <div>
+    <Navbar/>
+    <SearchJob/>
+    {/* <JobTab/> */}
+    <JobList/>
+    <Footer/>
     </div>
   );
 }
