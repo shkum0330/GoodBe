@@ -1,4 +1,4 @@
-package com.goodbe.business.web.dto.board;
+package com.goodbe.business.web.dto.board.post;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

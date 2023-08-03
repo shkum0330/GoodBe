@@ -47,15 +47,15 @@ public class InitDB {
             Training t5=new Training("eee","eee", TrainingType.ONLINE,"주4일");
             em.persist(t5);
 
-            Post p1=new Post(m1,"취업준비","aaa","aaa",0);
+            Post p1=new Post(m1,"취업준비",m1.getNickname(),"aaa","aaa",0);
             em.persist(p1);
-            Post p2=new Post(m1,"국비교육","bbb","bbb", 5);
+            Post p2=new Post(m1,"국비교육",m1.getNickname(),"bbb","bbb", 5);
             em.persist(p2);
-            Post p3=new Post(m2,"학습공유","ccc","ccc",3);
+            Post p3=new Post(m2,"학습공유",m2.getNickname(),"ccc","ccc",3);
             em.persist(p3);
-            Post p4=new Post(m2,"취뽀후기","ddd","ddd", 25);
+            Post p4=new Post(m2,"취뽀후기",m2.getNickname(),"ddd","ddd", 25);
             em.persist(p4);
-            Post p5=new Post(m1,"취업준비","eee","eee",150);
+            Post p5=new Post(m1,"취업준비",m1.getNickname(),"eee","eee",150);
             em.persist(p5);
         }
     }

@@ -3,9 +3,12 @@ package com.goodbe.business.web.service;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.file.FileStore;
 import com.goodbe.business.domain.file.UploadFile;
-import com.goodbe.business.web.dto.board.PostUpdateRequest;
-import com.goodbe.business.web.dto.board.PostWriteRequest;
+import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
+import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
+import com.goodbe.business.web.dto.board.post.PostWriteRequest;
 import com.goodbe.business.web.repository.BoardRepository;
+import com.goodbe.business.web.repository.CommentRepository;
 import com.goodbe.business.web.repository.MemberRepository;
 import com.goodbe.business.web.repository.UploadFileRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +17,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
     private final UploadFileRepository uploadFileRepository;
     private final FileStore fileStore;
@@ -59,8 +62,11 @@ public class BoardService {
         return true;
     }
 
-    @Transactional
+    // 게시글 작성
     public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request) throws IOException {
+        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
+        request.setMember(member);
+        request.setNickname(member.getNickname());
 
         List<UploadFile> storeImageFiles=null;
         UploadFile attachFile = null;
@@ -92,6 +98,15 @@ public class BoardService {
         return id;
     }
 
+    // 댓글 작성
+    public void writeComment(Long postId, CommentWriteRequest request) {
+        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
+        request.setMember(member);
+        request.setPost(boardRepository.findById(postId).get());
+        commentRepository.save(request.toEntity());
+    }
+
+
     public ResponseEntity<Resource> downloadAttach(Long postId)
             throws MalformedURLException {
         Post post = boardRepository.findById(postId).get();
@@ -106,18 +121,18 @@ public class BoardService {
                 .body(resource);
     }
 
-    public Post postDetail(Long id){
-        Post post=boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글을 찾을 수 없습니다. ID: " + id));
+    public Post postDetail(Long postId){
+        Post post=boardRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글을 찾을 수 없습니다. ID: " + postId));
 //        log.info("post member = {}",post.getMember().getNickname());
 //        Optional<Member> member=memberRepository.findById(post.getMember().getId());
         return post;
     }
 
-    public Long update(Long id,List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
-        Post post = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
+    public Long update(Long postId,List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
+        Post post = boardRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+postId));
 
-        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(id);
+        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(postId);
         for (UploadFile file:uploadFiles){
             fileStore.deleteFile(file.getStoreFileName());
         }
@@ -139,12 +154,12 @@ public class BoardService {
 
         post.update(request.getBoardType(),request.getTitle(),request.getContent(),request.getFiles(),request.getAttachFile());
 
-        return id;
+        return postId;
     }
-    public void deletePost(@PathVariable Long id) {
+    public void deletePost(@PathVariable Long postId) {
         //todo: 권한 체크
-        Post post = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("삭제할 게시글이 없습니다. id="+id));
-        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(id);
+        Post post = boardRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("삭제할 게시글이 없습니다. id="+postId));
+        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(postId);
         for (UploadFile file:uploadFiles){
             fileStore.deleteFile(file.getStoreFileName());
         }

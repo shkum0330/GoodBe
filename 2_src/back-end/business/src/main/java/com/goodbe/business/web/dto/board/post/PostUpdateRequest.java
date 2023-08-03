@@ -1,4 +1,4 @@
-package com.goodbe.business.web.dto.board;
+package com.goodbe.business.web.dto.board.post;
 
 import com.goodbe.business.domain.file.UploadFile;
 import com.goodbe.business.domain.member.Member;

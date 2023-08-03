@@ -2,11 +2,13 @@ package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.file.FileStore;
+import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.exception.AccessDeniedException;
-import com.goodbe.business.web.dto.board.PostDetailResponse;
-import com.goodbe.business.web.dto.board.PostUpdateRequest;
-import com.goodbe.business.web.dto.board.PostWriteRequest;
-import com.goodbe.business.web.dto.board.PostsResponse;
+import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
+import com.goodbe.business.web.dto.board.post.PostDetailResponse;
+import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
+import com.goodbe.business.web.dto.board.post.PostWriteRequest;
+import com.goodbe.business.web.dto.board.post.PostsResponse;
 import com.goodbe.business.web.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,16 +43,16 @@ public class BoardController {
     private final FileStore fileStore;
 
     @GetMapping("")
-    @Operation(summary = "[GET] 게시판 페이지", description = "게시글 목록을 띄움")
+    @Operation(summary = "[GET] 게시판 페이지", description = "페이징 처리하여 게시글 목록을 띄움")
     public List<PostsResponse> postList(@PageableDefault(sort = "id", size = 10, direction = Sort.Direction.DESC) Pageable pageable){
         Page<Post> posts=boardService.postList(pageable);
         return posts.stream().map(PostsResponse::new).collect(toList());
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{postId}")
     @Operation(summary = "[GET] 게시글 보기", description = "리스트에서 클릭하면 상세보기로 이동")
-    public PostDetailResponse postDetail(@PathVariable Long id){
-        log.info("{}",id);
-        Post post=boardService.postDetail(id);
+    public PostDetailResponse postDetail(@PathVariable Long postId){
+        log.info("{}",postId);
+        Post post=boardService.postDetail(postId);
 
         return new PostDetailResponse(post);
     }
@@ -68,6 +70,12 @@ public class BoardController {
 
         return boardService.writePost(imageFiles,singleAttachFile,request);
     }
+
+    @PostMapping("/{postId}/comment")
+    @Operation(summary = "[POST] 댓글 작성 작성", description = "댓글 작성")
+    public void writeComment(@PathVariable Long postId, @RequestBody CommentWriteRequest request) {
+        boardService.writeComment(postId,request);
+    }
     @GetMapping("/images/{filename}")
     @Operation(summary = "[GET] 이미지 조회", description = "<img> 태그로 이미지를 조회")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
@@ -81,25 +89,25 @@ public class BoardController {
         return boardService.downloadAttach(postId);
     }
 
-    @GetMapping("/{id}/update")
+    @GetMapping("/{postId}/update")
     @Operation(summary = "[GET] 게시글 수정", description = "게시글 수정 페이지 이동")
-    public Post updatePost(@PathVariable Long id, HttpHeaders headers){
-        return boardService.postDetail(id);
+    public Post updatePost(@PathVariable Long postId, HttpHeaders headers){
+        return boardService.postDetail(postId);
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/{postId}/update")
     @Operation(summary = "[POST] 게시글 수정", description = "게시글 수정")
-    public Long updatePost(@PathVariable Long id,
+    public Long updatePost(@PathVariable Long postId,
                            @RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
                           @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
                           @RequestPart(value = "postUpdateRequest") PostUpdateRequest request) throws IOException {
 
-        return boardService.update(id,imageFiles,singleAttachFile,request);
+        return boardService.update(postId,imageFiles,singleAttachFile,request);
     }
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{postId}/delete")
     @Operation(summary = "[DELETE] 게시글 삭제", description = "게시글 삭제")
-    public void deletePost(@PathVariable Long id) {
+    public void deletePost(@PathVariable Long postId) {
         //todo: 권한 체크
-        boardService.deletePost(id);
+        boardService.deletePost(postId);
     }
 }
