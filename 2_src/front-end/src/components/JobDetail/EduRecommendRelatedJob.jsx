@@ -32,7 +32,7 @@ const CustomBox = styled.div`
   align-items: center;
   margin: auto;
   width: 100%;
-  height: 40rem;
+  height: 35rem;
   background-color: #f1eeeebb;
   padding: 1rem;
 `;
@@ -41,7 +41,7 @@ const CustomContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: auto;
-  margin-top: 5rem;
+  margin-top: 2rem;
   width: 80%;
   height: 20rem;
   background-color: '#FAFAFA';
@@ -63,15 +63,40 @@ const TableCell = styled.td`
   text-align: center;
 `;
 
+
 const TableHeader = styled.th`
   padding: 0.5rem;
   text-align: center;
+  position: relative; /* 부모 요소를 relative로 설정 */
+  background-color: rgba(200, 200, 200, 0.3); /* 옅은 회색 배경 추가 */
 `;
 
 const ArrowIcon = styled.span`
   margin-left: 0.2rem;
+  position: absolute; /* 가상 요소를 부모 요소를 기준으로 배치하기 위해 */
+  top: 50%; /* 부모 요소의 중앙에 위치하도록 설정 */
+  transform: translateY(-50%); /* 중앙 정렬을 위해 */
 `;
 
+const UpArrow = styled(ArrowIcon)` /* 위쪽으로 향하는 정삼각형 스타일 */
+  &::before {
+    content: '';
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid black;
+    display: inline-block;
+  }
+`;
+
+const DownArrow = styled(ArrowIcon)` /* 아래쪽으로 향하는 정삼각형 스타일 */
+  &::before {
+    content: '';
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    display: inline-block;
+  }
+`;
 
 export default function EduRecommendRelatedJob() {
 
@@ -133,10 +158,10 @@ export default function EduRecommendRelatedJob() {
     <>
       <div>
         <CustomBox>
-          <h2 style={{ marginTop: '5rem', fontWeight: 'bold' }}>
+          <h2 style={{ marginLeft: '7rem', marginTop: '2rem', fontWeight: 'bold' }}>
             🙌Naver I&S 취뽀를 위한 국비교육 추천해드릴게요🙌
           </h2>
-          <h3 style={{ marginTop: '5rem', fontSize: '15px', color: 'grey' }}>
+          <h3 style={{ marginLeft: '7rem', marginTop: '2rem', fontSize: '15px', color: 'grey' }}>
             GoodBe에서 채용공고와 일치하는 교육과정들을 분석했어요.
           </h3>
           <CustomContainer>
@@ -149,11 +174,8 @@ export default function EduRecommendRelatedJob() {
                     모집상태 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
                   </TableHeader>
                   <TableHeader onClick={handleCostSort}>
-                    총 비용 <ArrowIcon>{costOrder === 'asc' ? (
-                  <BsArrowUp />
-                ) : (
-                  <BsArrowDown />
-                )}</ArrowIcon>
+                    총 비용
+                    {costOrder === 'asc' ? <UpArrow /> : <DownArrow />}
                   </TableHeader>
                   <TableHeader>
                     수업장소 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
@@ -168,7 +190,7 @@ export default function EduRecommendRelatedJob() {
               </thead>
               <tbody>
                 {tableData.map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow key={row.id}> 
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.course}</TableCell>
                     <TableCell>{row.status}</TableCell>

@@ -57,8 +57,10 @@ return (
       marginTop: '50px',
     }}
   >
-    <h2>채용공고</h2>
-    <h3 style={{ color: '#575757' }}>관심있는 기업과 직무를 골라보세요</h3>
+    <h2 style={{
+      marginTop : '2rem',
+    }}>채용공고</h2>
+    <h3 style={{ color: '#575757', fontSize :'15px' }}>관심있는 기업과 직무를 골라보세요</h3>
     <div style={{ display: 'flex', marginBottom: '10px', justifyContent: 'space-between' }}>
       {['전체', '대기업', '중견중소', '공기업공사', '외국계'].map((tab) => (
         <div
