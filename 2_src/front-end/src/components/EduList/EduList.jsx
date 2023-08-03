@@ -70,11 +70,13 @@ const ReserveButton = styled.button`
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 60px;
+    margin-right: 20px;
+    margin-top : 50px;
 `;
 const HeartEmoji = styled(BsFillHeartFill)`
+    margin-left: 20px;
     font-size: 30px;
-    margin-top: 20px;
+    margin-top: 130px;
     color: #FF5A79; 
 `;
 
@@ -95,7 +97,7 @@ const EduList = () => {
       };
       const lineStyle = {
         borderRight: '1px solid #ccc',
-        marginRight: '60px',
+        marginRight: '100px',
       }
 
       const itemStyle = {
@@ -106,25 +108,28 @@ const EduList = () => {
         padding: '10px',
         marginBottom: '10px',
         borderRadius: '20px',
+
       };
     
       const durationStyle = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: '5px',
+        marginTop: '-35px',
+        
       };
 
       const buttonContainerStyle = {
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'column',
+        flexDirection: 'row',
+        marginTop: '10px',
       };
 
       const eduInfoStyle = {
         display: 'flex',
         alignItems: 'center', 
-        justifyContent: 'center',
+        justifyContent: 'left',
         gap: '10px',
     };
 
@@ -163,7 +168,6 @@ const EduList = () => {
 
                 </div>
               </div>
-              <hr />
             </div>
           ))}
         </div>
