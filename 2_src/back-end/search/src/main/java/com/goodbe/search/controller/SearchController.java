@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +27,11 @@ public class SearchController {
     public List<JobPost> searchAllJobPost(){
        return jobPostService.getAllJobPost(); 
     }
+
+    @ApiOperation(value = "키워드로 채용공고 불러오기, 단어 하나만 사용 권장", response = List.class)
+    @GetMapping("/{keyword}")
+    public List<JobPost> searchJobPostByKeyword(@PathVariable String keyword){
+        return jobPostService.getJobPostByKeyword(keyword);
+    }
+
 }

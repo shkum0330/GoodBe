@@ -10,4 +10,6 @@ import com.goodbe.search.dto.*;
 public interface JobPostMapper {
     // 모든 채용공고 가졍오기
     public List<JobPost> selectJobData();
+
+    public List<JobPost> selectJobDataByKeyword(String keyword);
 }

@@ -18,5 +18,11 @@ public class JobPostServiceImpl implements JobPostService {
     public List<JobPost> getAllJobPost() {
         return jobPostMapper.selectJobData();
     }
+
+    @Override
+    public List<JobPost> getJobPostByKeyword(String keyword) {
+        keyword = '%' + keyword + '%';
+        return jobPostMapper.selectJobDataByKeyword(keyword);
+    }
     
 }
