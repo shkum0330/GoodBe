@@ -21,7 +21,8 @@ import MypageHome from './components/MyPageHome/MypageHome';
 
 =======
 import EduSearchHeader from './components/EduList/EduSearchHeader'
->>>>>>> 40d54734e44c22e7b866605ba1f9cafd36526801
+import MyLikeEduHeader from './components/MyEduLike/MyLikeEduHeader';
+import MyLikeEduList from './components/MyEduLike/MyLikeEduList'
 
 const Container=styled.div`
   display: flex;
@@ -55,9 +56,13 @@ function App() {
     </div>
 =======
    <div>
-    {/* <JobList /> */}
-    <EduSearchHeader />
-    <EduList />
+    <Sidebar />
+    <Navbar />
+    <MyLikeEduHeader />
+    <MyLikeEduList />
+
+
+    {/* <EduList /> */}
    </div>
 >>>>>>> 40d54734e44c22e7b866605ba1f9cafd36526801
   );
