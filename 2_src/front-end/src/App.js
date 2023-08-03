@@ -14,11 +14,12 @@ import MypageHome from './components/MyPageHome/MypageHome';
 function App() {
   return (
    <div>
-
+{/* 
     <Sidebar/>
     <Navbar/>
     <MyPageHomeHeader />
-    <MypageHome />
+    <MypageHome /> */}
+    <EduList/>
    </div>
   );
 }
