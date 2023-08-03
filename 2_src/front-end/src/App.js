@@ -10,6 +10,7 @@ import SearchJob from './components/JobMain/SearchJob';
 import EduSearchHeader from './components/EduList/EduSearchHeader'
 import MyLikeEduHeader from './components/MyEduLike/MyLikeEduHeader';
 import MyLikeEduList from './components/MyEduLike/MyLikeEduList'
+import AdBanner from './components/common/AdBanner'
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
     <Navbar />
     <MyLikeEduHeader />
     <MyLikeEduList />
-
+    <AdBanner />
 
     {/* <EduList /> */}
    </div>
