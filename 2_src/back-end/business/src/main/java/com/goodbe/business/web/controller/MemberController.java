@@ -1,6 +1,6 @@
 package com.goodbe.business.web.controller;
 
-import com.goodbe.business.web.dto.member.LoginMemberRequest;
+import com.goodbe.business.web.dto.member.MemberLoginRequest;
 import com.goodbe.business.web.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class MemberController {
 //                .block();
 //    }
     @PostMapping("/login")
-    public void login(@RequestBody LoginMemberRequest loginMemberRequest){
+    public void login(@RequestBody MemberLoginRequest memberLoginRequest){
         // todo: 자체 로그인 구현..?
 
     }

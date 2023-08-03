@@ -3,6 +3,7 @@ package com.goodbe.business.web.dto.board;
 import com.goodbe.business.domain.file.UploadFile;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.board.Post;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Schema(description = "게시물 작성 DTO")
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostWriteRequest {

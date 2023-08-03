@@ -1,4 +1,4 @@
 package com.goodbe.business.web.dto.member;
 
-public class LoginMemberResponse {
+public class MemberLoginRequest {
 }

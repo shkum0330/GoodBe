@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriUtils;
@@ -61,23 +62,33 @@ public class BoardService {
     @Transactional
     public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request) throws IOException {
 
+        List<UploadFile> storeImageFiles=null;
+        UploadFile attachFile = null;
+
         //todo: 리팩토링 필요...
-        Long id=boardRepository.save(request.toEntity()).getId();
-        Post post=boardRepository.findById(id).get();
-        if(imageFiles != null){
-            List<UploadFile> storeImageFiles = fileStore.storeFiles(imageFiles);
+        if(imageFiles != null) {
+            storeImageFiles = fileStore.storeFiles(imageFiles);
             uploadFileRepository.saveAll(storeImageFiles);
             request.setFiles(storeImageFiles);
+        }
+
+        if(singleAttachFile != null) {
+            attachFile = fileStore.storeFile(singleAttachFile);
+            request.setAttachFile(attachFile);
+            uploadFileRepository.save(attachFile);
+        }
+        Long id=boardRepository.save(request.toEntity()).getId();
+        Post post=boardRepository.findById(id).get();
+
+        if(imageFiles != null){
             for(UploadFile file:storeImageFiles){
                 file.setPost(post);
             }
         }
         if(singleAttachFile != null){
-            UploadFile attachFile = fileStore.storeFile(singleAttachFile);
-            request.setAttachFile(attachFile);
             attachFile.setPost(post);
-            uploadFileRepository.save(attachFile);
         }
+
         return id;
     }
 
@@ -106,6 +117,11 @@ public class BoardService {
     public Long update(Long id,List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
         Post post = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
 
+        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(id);
+        for (UploadFile file:uploadFiles){
+            fileStore.deleteFile(file.getStoreFileName());
+        }
+
         if(imageFiles != null){
             List<UploadFile> storeImageFiles = fileStore.storeFiles(imageFiles);
             uploadFileRepository.saveAll(storeImageFiles);
@@ -124,6 +140,16 @@ public class BoardService {
         post.update(request.getBoardType(),request.getTitle(),request.getContent(),request.getFiles(),request.getAttachFile());
 
         return id;
+    }
+    public void deletePost(@PathVariable Long id) {
+        //todo: 권한 체크
+        Post post = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("삭제할 게시글이 없습니다. id="+id));
+        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(id);
+        for (UploadFile file:uploadFiles){
+            fileStore.deleteFile(file.getStoreFileName());
+        }
+        boardRepository.delete(post);
+
     }
     private String resolveToken(HttpServletRequest request){
         String bearerToken=request.getHeader("Authorization");

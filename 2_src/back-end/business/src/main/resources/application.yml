@@ -18,6 +18,12 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 30MB
+
+#server:
+#  error:
+#    whitelabel:
+#      enabled: false
+
 file:
   dir: /Users/sehyun/study/file/
 

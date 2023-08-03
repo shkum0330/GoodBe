@@ -96,5 +96,10 @@ public class BoardController {
 
         return boardService.update(id,imageFiles,singleAttachFile,request);
     }
-
+    @DeleteMapping("/{id}/delete")
+    @Operation(summary = "[DELETE] 게시글 삭제", description = "게시글 삭제")
+    public void deletePost(@PathVariable Long id) {
+        //todo: 권한 체크
+        boardService.deletePost(id);
+    }
 }

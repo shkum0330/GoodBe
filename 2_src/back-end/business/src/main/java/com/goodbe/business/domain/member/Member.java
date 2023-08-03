@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -22,6 +23,7 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_id")
     private Long id;
+//    private UUID id;
 
     @OneToMany(mappedBy = "member")
     private List<TrainingReview> trainingReviews=new ArrayList<>();
@@ -35,8 +37,8 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
+//    @Column(nullable = false)
+//    private String password;
 
     @Column(nullable = false)
     private String name; // 실명
@@ -44,11 +46,24 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Column(nullable = false)
     private String nickname; // 닉네임
 
-    @Column(nullable = true)
+    @Embedded
+    private Address address;
+
+    @Column
     private int age;
 
-    @Column(nullable = true)
+    @Column
+    private String sex;
+
+    @Column
+    private String favoriteCompany;
+    @Column
+    private String favoriteJob;
+
+
+    @Column
     private String profileImage; // 프로필사진
+
 
     @Column
     private boolean isWithdrawn; // 탈퇴 여부
@@ -56,7 +71,6 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Builder
     public Member(String email, String password, String name, String nickname) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.nickname = nickname;
     }
