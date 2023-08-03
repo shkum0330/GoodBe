@@ -1,4 +1,5 @@
 
+
 import './App.css';
 import AccountHeader from './components/common/AccountHeader';
 import EduHeader from './components/common/EduHeader';
@@ -7,6 +8,7 @@ import BoardDetailContent from './components/BoardDetail/BoardDetailContent';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import styled from 'styled-components';
+import BoardWriteForm from './components/BoardWrite/BoardWriteForm';
 
 
 const Container=styled.div`
@@ -16,11 +18,14 @@ const Container=styled.div`
 `
 function App() {
   return (
+
     <Container>
       <Navbar/>
-        <BoardDetailContent/>
+        <BoardWriteForm/>
       <Footer/>
     </Container>
+
+
   );
 }
 
