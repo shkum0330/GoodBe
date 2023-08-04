@@ -21,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostWriteRequest {
     private String boardType; // 게시판 종류
+    private Member member;
     private String nickname;
     private String title;
     private String content;

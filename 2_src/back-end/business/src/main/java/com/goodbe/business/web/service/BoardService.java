@@ -1,9 +1,11 @@
 package com.goodbe.business.web.service;
 
+import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.file.FileStore;
 import com.goodbe.business.domain.file.UploadFile;
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.web.dto.board.comment.CommentUpdateRequest;
 import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
 import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
 import com.goodbe.business.web.dto.board.post.PostWriteRequest;
@@ -105,7 +107,10 @@ public class BoardService {
         request.setPost(boardRepository.findById(postId).get());
         commentRepository.save(request.toEntity());
     }
-
+    public void updateComment(Long postId,Long commentId, CommentUpdateRequest request) {
+        Comment comment = commentRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다. id="+commentId));
+        comment.update(request.getContent());
+    }
 
     public ResponseEntity<Resource> downloadAttach(Long postId)
             throws MalformedURLException {

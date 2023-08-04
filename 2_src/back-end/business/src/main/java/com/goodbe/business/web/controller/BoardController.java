@@ -4,6 +4,7 @@ import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.file.FileStore;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.exception.AccessDeniedException;
+import com.goodbe.business.web.dto.board.comment.CommentUpdateRequest;
 import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
 import com.goodbe.business.web.dto.board.post.PostDetailResponse;
 import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
@@ -72,9 +73,14 @@ public class BoardController {
     }
 
     @PostMapping("/{postId}/comment")
-    @Operation(summary = "[POST] 댓글 작성 작성", description = "댓글 작성")
+    @Operation(summary = "[POST] 댓글 작성", description = "댓글 작성")
     public void writeComment(@PathVariable Long postId, @RequestBody CommentWriteRequest request) {
         boardService.writeComment(postId,request);
+    }
+    @PostMapping("/{postId}/comment/{commentId}")
+    @Operation(summary = "[POST] 댓글 작성", description = "댓글 작성")
+    public void updateComment(@PathVariable Long postId,@PathVariable Long commentId, @RequestBody CommentUpdateRequest request) {
+        boardService.updateComment(postId,commentId,request);
     }
     @GetMapping("/images/{filename}")
     @Operation(summary = "[GET] 이미지 조회", description = "<img> 태그로 이미지를 조회")
