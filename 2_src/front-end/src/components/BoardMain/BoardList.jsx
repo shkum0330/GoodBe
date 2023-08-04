@@ -14,6 +14,28 @@ let TabContentTitle = styled.div`
   align-items: center;
 `
 
+const TabList=styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+const Tab= styled.div`
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+
+    width:300px;
+`
+
+
+
+
+
 const TabItem = styled.li`
     text-align: center;
     font-family: Istok Web;
@@ -215,8 +237,42 @@ export default function () {
     let [clickedTab, setClickedTab] = useState(0);
     let [onOff, setOnOff] = useState(false);
 
+    let [selected, setSelected]= useState(0);
+    
+
     return (
         <div>
+            <TabList>
+                <Tab 
+                onClick={()=>{setOnOff(false); setSelected(0)}} 
+                className={0 === selected? activeTab: unactiveTab} >
+                    전체 
+                </Tab>
+
+                <Tab 
+                onClick={()=>{setOnOff(false); setSelected(1)}} 
+                className={1 === selected? activeTab: unactiveTab} >
+                    취업준비
+                </Tab>
+
+                <Tab 
+                onClick={()=>{setOnOff(false); setSelected(2)}} 
+                className={2 === selected? activeTab: unactiveTab} >
+                    국비교육
+                </Tab>
+
+                <Tab 
+                onClick={()=>{setOnOff(false); setSelected(3)}} 
+                className={3 === selected? activeTab: unactiveTab} >
+                    학습공유
+                </Tab>
+
+                <Tab 
+                onClick={()=>{setOnOff(false); setSelected(4)}} 
+                className={4 === selected? activeTab: unactiveTab} >
+                    취뽀후기
+                </Tab>
+            </TabList>
 
             <Nav class="nav nav-underline" variant="tabs" defaultActiveKey="0">
                 <TabItem class="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
