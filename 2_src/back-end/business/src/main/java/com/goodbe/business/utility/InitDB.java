@@ -1,4 +1,4 @@
-package com.goodbe.business.web.service;
+package com.goodbe.business.utility;
 
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.board.Post;

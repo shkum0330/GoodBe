@@ -2,6 +2,7 @@ package com.goodbe.business.web.service;
 
 import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.Post;
+import com.goodbe.business.domain.board.PostLike;
 import com.goodbe.business.domain.file.FileStore;
 import com.goodbe.business.domain.file.UploadFile;
 import com.goodbe.business.domain.member.Member;
@@ -9,10 +10,7 @@ import com.goodbe.business.web.dto.board.comment.CommentUpdateRequest;
 import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
 import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
 import com.goodbe.business.web.dto.board.post.PostWriteRequest;
-import com.goodbe.business.web.repository.BoardRepository;
-import com.goodbe.business.web.repository.CommentRepository;
-import com.goodbe.business.web.repository.MemberRepository;
-import com.goodbe.business.web.repository.UploadFileRepository;
+import com.goodbe.business.web.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -44,6 +42,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+    private final PostLikeRepository postLikeRepository;
     private final MemberRepository memberRepository;
     private final UploadFileRepository uploadFileRepository;
     private final FileStore fileStore;
@@ -108,8 +107,28 @@ public class BoardService {
         commentRepository.save(request.toEntity());
     }
     public void updateComment(Long postId,Long commentId, CommentUpdateRequest request) {
-        Comment comment = commentRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다. id="+commentId));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다. id="+commentId));
         comment.update(request.getContent());
+    }
+
+
+    public void likePost(Long memberId, Long postId) throws Exception {
+
+        postLikeRepository.save(new PostLike(memberRepository.findById(memberId).get(),boardRepository.findById(postId).get()));
+        boardRepository.findById(postId).get().like();
+    }
+
+    public void unlikePost(Long memberId, Long postId) throws Exception {
+        PostLike like=postLikeRepository.findPostLikeByMemberIdAndPostId(memberId,postId);
+        postLikeRepository.delete(like);
+        boardRepository.findById(like.getPost().getId()).get().likeCancel();
+    }
+
+    public boolean isLike(Long memberId, Long postId) throws Exception {
+        if (postLikeRepository.findPostLikeByMemberIdAndPostId(memberId, postId) != null){ // 이미 좋아요를 했으면 취소
+            return true;
+        }
+        return false;
     }
 
     public ResponseEntity<Resource> downloadAttach(Long postId)
@@ -169,6 +188,13 @@ public class BoardService {
             fileStore.deleteFile(file.getStoreFileName());
         }
         boardRepository.delete(post);
+
+    }
+
+    public void deleteComment(@PathVariable Long commentId) {
+        //todo: 권한 체크
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("삭제할 댓글이 없습니다. id="+commentId));
+        commentRepository.delete(comment);
 
     }
     private String resolveToken(HttpServletRequest request){

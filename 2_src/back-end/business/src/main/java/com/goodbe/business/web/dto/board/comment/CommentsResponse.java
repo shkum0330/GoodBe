@@ -11,11 +11,13 @@ import java.time.LocalDate;
 @Schema(description = "게시물의 댓글 응답 DTO")
 @Data
 public class CommentsResponse {
+    private Long commentId;
     private String nickname;
     private String content;
     private LocalDate createDate;
 
     public CommentsResponse(Comment entity) {
+        this.commentId=entity.getId();
         this.nickname=entity.getMember().getNickname();
         this.content = entity.getContent();
         this.createDate = entity.getCreateDate();

@@ -84,5 +84,10 @@ public class Post extends BaseTimeEntity {
         this.files = files;
         this.attachFile = attachFile;
     }
-
+    public void like(){
+        this.likeCount++;
+    }
+    public void likeCancel(){
+        this.likeCount++;
+    }
 }
