@@ -1,0 +1,36 @@
+server:
+  port: 8089
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 102133184952-9ihuv92pb6jb2n6cvouaisemgo16li1r.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+  datasource: # H2 DB 설정
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true # H2 DB 웹콘솔 사용하도록 설정 (http://localhost:8080/h2-console)
+  jpa:
+    database: H2
+    show-sql: true # Jpa 수행 시 SQL문 로그 출력
+    properties:
+      hibernate:
+        format_sql: true # 쿼리 출력시 포맷 정렬되도록 설정
+        ddl-auto: create
+    output:
+      ansi:
+        enabled: always
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  logging:
+    level:
+      org.hibernate.type: trace
