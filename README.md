@@ -1,4 +1,4 @@
-#금세현(BE)
+# 금세현(BE)
 
 ## 파일 업로드
 - 게시글에 첨부파일(1개), 이미지 파일(여러개)을 추가할 수 있게 하였다.
@@ -129,7 +129,8 @@ public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttach
         return id;
     }
 ```
-#유지나(BE, FE)
+
+# 유지나(BE, FE)
 
 ## 채팅 서비스 구현 
 이 README 파일은 Node.js, MongoDB 및 Socket.io를 사용하여 채팅 서비스를 구현하는 방법을 안내합니다. 이 프로젝트를 따라하는 데 필요한 기초적인 지식은 Node.js, Express, MongoDB, Socket.io 및 JavaScript에 대한 이해입니다.
@@ -418,7 +419,7 @@ nodemon index.js
 브라우저에서 http://localhost:3000에 접속하여 화상 서비스를 테스트합니다.
 이제 화상 서비스가 작동하며, 사용자는 화상 통화를 시작하고 다른 사용자와 음성 및 영상 통화를 할 수 있습니다. 이 예제는 간단한 시작 지점으로, 더 많은 기능과 보안 측면을 추가하여 실제 프로덕션 환경에 적합하게 확장할 수 있습니다.
 
-#이승환(BE)
+# 이승환(BE)
 
 ### 검색 서버
 + 검색 API
@@ -444,4 +445,4 @@ nodemon index.js
     3. 새로 올라온 공고를 확인하여 DB에 수집하는 기능
 
 
-#이해준(BE)
+# 이해준(BE)
