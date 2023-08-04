@@ -1,4 +1,4 @@
-# 👨‍🏫국비교육 추천 GoodBE 팀원 별 작업 내용
+# 🏫 국비교육 추천 GoodBE 팀원 별 작업 내용
 # 유지나(BE, FE, 팀장)
 ## 채팅 서비스 구현 
 이 README 파일은 Node.js, MongoDB 및 Socket.io를 사용하여 채팅 서비스를 구현하는 방법을 안내합니다. 이 프로젝트를 따라하는 데 필요한 기초적인 지식은 Node.js, Express, MongoDB, Socket.io 및 JavaScript에 대한 이해입니다.
