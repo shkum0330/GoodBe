@@ -6,8 +6,12 @@ import goodbelogo from '../../assets/navbar/goodbelogo.svg';
 import bell from '../../assets/navbar/bell.svg';
 import messagetext from '../../assets/navbar/messagetext.svg';
 import profile from '../../assets/navbar/profile.svg';
+import styled from 'styled-components';
 
 
+const Navbbar=styled.div`
+  width: 100%;
+`
 export default function CustomNavbar() {
 
   const navbarIconStyle = {
@@ -16,7 +20,7 @@ export default function CustomNavbar() {
   }
 
   return (
-    <div className="App">
+    <Navbbar className="App">
       
       <Navbar bg="light" variant="light">
           <Navbar.Brand href="#home">
@@ -51,6 +55,6 @@ export default function CustomNavbar() {
           </div>
       </Navbar>
       
-    </div>
+    </Navbbar>
   );
 }
