@@ -1,24 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
 
-const Container = styled.div`
-  width: 60%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ItemContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 20px;
-`;
 const EduInstitution = styled.p`
     color: #919191;
     font-family: Istok Web;
@@ -99,18 +82,13 @@ const HeartEmoji = styled(BsFillHeartFill)`
 
 
 const EduList = () => {
-  const dummyData = [
-    { id: 1, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
-    { id: 2, EduInstitution :'내일배움캠프', Edutitle: '백엔드 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
-    { id: 3, EduInstitution :'내일배움캠프', Edutitle: '프론트엔드 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
-    { id: 4, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 9기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
-    { id: 5, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 10기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
-    { id: 6, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 10기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
-  ];
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-   
+    const dummyData = [
+        { id: 1, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
+        { id: 2, EduInstitution :'내일배움캠프', Edutitle: '백엔드 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
+        { id: 3, EduInstitution :'내일배움캠프', Edutitle: '프론트엔드 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
+        { id: 4, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 9기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
+        { id: 5, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 10기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
+      ];
       const container = {
         width: '60%',
         margin: '0 auto',
@@ -163,24 +141,11 @@ const EduList = () => {
         height: '100%'
     };
 
-     // 페이지 번호를 클릭했을 때 페이지 변경
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  // 전체 페이지 수 계산
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
-
-  // 현재 페이지에 해당하는 데이터 계산
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = dummyData.slice(indexOfFirstItem, indexOfLastItem);
-
-  return (
-    <div style={container}>
-      {currentItems.map((item) => (
-        <div key={item.id} style={itemStyle}>
-           <div style={lineStyle}>
+      return (
+        <div style={container}>
+          {dummyData.map((item) => (
+            <div key={item.id} style={itemStyle}>
+              <div style={lineStyle}>
                 <EduInstitution>{item.EduInstitution}</EduInstitution>
                 <Edutitle>{item.Edutitle}</Edutitle>
                 <div>
@@ -203,32 +168,14 @@ const EduList = () => {
 
                 </div>
               </div>
+<<<<<<< HEAD
 
+=======
+            </div>
+          ))}
+>>>>>>> 888273136400abfe461823a309f5a684920decd4
         </div>
-      ))}
-
-      {/* 페이지네이션 버튼 */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-          <button
-            key={pageNumber}
-            style={{
-              padding: '5px 10px',
-              margin: '0 5px',
-              backgroundColor: currentPage === pageNumber ? '#0432D6' : '#EBEBEB',
-              color: currentPage === pageNumber ? 'white' : 'black',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-            onClick={() => handlePageClick(pageNumber)}
-          >
-            {pageNumber}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default EduList;
