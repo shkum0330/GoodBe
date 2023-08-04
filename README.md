@@ -445,7 +445,7 @@ public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttach
 
     
 # 이해준(BE)
-
+### 
 # 이성원(FE)
 ## 컴포넌트 디자인
 ### 국비교육페이지
@@ -455,3 +455,11 @@ EduDetail
 Curriculum
 EduRevieiw
 ```
+### 마이페이지
+```
+MyPageHome
+MyInfoChange
+MyEduLiike
+MyJobLike
+```
+
