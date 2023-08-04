@@ -1,6 +1,4 @@
 # 유지나(BE, FE)
-
-
 ## 채팅 서비스 구현 
 이 README 파일은 Node.js, MongoDB 및 Socket.io를 사용하여 채팅 서비스를 구현하는 방법을 안내합니다. 이 프로젝트를 따라하는 데 필요한 기초적인 지식은 Node.js, Express, MongoDB, Socket.io 및 JavaScript에 대한 이해입니다.
 ### 요구 사항
@@ -290,8 +288,6 @@ nodemon index.js
 
 
 # 금세현(BE)
-
-
 ## 파일 업로드
 - 게시글에 첨부파일(1개), 이미지 파일(여러개)을 추가할 수 있게 하였다.
 ### UploadFile - 파일 엔티티
@@ -424,8 +420,6 @@ public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttach
 
 
 # 이승환(BE)
-
-
 ### 검색 서버
 + 검색 API
     채용공고 전체를 불러오는 API
@@ -451,3 +445,13 @@ public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttach
 
     
 # 이해준(BE)
+
+# 이성원(FE)
+## 컴포넌트 디자인
+### 국비교육페이지
+```
+EduList
+EduDetail
+Curriculum
+EduRevieiw
+```
