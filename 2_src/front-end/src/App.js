@@ -12,49 +12,23 @@ import MyPageHomeHeader from './components/MyPageHome/MyPageHomeHeader';
 import MyPageInformationHeader from './components/MyInfoChange/MyPageInformationHeader';
   
 
+import React from 'react'
 
-<<<<<<< HEAD
-=======
-
-=======
-import EduSearchHeader from './components/EduList/EduSearchHeader'
-import MyLikeEduHeader from './components/MyEduLike/MyLikeEduHeader';
-import MyLikeEduList from './components/MyEduLike/MyLikeEduList'
-
-const Container=styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
->>>>>>> fd4d93b1e2a9fcb4eb45347a158e95b996b78856
-function App() {
+export default function App() {
   return (
     <div>
        <Sidebar/>
       <Navbar/>
-     
-      <MyPageInformationHeader/>
+      <JobList/>
+      {/* <MyPageInformationHeader/> */}
       {/* <MyPageHomeHeader/> */}
       {/* <MypageHome/> */}
       <Footer/>
 
     </div>
-<<<<<<< HEAD
-
-=======
-=======
-   <div>
-    <Sidebar />
-    <Navbar />
-    <MyLikeEduHeader />
-    <MyLikeEduList />
 
 
-    {/* <EduList /> */}
-   </div>
->>>>>>> 40d54734e44c22e7b866605ba1f9cafd36526801
->>>>>>> fd4d93b1e2a9fcb4eb45347a158e95b996b78856
   );
-}
 
-export default App;
+ 
+}
