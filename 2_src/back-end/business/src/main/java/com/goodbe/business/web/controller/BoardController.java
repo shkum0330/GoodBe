@@ -68,7 +68,6 @@ public class BoardController {
     public Long writePost(@RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
             @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
             @RequestPart(value = "postWriteRequest") PostWriteRequest request) throws IOException {
-
         return boardService.writePost(imageFiles,singleAttachFile,request);
     }
 
@@ -77,8 +76,9 @@ public class BoardController {
     public void writeComment(@PathVariable Long postId, @RequestBody CommentWriteRequest request) {
         boardService.writeComment(postId,request);
     }
+
     @PostMapping("/{postId}/comment/{commentId}")
-    @Operation(summary = "[POST] 댓글 작성", description = "댓글 작성")
+    @Operation(summary = "[POST] 댓글 수정", description = "댓글 수정")
     public void updateComment(@PathVariable Long postId,@PathVariable Long commentId, @RequestBody CommentUpdateRequest request) {
         boardService.updateComment(postId,commentId,request);
     }
@@ -116,4 +116,37 @@ public class BoardController {
         //todo: 권한 체크
         boardService.deletePost(postId);
     }
+
+    @DeleteMapping("/{postId}/comment/{commentId}")
+    @Operation(summary = "[DELETE] 댓글 삭제", description = "댓글 삭제")
+    public void deleteComment(@PathVariable Long commentId){
+        boardService.deleteComment(commentId);
+    }
+
+
+
+    @GetMapping("{postId}/like")
+    @Operation(summary = "댓글 좋아요 GET", description = "로그인해야만 좋아요 가능. 1번 요청하면 좋아요(true), 2번 요청하면 취소(false)")
+    public boolean likePost(@PathVariable Long postId, HttpServletRequest request) throws Exception {
+
+        if(!boardService.isLike(1L,postId)){
+            log.info("좋아요");
+            boardService.likePost(1L,postId);
+            return true;
+        }
+        else {
+            log.info("좋아요 취소");
+            boardService.unlikePost(1L,postId);
+            return false;
+        }
+    }
+    // 필요할 일이 있지 않을까?
+//    private String getUserId(HttpServletRequest request){
+//        String token=jwtTokenProvider.resolveToken(request,"Access");
+//        if(!jwtTokenProvider.validateToken(token)){
+//            throw new RuntimeException("유효하지 않은 토큰입니다.");
+//        }
+//        String userId= jwtTokenProvider.getUserId(token);
+//        return userId;
+//    }
 }
