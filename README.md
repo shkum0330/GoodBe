@@ -445,7 +445,132 @@ public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttach
 
     
 # 이해준(BE)
+## oauth2.0 이용한 소셜로그인 구현
+### CustomOAuth2AuthService
+```java
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class  CustomOAuth2AuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
+    @SneakyThrows
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {
+        log.info("CustomOAuth2AuthService");
+        OAuth2UserService delegate = new DefaultOAuth2UserService();
+        OAuth2User oAuth2User = delegate.loadUser(request);
+        String registrationId = request.getClientRegistration().getRegistrationId();
+        String userNameAttributeName = request.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes.getAttributes(), attributes.getNameAttributeKey());
+    }
+}
+```
+### CustomOidcUserService
+```java
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class CustomOidcUserService extends OidcUserService {
+
+    @SneakyThrows
+    @Override
+    public OidcUser loadUser(OidcUserRequest request) throws OAuth2AuthenticationException {
+        log.info("CustomOidcUserService");
+        OAuth2UserService delegate = new DefaultOAuth2UserService();
+        OAuth2User oAuth2User = delegate.loadUser(request);
+        String registrationId = request.getClientRegistration().getRegistrationId();
+        String userNameAttributeName = request.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        return (OidcUser) new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes.getAttributes(), attributes.getNameAttributeKey());
+    }
+}
+```
+### OAuth2Attributes
+```java
+@Slf4j
+@Getter
+public class OAuth2Attributes {
+    private final Map<String, Object> attributes;
+    private final String nameAttributeKey;
+    private final String oauthId;
+    private final String nickname;
+    private final String email;
+    private final String picture;
+    private final Provider provider;
+
+    @Builder
+    public OAuth2Attributes(Map<String, Object> attributes, String nameAttributeKey, String oauthId, String nickname, String email, String picture, Provider provider) {
+        this.attributes = attributes;
+        this.nameAttributeKey = nameAttributeKey;
+        this.oauthId = oauthId;
+        this.nickname = nickname;
+        this.email = email;
+        this.picture = picture;
+        this.provider = provider;
+    }
+
+    @SneakyThrows
+    public static OAuth2Attributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+        log.info("userNameAttributeName = {}", new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userNameAttributeName));
+        log.info("attributes = {}", new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(attributes));
+        String registrationIdToLower = registrationId.toLowerCase();
+        switch (registrationIdToLower) {
+            case "google": return ofGoogle(userNameAttributeName, attributes);
+            default: throw new OAuth2RegistrationException("해당 소셜 로그인은 현재 지원하지 않습니다.");
+        }
+    }
+
+    private static OAuth2Attributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        return OAuth2Attributes.builder()
+                .oauthId((String) attributes.get(userNameAttributeName))
+                .nickname((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .picture((String) attributes.get("picture"))
+                .provider(Provider.GOOGLE)
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+}
+```
+### OAuth2AuthenticationSuccessHandler
+```java
+@Slf4j
+@RequiredArgsConstructor
+@Component
+public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+        log.info("성공!");
+        String[] path = httpServletRequest.getRequestURI().split("/");
+        Provider provider = Provider.valueOf(path[path.length - 1].toUpperCase());
+        String oauthId = authentication.getName();
+
+        String uri = UriComponentsBuilder.fromUriString( "http://localhost:8089/social")
+                .queryParam("provider", provider)
+                .queryParam("oauthId", oauthId)
+                .build().toUriString();
+        httpServletResponse.sendRedirect(uri);
+    }
+}
+```
+### OAuth2AuthenticationFailureHandler
+```java
+@Slf4j
+@Component
+public class OAuth2AuthenticationFailureHandler implements AuthenticationFailureHandler {
+
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        log.info("실패!");
+        redirectStrategy.sendRedirect(httpServletRequest,httpServletResponse,"/login");
+    }
+}
+```
 # 이성원(FE)
 ## 페이지 디자인, 구현(figma, react)
 ### 국비교육페이지
