@@ -85,6 +85,10 @@ const LinkStyle = styled.a`
     text-decoration-line: underline;
     margin-left: 10px;
     margin-bottom: 10px;
+    /* hover 상태일 때 커서 모양을 변경 */
+    &:hover {
+      cursor: pointer;
+    }
 `
  
 const MyLikeEduList = () => {
