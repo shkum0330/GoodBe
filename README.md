@@ -1,136 +1,5 @@
-# 금세현(BE)
-
-## 파일 업로드
-- 게시글에 첨부파일(1개), 이미지 파일(여러개)을 추가할 수 있게 하였다.
-### UploadFile - 파일 엔티티
-```java
-@Getter @Setter
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UploadFile {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="file_id")
-    private Long id;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
-
-    private String uploadFileName;
-    private String storeFileName;
-    private String fileUrl;
-
-    @Builder
-    public UploadFile(String uploadFileName, String storeFileName) {
-        this.uploadFileName = uploadFileName;
-        this.storeFileName = storeFileName;
-    }
-}
-```
-### FileStore
-```java
-@Component
-public class FileStore {
-    @Value("${file.dir}")
-    private String fileDir;
-
-    public String getFullPath(String fileName){
-        return fileDir+fileName;
-    }
-
-    // 이미지 파일들을 저장한다.
-    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
-        List<UploadFile> storeFileResult=new ArrayList<>();
-        for(MultipartFile multipartFile:multipartFiles){
-            if(!multipartFile.isEmpty()) storeFileResult.add(storeFile(multipartFile));
-        }
-        return storeFileResult;
-    }
-
-    // 첨부파일을 저장한다.
-    public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
-        if(multipartFile == null || multipartFile.isEmpty()) {
-            return null;
-        }
-        String originalFilename=multipartFile.getOriginalFilename();
-        String storeFileName=createStoreFileName(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
-        return new UploadFile(originalFilename,storeFileName);
-    }
-
-    // 서버에 저장되는 파일명을 UUID로 생성한다.
-    private String createStoreFileName(String originalFilename){
-        String ext=extractExt(originalFilename);
-        String uuid= UUID.randomUUID().toString();
-        return uuid+"."+ext;
-    }
-
-    // 파일 확장자 추출
-    private String extractExt(String originalFilename){
-        int pos=originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos+1);
-    }
-
-    // 파일 삭제
-    public void deleteFile(String fileName) {
-        try {
-            Path filePath = Paths.get(fileDir).resolve(fileName);
-            Files.deleteIfExists(filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-### BoardController
-```java
-@PostMapping("/write")
-    @Operation(summary = "[POST] 게시글 작성", description = "게시글 작성")
-    public Long writePost(@RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
-            @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
-            @RequestPart(value = "postWriteRequest") PostWriteRequest request) throws IOException {
-        return boardService.writePost(imageFiles,singleAttachFile,request);
-    }
-```
-### BoardService
-```java
-public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request) throws IOException {
-        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
-        request.setMember(member);
-        request.setNickname(member.getNickname());
-
-        List<UploadFile> storeImageFiles=null;
-        UploadFile attachFile = null;
-
-        //todo: 리팩토링 필요...
-        if(imageFiles != null) {
-            storeImageFiles = fileStore.storeFiles(imageFiles);
-            uploadFileRepository.saveAll(storeImageFiles);
-            request.setFiles(storeImageFiles);
-        }
-
-        if(singleAttachFile != null) {
-            attachFile = fileStore.storeFile(singleAttachFile);
-            request.setAttachFile(attachFile);
-            uploadFileRepository.save(attachFile);
-        }
-        Long id=boardRepository.save(request.toEntity()).getId();
-        Post post=boardRepository.findById(id).get();
-
-        if(imageFiles != null){
-            for(UploadFile file:storeImageFiles){
-                file.setPost(post);
-            }
-        }
-        if(singleAttachFile != null){
-            attachFile.setPost(post);
-        }
-
-        return id;
-    }
-```
-
 # 유지나(BE, FE)
+
 
 ## 채팅 서비스 구현 
 이 README 파일은 Node.js, MongoDB 및 Socket.io를 사용하여 채팅 서비스를 구현하는 방법을 안내합니다. 이 프로젝트를 따라하는 데 필요한 기초적인 지식은 Node.js, Express, MongoDB, Socket.io 및 JavaScript에 대한 이해입니다.
@@ -260,7 +129,7 @@ MongoDB 서버를 실행합니다.
 nodemon index.js
 ```
 브라우저에서 http://localhost:3000에 접속하여 채팅 서비스를 테스트합니다.
-## 화상 서비스 구현 README
+## 화상 서비스 구현
 이 README 파일은 WebRTC와 Node.js를 사용하여 화상 서비스를 구현하는 방법을 안내합니다. 이 프로젝트를 따라하는 데 필요한 기초적인 지식은 WebRTC, Node.js, Express 및 JavaScript에 대한 이해입니다.
 ### 요구 사항
 Node.js 설치: https://nodejs.org/ 에서 Node.js를 다운로드하여 설치합니다.
@@ -419,7 +288,143 @@ nodemon index.js
 브라우저에서 http://localhost:3000에 접속하여 화상 서비스를 테스트합니다.
 이제 화상 서비스가 작동하며, 사용자는 화상 통화를 시작하고 다른 사용자와 음성 및 영상 통화를 할 수 있습니다. 이 예제는 간단한 시작 지점으로, 더 많은 기능과 보안 측면을 추가하여 실제 프로덕션 환경에 적합하게 확장할 수 있습니다.
 
+
+# 금세현(BE)
+
+
+## 파일 업로드
+- 게시글에 첨부파일(1개), 이미지 파일(여러개)을 추가할 수 있게 하였다.
+### UploadFile - 파일 엔티티
+```java
+@Getter @Setter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class UploadFile {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="file_id")
+    private Long id;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    private String uploadFileName;
+    private String storeFileName;
+    private String fileUrl;
+
+    @Builder
+    public UploadFile(String uploadFileName, String storeFileName) {
+        this.uploadFileName = uploadFileName;
+        this.storeFileName = storeFileName;
+    }
+}
+```
+### FileStore
+```java
+@Component
+public class FileStore {
+    @Value("${file.dir}")
+    private String fileDir;
+
+    public String getFullPath(String fileName){
+        return fileDir+fileName;
+    }
+
+    // 이미지 파일들을 저장한다.
+    public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+        List<UploadFile> storeFileResult=new ArrayList<>();
+        for(MultipartFile multipartFile:multipartFiles){
+            if(!multipartFile.isEmpty()) storeFileResult.add(storeFile(multipartFile));
+        }
+        return storeFileResult;
+    }
+
+    // 첨부파일을 저장한다.
+    public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
+        if(multipartFile == null || multipartFile.isEmpty()) {
+            return null;
+        }
+        String originalFilename=multipartFile.getOriginalFilename();
+        String storeFileName=createStoreFileName(originalFilename);
+        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+        return new UploadFile(originalFilename,storeFileName);
+    }
+
+    // 서버에 저장되는 파일명을 UUID로 생성한다.
+    private String createStoreFileName(String originalFilename){
+        String ext=extractExt(originalFilename);
+        String uuid= UUID.randomUUID().toString();
+        return uuid+"."+ext;
+    }
+
+    // 파일 확장자 추출
+    private String extractExt(String originalFilename){
+        int pos=originalFilename.lastIndexOf(".");
+        return originalFilename.substring(pos+1);
+    }
+
+    // 파일 삭제
+    public void deleteFile(String fileName) {
+        try {
+            Path filePath = Paths.get(fileDir).resolve(fileName);
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+### BoardController
+```java
+@PostMapping("/write")
+    @Operation(summary = "[POST] 게시글 작성", description = "게시글 작성")
+    public Long writePost(@RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
+            @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
+            @RequestPart(value = "postWriteRequest") PostWriteRequest request) throws IOException {
+        return boardService.writePost(imageFiles,singleAttachFile,request);
+    }
+```
+### BoardService
+```java
+public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request) throws IOException {
+        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
+        request.setMember(member);
+        request.setNickname(member.getNickname());
+
+        List<UploadFile> storeImageFiles=null;
+        UploadFile attachFile = null;
+
+        //todo: 리팩토링 필요...
+        if(imageFiles != null) {
+            storeImageFiles = fileStore.storeFiles(imageFiles);
+            uploadFileRepository.saveAll(storeImageFiles);
+            request.setFiles(storeImageFiles);
+        }
+
+        if(singleAttachFile != null) {
+            attachFile = fileStore.storeFile(singleAttachFile);
+            request.setAttachFile(attachFile);
+            uploadFileRepository.save(attachFile);
+        }
+        Long id=boardRepository.save(request.toEntity()).getId();
+        Post post=boardRepository.findById(id).get();
+
+        if(imageFiles != null){
+            for(UploadFile file:storeImageFiles){
+                file.setPost(post);
+            }
+        }
+        if(singleAttachFile != null){
+            attachFile.setPost(post);
+        }
+
+        return id;
+    }
+```
+
+
 # 이승환(BE)
+
 
 ### 검색 서버
 + 검색 API
@@ -444,5 +449,5 @@ nodemon index.js
     2. 일정 시간마다 수집 코드를 실행하는 기능
     3. 새로 올라온 공고를 확인하여 DB에 수집하는 기능
 
-
+    
 # 이해준(BE)
