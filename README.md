@@ -445,9 +445,9 @@ public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttach
 
     
 # 이해준(BE)
-### 
+
 # 이성원(FE)
-## 컴포넌트 디자인
+## 페이지 디자인, 구현(figma, react)
 ### 국비교육페이지
 ```
 EduList
@@ -462,4 +462,16 @@ MyInfoChange
 MyEduLiike
 MyJobLike
 ```
+# 이정석(FE)
+## 페이지 디자인, 구현(figma, react)
+### 
+```
+로그인
+회원가입 
+채용공고
+마이페이지 (개인정보창)
++sorting 을 통한 목록 정렬
++pagination -> 국비교육 페이지 및 채용공고 페이지에 적용
+```
+
 
