@@ -60,6 +60,7 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
 
     @Column
     private String favoriteCompany;
+
     @Column
     private String favoriteJob;
 

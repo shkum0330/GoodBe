@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Schema(description = "마이페이지 - 내가 쓴 글 목록 응답 DTO")
 @Data
@@ -16,7 +17,7 @@ public class MyPostsResponse {
     private int hits; // 조회수
     private int likes; // 좋아요 수
     private int comments; // 댓글 수
-    private LocalDate createDate; // 작성 시간
+    private String createDate; // 작성 시간
 
     @Builder
     public MyPostsResponse(Post entity) {
@@ -26,6 +27,6 @@ public class MyPostsResponse {
         this.hits = entity.getHits();
         this.likes = entity.getLikeCount();
         this.comments=entity.getComments().size();
-        this.createDate=entity.getCreateDate();
+        this.createDate=entity.getCreateDate().toString().substring(0,10); // 년월일만 분리
     }
 }

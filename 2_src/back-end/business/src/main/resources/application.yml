@@ -25,7 +25,8 @@ spring:
 #      enabled: false
 
 file:
-  dir: /Users/sehyun/study/file/
+  dir:
+    local: /Users/sehyun/study/file/
 
 #  session:
 #    store-type: redis
