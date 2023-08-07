@@ -305,14 +305,10 @@ const MyPageInformationHeader = () => {
                    </ThirdBox>
 
                    <FourthBox>
-
                        <DetailSmall>
                        관심 취업 정보는  GoodBe 서비스를 사용하는 과정에서 이용될 수 있습니다
                    </DetailSmall>
-                   
                    </FourthBox>
-                   
-               
                    <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     관심 회사
@@ -393,8 +389,6 @@ const MyPageInformationHeader = () => {
                   
                    </ContentBoxDetailUnderlined>               
                    
-                   
-                   
                     <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     거주지역    
@@ -411,24 +405,12 @@ const MyPageInformationHeader = () => {
                   
                    </ContentBoxDetailUnderlined>
 
-
-
             </SecondBox>
 
         </ContentBox>
 
-
         <br/>
         
-
-
-
-
-
-
-
-
-
 
         </div>
     );

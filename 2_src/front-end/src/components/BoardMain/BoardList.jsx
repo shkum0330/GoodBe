@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
 import './board.css';
 import data from './articles.json';
-import  './index.css';
+// import  './index.css';
 
 let TabContentTitle = styled.div`
   font-size: 30px;
@@ -64,21 +64,16 @@ margin:10px 10px 0 10px;
   flex-wrap: wrap;
   frame:void;
 //   border: 1px solid black;
-
-  
 `
 const Article = styled.tr`
   width: 48%;
   height: 200px;
   padding: 10px;
-
 //   border: 1px solid #919191;
 //   margin:5px;
 //   border-radius: 10px;
-
   display:flex;
   flex-direction: row;
-
 `
 
 const Title = styled.h2`
@@ -244,7 +239,7 @@ function TabContent(props) {
     }
 };
 
-export default function () {
+export default function BoardList() {
 
     let [clickedTab, setClickedTab] = useState(0);
     let [onOff, setOnOff] = useState(false);
@@ -285,7 +280,7 @@ export default function () {
                     취뽀후기
                 </Tab>
             </TabList>
-
+{/* 
             <Nav class="nav nav-underline" variant="tabs" defaultActiveKey="0">
                 <TabItem class="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
                     <a aria-current="page" href="#" className={0 === clickedTab ? 'selected' : 'not-selected'}>전체</a>
@@ -303,7 +298,7 @@ export default function () {
                     <a class="nav-link" href="#" className={4 === clickedTab ? 'selected' : 'not-selected'}>취뽀후기</a>
                 </TabItem>
 
-            </Nav>
+            </Nav> */}
 
             <CSSTransition in={onOff} classNames="show" timeout={1000}>
                 <TabContent clickedTab={clickedTab} setOnOff={setOnOff} />
