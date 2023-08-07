@@ -4,14 +4,8 @@ from .serializers import job_post_serializer
 from .models import job_post
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from nlp import nlp
 
 @api_view(['GET'])
-def get_keyword_abstraction(request):
-    queryset = job_post.objects.all()
-    serializer = job_post_serializer(queryset,many = True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def hello_rest_api(request):
-    data = {'message': 'Hello, REST API!'}
-    return Response(data)
+def get_keyword_abstraction(request, keyword):
+    return Response(keyword)
