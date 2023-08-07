@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-
 import Navbar from './components/common/Navbar';
 import Sidebar from './components/common/Sidebar';
 import Footer from './components/common/Footer';
@@ -34,11 +29,6 @@ export default function App() {
 
   );
 
-<<<<<<< HEAD
+
  
 }
-=======
-export default App;
->>>>>>> d8dd12d47ef8fa46aae9291d340248841a491767
->>>>>>> 888273136400abfe461823a309f5a684920decd4
->>>>>>> 2faf565c8cf82c0722ecd13bc36e7b209f8c578b
