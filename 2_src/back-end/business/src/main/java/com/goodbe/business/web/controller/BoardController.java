@@ -2,7 +2,6 @@ package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.file.FileStore;
-import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.exception.AccessDeniedException;
 import com.goodbe.business.web.dto.board.comment.CommentUpdateRequest;
 import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
@@ -22,9 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -42,6 +43,11 @@ public class BoardController {
 
     private final BoardService boardService;
     private final FileStore fileStore;
+
+    WebClient client = WebClient.builder()
+            .baseUrl("http://localhost:8082") // 요청을 인증 서버로 보냄
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
+            .build();
 
     @GetMapping("")
     @Operation(summary = "[GET] 게시판 페이지", description = "페이징 처리하여 게시글 목록을 띄움")
@@ -108,7 +114,7 @@ public class BoardController {
                           @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
                           @RequestPart(value = "postUpdateRequest") PostUpdateRequest request) throws IOException {
 
-        return boardService.update(postId,imageFiles,singleAttachFile,request);
+        return boardService.updatePost(postId,imageFiles,singleAttachFile,request);
     }
     @DeleteMapping("/{postId}/delete")
     @Operation(summary = "[DELETE] 게시글 삭제", description = "게시글 삭제")

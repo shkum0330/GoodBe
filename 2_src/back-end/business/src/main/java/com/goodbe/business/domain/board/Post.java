@@ -77,6 +77,7 @@ public class Post extends BaseTimeEntity {
         this.likeCount = likeCount;
     }
 
+    // 게시글 수정 로직
     public void update(String boardType, String title, String content, List<UploadFile> files, UploadFile attachFile) {
         this.boardType = boardType;
         this.title = title;
@@ -88,6 +89,6 @@ public class Post extends BaseTimeEntity {
         this.likeCount++;
     }
     public void likeCancel(){
-        this.likeCount++;
+        this.likeCount--;
     }
 }

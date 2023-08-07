@@ -31,9 +31,9 @@ public class InitDB {
 
         public void dbInit(){
 
-            Member m1=new Member("abc@naver.com","1234","김민지","minji");
+            Member m1=new Member("abc@naver.com","김민지","minji");
             em.persist(m1);
-            Member m2=new Member("fgd@gmail.com","1234","강해린","haerin");
+            Member m2=new Member("fgd@gmail.com","강해린","haerin");
             em.persist(m2);
 
             Training t1=new Training("aaa","aaa", TrainingType.ONLINE,"주5일");

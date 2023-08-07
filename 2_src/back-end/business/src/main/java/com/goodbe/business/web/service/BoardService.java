@@ -48,7 +48,8 @@ public class BoardService {
     private final FileStore fileStore;
 
     WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8082") // 인증 서버
+            .baseUrl("http://localhost:8082") // 인증 서버(로컬)
+            .baseUrl("http://localhost:8082") // 인증 서버(EC2)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)// 기본 해더
             .build();
 
@@ -153,9 +154,10 @@ public class BoardService {
         return post;
     }
 
-    public Long update(Long postId,List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
+    public Long updatePost(Long postId, List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
         Post post = boardRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+postId));
 
+        // 원래 올린 파일들은 삭제
         List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(postId);
         for (UploadFile file:uploadFiles){
             fileStore.deleteFile(file.getStoreFileName());
@@ -197,6 +199,8 @@ public class BoardService {
         commentRepository.delete(comment);
 
     }
+
+
     private String resolveToken(HttpServletRequest request){
         String bearerToken=request.getHeader("Authorization");
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")){
