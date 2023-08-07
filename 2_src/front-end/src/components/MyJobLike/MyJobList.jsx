@@ -120,7 +120,7 @@ const MyLikeEduList = () => {
             <LinkStyle>이동하기></LinkStyle>
           </JobItemContainer>
         ))}
-      </Container>
+      </Container> 
     </div>
   );
 };
