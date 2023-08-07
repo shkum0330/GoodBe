@@ -1,5 +1,7 @@
 package com.goodbe.business.utility;
 
+import com.goodbe.business.domain.board.Comment;
+import com.goodbe.business.domain.board.PostLike;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.training.TrainingType;
@@ -57,6 +59,11 @@ public class InitDB {
             em.persist(p4);
             Post p5=new Post(m1,"취업준비",m1.getNickname(),"eee","eee",150);
             em.persist(p5);
+
+            Comment c1=new Comment(m2,p1,"안녕하세요");
+            em.persist(c1);
+            Comment c2=new Comment(m2,p1,"반갑습니다.");
+            em.persist(c2);
         }
     }
 }

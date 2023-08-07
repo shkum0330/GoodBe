@@ -21,11 +21,11 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name="member_id")
-    private String id;
+//    @GeneratedValue(generator = "system-uuid")
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="member_id")
+    private Long id;
 //    private UUID id;
 
     @OneToMany(mappedBy = "member")

@@ -13,8 +13,8 @@ public class PostsResponse {
 
     private Long id;
     private Member member;
-//    private Long memberId;
-    private String memberId;
+    private Long memberId;
+//    private String memberId;
     private String nickname;
     private String boardType; // 게시판 종류
     private String title;

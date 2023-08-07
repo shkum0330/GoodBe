@@ -49,7 +49,7 @@ public class BoardService {
 
     WebClient client = WebClient.builder()
             .baseUrl("http://localhost:8082") // 인증 서버(로컬)
-            .baseUrl("http://localhost:8082") // 인증 서버(EC2)
+            .baseUrl("3.38.102.133:8083") // 인증 서버(EC2)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)// 기본 해더
             .build();
 
