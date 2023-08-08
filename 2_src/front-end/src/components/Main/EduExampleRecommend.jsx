@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import KHimg from '../../assets/main/KHimg.svg';
 
+
 const GoToLogin = styled.a`
     color: #000;
     text-align: left;

@@ -1,12 +1,11 @@
 import React from 'react'
-import BoardList from './components/BoardMain/BoardList'
-
+import MyBoardContainer from './components/MyBoard/MyBoardContainer'
 
 
 export default function App() {
   return (
     <div>
-      <BoardList></BoardList>
+      <MyBoardContainer/>
       
       
     </div>

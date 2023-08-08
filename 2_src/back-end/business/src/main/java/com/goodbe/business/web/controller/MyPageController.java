@@ -25,7 +25,7 @@ public class MyPageController {
     private final MemberService memberService;
     private final MyPageService myPageService;
 
-    @GetMapping("/posts")
+        @GetMapping("/posts")
     @Operation(summary = "[GET] 게시판 페이지", description = "페이징 처리하여 게시글 목록을 띄움")
     public List<MyPostsResponse> myPosts(){
         List<Post> posts=myPageService.myPosts(1L);
