@@ -5,6 +5,18 @@ import pandas as pd
 from collections import deque
 import pymysql
 
+# api key 경로 설정
+#job_api_path =
+job_api_path = r"C:\SH\공통프로젝트\job_api_key.txt"
+
+# db 연결
+# db connection
+conn = pymysql.connect(host = "localhost",port=3306,
+                       user = "root",
+                       password = "ssafy",
+                       database = "test",
+                       charset = "utf8")
+
 # 데이터 저장할 리스트
 auth_no_list = deque()
 job_df = pd.DataFrame(columns=['id', 'company_id', 'company_data', 'company_url', 'job_content', 'end_date', 'sal', 'job_data'])
@@ -17,9 +29,7 @@ occupation = ['023', # 컴퓨터시스템
               '056', # 미디어콘텐츠·UX/UI 디자이너
               ]
 
-# 경로
-# job_api_path = r"job_api_key.txt"
-job_api_path = r"C:\SH\공통프로젝트\job_api_key.txt"
+
 # api key
 with open(job_api_path, "r") as f:
     api_key = f.read()
@@ -123,13 +133,6 @@ for wanted_auth_no in auth_no_list:
 # csv로 저장
 job_df.to_json("job_data2.json")
 
-
-# db connection
-conn = pymysql.connect(host = "localhost",port=3306,
-                       user = "root",
-                       password = "ssafy",
-                       database = "test",
-                       charset = "utf8")
 
 curs = conn.cursor()
 
