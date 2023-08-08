@@ -125,8 +125,6 @@ const OnOff = styled.p`
     padding: 5px 10px; 
     border-radius: 5px; 
 
-
-
 `
 const EduDate = styled.p`
     color: #00101E;
