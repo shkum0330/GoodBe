@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { AiOutlineLike } from "react-icons/ai";
 import { LiaCommentDotsSolid } from "react-icons/lia";
@@ -91,6 +92,14 @@ const ViewCount = styled.div`
 `
 
 const MyBoardContainer = () => {
+    axios.get('http://localhost:8080/api/mypage/posts')
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.error('Error fetching data:', error);
+    });
+
     const dummyData = [
         { id: 1, BoardType:'취업게시판', Boardtitle: '화이팅합시다다들모두!', BoardDate: '2023-07-26', like: '3', comments:'4', views: '10'},
         { id: 2, BoardType:'취업게시판', Boardtitle: '화이팅합시다다들모두!', BoardDate: '2023-07-26',like: '3',comments:'4', views: '10'},

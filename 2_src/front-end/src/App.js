@@ -1,6 +1,6 @@
 
 import Navbar from './components/common/Navbar';
-// import Sidebar from './components/common/Sidebar';
+import Sidebar from './components/common/Sidebar';
 // import Footer from './components/common/Footer';
 // import JobList from './components/JobMain/JobList';
 // import JobTab from './components/JobMain/JobTab';
@@ -23,19 +23,18 @@ import SearchMain from './components/Main/SearchMain';
 import EduExampleRecommend from './components/Main/EduExampleRecommend';
 import EduTop6 from './components/Main/EduTop6';
 import EduNear from './components/Main/EduNear';
-
+import MyBoardContainer from './components/MyBoard/MyBoardContainer';
+import MyBoardHeader from './components/MyBoard/MyBoardContainer';
 
 
 
 export default function App() {
   return (
     <div>
+      <Sidebar/>
       <Navbar/>
-      <Advertise/>
-      <SearchMain/>
-      <EduExampleRecommend/>
-      <EduTop6/>
-      <EduNear/>
+      <MyBoardHeader/>
+      <MyBoardContainer/>
     </div>
   );
 
