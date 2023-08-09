@@ -2,6 +2,7 @@ package com.goodbe.business.utility;
 
 import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.PostLike;
+import com.goodbe.business.domain.member.Address;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.training.TrainingType;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static java.time.LocalDateTime.*;
@@ -33,7 +35,10 @@ public class InitDB {
 
         public void dbInit(){
 
-            Member m1=new Member("abc@naver.com","김민지","minji");
+            Member m1=new Member("kumsh0330@naver.com","김민지","minji",
+                    LocalDate.of(2004,5,7),
+                    new Address("서울특별시 동대문구","겸재로 16","12345"),
+                    "여성","현대자동차","경로탐색 SW개발",false);
             em.persist(m1);
             Member m2=new Member("fgd@gmail.com","강해린","haerin");
             em.persist(m2);

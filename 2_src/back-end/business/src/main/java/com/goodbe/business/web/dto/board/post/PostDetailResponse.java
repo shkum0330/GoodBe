@@ -37,7 +37,7 @@ public class PostDetailResponse {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.likeCount = entity.getLikeCount();
-        this.files=entity.getFiles().stream().map(f -> new UploadFileResponse(f)).collect(Collectors.toList());
-        this.comments=entity.getComments().stream().map(c -> new CommentsResponse(c)).collect(Collectors.toList());
+        this.files=entity.getFiles().stream().map(UploadFileResponse::new).collect(Collectors.toList());
+        this.comments=entity.getComments().stream().map(CommentsResponse::new).collect(Collectors.toList());
     }
 }
