@@ -179,7 +179,7 @@ const EduExampleRecommend = () => {
             </Row>
             <NaverBackendBox>
                 <NaverBackend>네이버 백엔드 <br />지원자들이 관심있는</NaverBackend>
-                <MoreInfo>더보기></MoreInfo>
+                <MoreInfo>더보기</MoreInfo>
             </NaverBackendBox>
         
             <RowContainer>

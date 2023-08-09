@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Building from '../../assets/main/Building.svg';
-import SamsungLogo from '../../assets/main/SamsungLogo.svg';
+
 
 const Container1 = styled.div`
     position: absolute;
@@ -109,7 +108,7 @@ font-family: 'Istok Web';
 
 
 
-export default function EnterpriseIntroduction() {
+export default function EduInterest() {
     return (
       <div>
         <Container1>

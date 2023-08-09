@@ -94,26 +94,6 @@ const Title = styled.h3`
   justify-content: space-evenly;
 `;
 
-const h_2 = styled.span`
-font-family: 'Istok Web';
-  font-style: normal;
-  font-size: 15px;
-  line-height: 47px;
-  color: #070707;
-  justify-content: space-evenly; 
-  position: absolute;
-  margin-left : 5px;
-`;
-
-const h_3 = styled.span`
-font-family: 'Istok Web';
-  font-style: normal;
-  font-size: 10px;
-  line-height: 47px;
-  color: #070707;
-  justify-content: space-evenly;  
-`;
-
 const RedSmallText = styled.span`
   font-size: 12px;
   color: red;
