@@ -3,7 +3,7 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import SearchJob from '../components/JobMain/SearchJob';
 import JobList from '../components/JobMain/JobList';
-import LargeLink from '../components/JobMain/LargeLink'
+
 
 
 const JobMain = () => {
@@ -12,7 +12,6 @@ const JobMain = () => {
             <Navbar/>
             <SearchJob/>
             <JobList />
-            <LargeLink />
             <Footer/>
         </div>
     );
