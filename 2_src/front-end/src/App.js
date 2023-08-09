@@ -15,17 +15,29 @@
 // import GoLogin from './components/Login/GoLogin';
 // import InsertLoginInfo from './components/Login/InsertLoginInfo';
 // import SocialLogin from './components/Login/SocialLogin';
+import * as serviceWorker from './serviceWorker';
+// import EnterpriseIntroduction from './components/Main/EnterpriseIntroduction';
+// import EduInterest from './components/Main/EduInterset';
+// import Advertise from './components/Main/Advertise';
+// import SearchMain from './components/Main/SearchMain';
+// import EduExampleRecommend from './components/Main/EduExampleRecommend';
+// import EduTop6 from './components/Main/EduTop6';
+// import EduNear from './components/Main/EduNear';
 import React from 'react'
-import GoLogin from './components/SignUp/GoLogin';
-import AboutAccount from './components/Login/AboutAccount';
-import EnterpriseIntroduction from './components/Main/EnterpriseIntroduction';
-import EduInterest from './components/Main/EduInterset';
+import { Route } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import EduDetail from './pages/EduDetail';
+
 
 export default function App() {
+  
   return (
-    <div>
-      <EnterpriseIntroduction/>
-      <EduInterest/>
-    </div>
+    <>
+      <Route component={EduDetail} path="/EduDetail" />
+    </>
   );
 };
+
+ 
+  
+
