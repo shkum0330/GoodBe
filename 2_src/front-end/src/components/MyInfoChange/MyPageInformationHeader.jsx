@@ -1,8 +1,9 @@
 import React from 'react';
-// import myprofile from '../../assets/MyPageHome/myprofile.svg';
 import styled from 'styled-components'
 import Cyber_security_emoji from '../../assets/MyInfoChange/Cyber_security_emoji.svg'
 import CatProfile_Circle from '../../assets/MyInfoChange/CatProfile_Circle.svg'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Title = styled.p`
     color: #000;
@@ -163,6 +164,23 @@ const SelectStyled = styled.select`
 `;
 
 const MyPageInformationHeader = () => {
+    const [formData, setFormData] = useState(new FormData());
+    const [userInfo, setUserInfo] = useState(null); // 상태 추가
+  
+    useEffect(() => {
+      axios
+        .get('http://localhost:8080/api/mypage/memberinfo', formData)
+        .then((response) => {
+          // API 요청 성공 시 처리
+          console.log(response.data);
+          setUserInfo(response.data); // API 응답 데이터를 상태에 저장
+        })
+        .catch((error) => {
+          // API 요청 실패 시 처리
+          console.error('Error fetching data:', error);
+        });
+    }, [formData]);
+
     const containerStyle = {
         display: 'flex',
         flexDirection: 'column',
@@ -184,16 +202,12 @@ const MyPageInformationHeader = () => {
 
     return (
         <div style={containerStyle}>
-            {/* <img src={myprofile} alt="myprofile" style={imgStyle} /> */}
             <Title>개인 정보</Title>
             <TitleDetail>맞춤 교육 및 채용공고정보를 제공하기 위해 사용되는 나와 내 환경설정에 관한 정보입니다.</TitleDetail>
             <br/>
             <br/>
             <FirstBox>
-              
-
                     <SecondBox>
-                   
                         <ThirdBox>
                         <TitleSmall>
                         GoodBe에 표시되는 프로필 정보
@@ -241,7 +255,7 @@ const MyPageInformationHeader = () => {
                      사진을 추가하면 다른 사람이 나를 알아보기 쉬워지며 내가 계정에 로그인되어 있는지 확인할 수 있습니다.
                     </SeparatedContentBox2>
                     <SeparatedContentBox3>
-                    <img src={CatProfile_Circle} alt="myprofile" style={imgStyle2} /> 
+                    {userInfo ? userInfo.profileImage : ''}
                     </SeparatedContentBox3>
                    </ContentBoxDetailUnderlined>
                
@@ -250,7 +264,8 @@ const MyPageInformationHeader = () => {
                     닉네임
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     지르나르냥
+                     {userInfo ? userInfo.nickname : ''}
+
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
@@ -260,7 +275,7 @@ const MyPageInformationHeader = () => {
                     생년월일
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     1999.11.28
+                     {userInfo ? userInfo.birth : ''}
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>               
@@ -272,12 +287,10 @@ const MyPageInformationHeader = () => {
                     성별
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     여성
+                     {userInfo ? userInfo.gender : ''}
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
-
-
 
             </SecondBox>
 
@@ -285,11 +298,6 @@ const MyPageInformationHeader = () => {
 
 
         <br/>
-
-
-
-
-
 
 
         <ContentBox>
@@ -314,31 +322,24 @@ const MyPageInformationHeader = () => {
                     관심 회사
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     현대자동차
+                     {userInfo ? userInfo.favoriteCompany : ''}
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
-                   
-                   
-                   
                     <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     관심 직무
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     경로탐색 sW개발
+                     {userInfo ? userInfo.favoriteJob : ''}
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
-
-
             </SecondBox>
 
         </ContentBox>
-
-
 
 <ContentBox>
 
@@ -364,7 +365,7 @@ const MyPageInformationHeader = () => {
                     이름
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     유지나
+                     {userInfo ? userInfo.name : ''}
                     </SeparatedContentBox2>
 
                    </ContentBoxDetailUnderlined>
@@ -374,7 +375,7 @@ const MyPageInformationHeader = () => {
                     이메일
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     wlskb@naver.com
+                     {userInfo ? userInfo.email : ''}
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
@@ -394,14 +395,10 @@ const MyPageInformationHeader = () => {
                     거주지역    
                     </SeparatedContentBox1>
                     <SeparatedContentBox2>
-                            {/* 여기에 option 태그를 넣어주세요 */}
-                            <SelectStyled>
-                                <option value="Seoul, South Korea">Seoul, South Korea</option>
-                                <option value="New York, USA">New York, USA</option>
-                                <option value="Tokyo, Japan">Tokyo, Japan</option>
-                                {/* 다른 옵션들도 추가할 수 있습니다 */}
-                            </SelectStyled>
-                        </SeparatedContentBox2>
+ 
+                    {userInfo?.address?.city} {userInfo?.address?.street} {userInfo?.address?.zipcode}
+
+                    </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
