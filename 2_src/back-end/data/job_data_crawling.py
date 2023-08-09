@@ -7,7 +7,7 @@ import pymysql
 
 # api key 경로 설정
 #job_api_path =
-job_api_path = r"C:\SH\공통프로젝트\job_api_key.txt"
+job_api_path = r"C:\SH\gpt\job_api_key.txt"
 
 # db 연결
 # db connection
@@ -131,7 +131,7 @@ for wanted_auth_no in auth_no_list:
     job_df.loc[idx] = job_data_list
 
 # csv로 저장
-job_df.to_json("job_data2.json")
+# job_df.to_json("job_data2.json")
 
 
 curs = conn.cursor()
