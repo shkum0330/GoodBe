@@ -1,23 +1,21 @@
 
 import Navbar from './components/common/Navbar';
 import Sidebar from './components/common/Sidebar';
-// import Footer from './components/common/Footer';
-// import JobList from './components/JobMain/JobList';
-// import JobTab from './components/JobMain/JobTab';
-// import EduList from './components/EduList/EduList';
-// import SearchJob from './components/JobMain/SearchJob';
-// import EduSearchHeader from './components/EduList/EduSearchHeader';
-// import MypageHome from './components/MyPageHome/MypageHome';
-// import MyPageHomeHeader from './components/MyPageHome/MyPageHomeHeader';
-// import MyPageInformationHeader from './components/MyInfoChange/MyPageInformationHeader';
-// import BoardList from './components/BoardMain/BoardList';
-// import AboutAccount from './components/Login/AboutAccount';
-// import GoLogin from './components/Login/GoLogin';
-// import InsertLoginInfo from './components/Login/InsertLoginInfo';
-// import SocialLogin from './components/Login/SocialLogin';
-import React from 'react'
-import GoLogin from './components/SignUp/GoLogin';
+import Footer from './components/common/Footer';
+import JobList from './components/JobMain/JobList';
+import JobTab from './components/JobMain/JobTab';
+import EduList from './components/EduList/EduList';
+import SearchJob from './components/JobMain/SearchJob';
+import EduSearchHeader from './components/EduList/EduSearchHeader';
+import MypageHome from './components/MyPageHome/MypageHome';
+import MyPageHomeHeader from './components/MyPageHome/MyPageHomeHeader';
+import MyPageInformationHeader from './components/MyInfoChange/MyPageInformationHeader';
+import BoardList from './components/BoardMain/BoardList';
 import AboutAccount from './components/Login/AboutAccount';
+import GoLogin from './components/Login/GoLogin';
+import InsertLoginInfo from './components/Login/InsertLoginInfo';
+import SocialLogin from './components/Login/SocialLogin';
+import {React, Routes, Route} from 'react'
 import Advertise from './components/Main/Advertise';
 import SearchMain from './components/Main/SearchMain';
 import EduExampleRecommend from './components/Main/EduExampleRecommend';
@@ -27,11 +25,12 @@ import MyBoardContainer from './components/MyBoard/MyBoardContainer';
 import MyBoardHeader from './components/MyBoard/MyBoardContainer';
 
 
+export default function App() {
   
   return (
-<<<<<<< HEAD
+
     <Routes>
-      <Route path = "/" element={<Main/>} />
+      <Route path = "/" element={<Main />} />
       <Route path = "/MyBoard" element={<MyBoard/>} />
       <Route path = "/BoardDetail" element={<BoardDetail/>} />
       <Route path = "/BoardEdit" element={<BoardEdit/>} />
