@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 import React from 'react'
 import { Route, Router, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
@@ -34,10 +35,41 @@ import  TeamInfo   from './pages/TeamInfo ';
 import  UserWithdraw   from './pages/UserWithdraw ';
 import  BoardDetail   from './pages/BoardDetail ';
 import  MyEduLIke   from './pages/MyEduLIke ';
+=======
+import Navbar from './components/common/Navbar';
+import Sidebar from './components/common/Sidebar';
+// import Footer from './components/common/Footer';
+// import JobList from './components/JobMain/JobList';
+// import JobTab from './components/JobMain/JobTab';
+// import EduList from './components/EduList/EduList';
+// import SearchJob from './components/JobMain/SearchJob';
+// import EduSearchHeader from './components/EduList/EduSearchHeader';
+// import MypageHome from './components/MyPageHome/MypageHome';
+// import MyPageHomeHeader from './components/MyPageHome/MyPageHomeHeader';
+// import MyPageInformationHeader from './components/MyInfoChange/MyPageInformationHeader';
+// import BoardList from './components/BoardMain/BoardList';
+// import AboutAccount from './components/Login/AboutAccount';
+// import GoLogin from './components/Login/GoLogin';
+// import InsertLoginInfo from './components/Login/InsertLoginInfo';
+// import SocialLogin from './components/Login/SocialLogin';
+import React from 'react'
+import GoLogin from './components/SignUp/GoLogin';
+import AboutAccount from './components/Login/AboutAccount';
+import Advertise from './components/Main/Advertise';
+import SearchMain from './components/Main/SearchMain';
+import EduExampleRecommend from './components/Main/EduExampleRecommend';
+import EduTop6 from './components/Main/EduTop6';
+import EduNear from './components/Main/EduNear';
+import MyBoardContainer from './components/MyBoard/MyBoardContainer';
+import MyBoardHeader from './components/MyBoard/MyBoardContainer';
+
+
+>>>>>>> 01c1f8554bd54469ae32de0eed6f18aab4669c05
 
 export default function App() {
   
   return (
+<<<<<<< HEAD
     <Routes>
       <Route path = "/" element={<Main/>} />
       <Route path = "/MyBoard" element={<MyBoard/>} />
@@ -84,4 +116,13 @@ export default function App() {
 
  
   
+=======
+    <div>
+      <Sidebar/>
+      <Navbar/>
+      <MyBoardHeader/>
+      <MyBoardContainer/>
+    </div>
+  );
+>>>>>>> 01c1f8554bd54469ae32de0eed6f18aab4669c05
 
