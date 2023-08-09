@@ -1,9 +1,12 @@
-import React from 'react';
+
 import axios from 'axios';
 import styled from 'styled-components';
-import { AiOutlineLike } from "react-icons/ai";
-import { LiaCommentDotsSolid } from "react-icons/lia";
-import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineLike, AiOutlineEye } from 'react-icons/ai';
+import { IoMdChatboxes } from 'react-icons/io';
+import React, { useEffect, useState } from 'react';
+
+
+const API_BASE_URL = 'http://localhost:8080';
 
 const BoardContainer = styled.div`
     border-radius: 10px;
@@ -92,40 +95,41 @@ const ViewCount = styled.div`
 `
 
 const MyBoardContainer = () => {
-    axios.get('http://localhost:8080/api/mypage/posts')
-    .then(function (response) {
-        console.log(response);
-    })
-    .catch(function (error) {
-        console.error('Error fetching data:', error);
-    });
+    const [boardData, setBoardData] = useState([]); 
+    
 
-    const dummyData = [
-        { id: 1, BoardType:'취업게시판', Boardtitle: '화이팅합시다다들모두!', BoardDate: '2023-07-26', like: '3', comments:'4', views: '10'},
-        { id: 2, BoardType:'취업게시판', Boardtitle: '화이팅합시다다들모두!', BoardDate: '2023-07-26',like: '3',comments:'4', views: '10'},
-        { id: 3, BoardType:'취업게시판', Boardtitle: '화이팅합시다다들모두!', BoardDate: '2023-07-26', like: '3', comments:'4', views: '10' },
-        { id: 4, BoardType:'취업게시판', Boardtitle: '화이팅합시다다들모두!', BoardDate: '2023-07-26', like: '3', comments:'4', views: '10'},
-    ]
+    useEffect(() => {
+      axios
+        .get(`${API_BASE_URL}/api/mypage/posts`)
+        .then(function (response) {
+          console.log(response.data);
+          setBoardData(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }, []); 
+  
     return (
-        <div>
-             {dummyData.map((item) => (
-                <BoardContainer key={item.id}>
-                    <BoardBox>
-                        <BoardType>{item.BoardType}</BoardType>
-                        <BoardTitle>{item.Boardtitle}</BoardTitle>
-                        <EduDate>{item.BoardDate}</EduDate>
-                        <IconContainer>
-                            <AiOutlineLike size={26}/>
-                            <LikeCount>{item.like}개</LikeCount>
-                            <LiaCommentDotsSolid size={26}/>
-                            <CommentCount>{item.comments}개</CommentCount>
-                            <AiOutlineEye size={26}/>
-                            <ViewCount>{item.views}개</ViewCount>
-                        </IconContainer>
-                    </BoardBox>
-                </BoardContainer>
-            ))}
-        </div>
+      <div>
+        {boardData.map((item) => (
+          <BoardContainer key={item.postId}>
+            <BoardBox>
+              <BoardType>{item.boardType}</BoardType>
+              <BoardTitle>{item.title}</BoardTitle>
+              <EduDate>{item.createDate}</EduDate>
+              <IconContainer>
+                <AiOutlineLike size={26} />
+                <LikeCount>{item.likes}개</LikeCount>
+                <IoMdChatboxes size={26} />
+                <CommentCount>{item.comments}개</CommentCount>
+                <AiOutlineEye size={26} />
+                <ViewCount>{item.hits}개</ViewCount>
+              </IconContainer>
+            </BoardBox>
+          </BoardContainer>
+        ))}
+      </div>
     );
 };
 

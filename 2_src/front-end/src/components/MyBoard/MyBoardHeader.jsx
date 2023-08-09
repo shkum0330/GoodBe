@@ -61,7 +61,7 @@ const MyLikeEduHeader = () => {
         <div>
 
             <MyBoardHeader>내가 쓴 글</MyBoardHeader>
-            <MyBoardDetail>교게시판에 작성한 글을 확인하고 관리할 수 있습니다. </MyBoardDetail>
+            <MyBoardDetail>게시판에 작성한 글을 확인하고 관리할 수 있습니다. </MyBoardDetail>
             <MyBoardImg src={MyBoard}/>
             <GoodBeBoardContainer>
                 <GoodBeBoard>GoodBe에서 내가 쓴 글</GoodBeBoard>

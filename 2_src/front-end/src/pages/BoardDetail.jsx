@@ -1,14 +1,21 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
-import BoardDetailContent from '../components/BoardDetail/BoardDetailContent'
-import ReviewList from '../components/BoardDetail/ReviewList'
 
-export default function BoardDetail() {
-  return (
-    <div><BoardDetailContent/>
-    <ReviewList/>
+import React from 'react';
+import BoardDetailContent from '../components/BoardDetail/BoardDetailContent';
+import ReviewList from '../components/BoardDetail/ReviewList';
+import Navbar from '../components/common/Navbar'
 
-    </div>
+const BoardDetail = () => {
+    return (
+        <div>
+            <Navbar/>
+            <BoardDetailContent />
+            <ReviewList />
+            
+            <h1>test</h1>
+            
+        </div>
+    );
+};
 
-  )
-}
+export default BoardDetail;
+

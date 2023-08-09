@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
 import './board.css';
 import data from './articles.json';
-// import  './index.css';
+import  './index.css';
 
 let TabContentTitle = styled.div`
   font-size: 30px;
@@ -64,16 +64,21 @@ margin:10px 10px 0 10px;
   flex-wrap: wrap;
   frame:void;
 //   border: 1px solid black;
+
+  
 `
 const Article = styled.tr`
   width: 48%;
   height: 200px;
   padding: 10px;
+
 //   border: 1px solid #919191;
 //   margin:5px;
 //   border-radius: 10px;
+
   display:flex;
   flex-direction: row;
+
 `
 
 const Title = styled.h2`
@@ -86,17 +91,6 @@ font-weight: 700;
 line-height: normal;
 text-transform: capitalize;
 `
-
-const ActiveTabChanged= {
-color: "#4AA9FF",
-borderColor: "none none #4AA9FF none"
-}
-
-const UnactiveTabChanged = {
-color: "#4AA9FF",
-borderColor: "none none #4AA9FF none"
-}
-
 
 const Content = styled.div`
 color: #696868;
@@ -244,43 +238,12 @@ export default function BoardList() {
     let [clickedTab, setClickedTab] = useState(0);
     let [onOff, setOnOff] = useState(false);
 
-    let [selected, setSelected]= useState(0);
     
 
     return (
         <div>
-            <TabList>
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(0)}} 
-                className={0 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    전체 
-                </Tab>
+           
 
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(1)}} 
-                className={1 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    취업준비
-                </Tab>
-
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(2)}} 
-                className={2 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    국비교육
-                </Tab>
-
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(3)}} 
-                className={3 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    학습공유
-                </Tab>
-
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(4)}} 
-                className={4 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    취뽀후기
-                </Tab>
-            </TabList>
-{/* 
             <Nav class="nav nav-underline" variant="tabs" defaultActiveKey="0">
                 <TabItem class="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
                     <a aria-current="page" href="#" className={0 === clickedTab ? 'selected' : 'not-selected'}>전체</a>
@@ -298,7 +261,7 @@ export default function BoardList() {
                     <a class="nav-link" href="#" className={4 === clickedTab ? 'selected' : 'not-selected'}>취뽀후기</a>
                 </TabItem>
 
-            </Nav> */}
+            </Nav>
 
             <CSSTransition in={onOff} classNames="show" timeout={1000}>
                 <TabContent clickedTab={clickedTab} setOnOff={setOnOff} />
