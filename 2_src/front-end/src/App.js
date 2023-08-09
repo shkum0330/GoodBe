@@ -1,28 +1,39 @@
 
-import Navbar from './components/common/Navbar';
-import Sidebar from './components/common/Sidebar';
-import Footer from './components/common/Footer';
-import JobList from './components/JobMain/JobList';
-import JobTab from './components/JobMain/JobTab';
-import EduList from './components/EduList/EduList';
-import SearchJob from './components/JobMain/SearchJob';
-import EduSearchHeader from './components/EduList/EduSearchHeader';
-import MypageHome from './components/MyPageHome/MypageHome';
-import MyPageHomeHeader from './components/MyPageHome/MyPageHomeHeader';
-import MyPageInformationHeader from './components/MyInfoChange/MyPageInformationHeader';
-import BoardList from './components/BoardMain/BoardList';
-import AboutAccount from './components/Login/AboutAccount';
-import GoLogin from './components/Login/GoLogin';
-import InsertLoginInfo from './components/Login/InsertLoginInfo';
-import SocialLogin from './components/Login/SocialLogin';
-import {React, Routes, Route} from 'react'
-import Advertise from './components/Main/Advertise';
-import SearchMain from './components/Main/SearchMain';
-import EduExampleRecommend from './components/Main/EduExampleRecommend';
-import EduTop6 from './components/Main/EduTop6';
-import EduNear from './components/Main/EduNear';
-import MyBoardContainer from './components/MyBoard/MyBoardContainer';
-import MyBoardHeader from './components/MyBoard/MyBoardContainer';
+import React from 'react'
+import { Route, Router, Routes } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import EduDetail from './pages/EduDetail';
+import Main from './pages/Main';
+import MyBoard from './pages/MyBoard';
+import BoardEdit from './pages/BoardEdit';
+import BoardMain from './pages/BoardMain';
+import BoardWrite from './pages/BoardWrite';
+import  CamChat   from './pages/CamChat ';
+import   CamChatReview from './pages/CamChatReview ';
+import  Chatroom   from './pages/Chatroom ';
+import   Curriculumn  from './pages/Curriculumn ';
+import   EduList  from './pages/EduList ';
+import  EduReview   from './pages/EduReview ';
+import   EmailFind  from './pages/EmailFind ';
+import  InstitutionSignUp   from './pages/InstitutionSignUp ';
+import   JobAnalyze  from './pages/JobAnalyze ';
+import  JobDetail   from './pages/JobDetail ';
+import  JobMain   from './pages/JobMain ';
+import  Login   from './pages/Login ';
+import  MyConsulting   from './pages/MyConsulting ';
+import  MyEduLike   from './pages/MyEduLike ';
+import   MyInfoChange  from './pages/MyInfoChange ';
+import MyJobLike    from './pages/MyJobLike ';
+import  MyPageHome   from './pages/MyPageHome ';
+import  PasswordFind   from './pages/PasswordFind ';
+import  PasswordResult   from './pages/PasswordResult ';
+import  PasswordSearch   from './pages/PasswordSearch ';
+import  Reservation   from './pages/Reservation ';
+import  SignUp   from './pages/SignUp ';
+import  TeamInfo   from './pages/TeamInfo ';
+import  UserWithdraw   from './pages/UserWithdraw ';
+import  BoardDetail   from './pages/BoardDetail ';
+import  MyEduLIke   from './pages/MyEduLIke ';
 
 
 export default function App() {
@@ -30,7 +41,7 @@ export default function App() {
   return (
 
     <Routes>
-      <Route path = "/" element={<Main />} />
+      <Route path = "/" element={<Main/>} />
       <Route path = "/MyBoard" element={<MyBoard/>} />
       <Route path = "/BoardDetail" element={<BoardDetail/>} />
       <Route path = "/BoardEdit" element={<BoardEdit/>} />
