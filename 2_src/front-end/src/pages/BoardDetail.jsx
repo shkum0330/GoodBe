@@ -1,3 +1,4 @@
+
 import React from 'react';
 import BoardDetailContent from '../components/BoardDetail/BoardDetailContent';
 import ReviewList from '../components/BoardDetail/ReviewList';
