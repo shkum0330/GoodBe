@@ -7,9 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.goodbe.search.dto.*;
 
 @Mapper
-public interface JobPostMapper {
+public interface EduMapper {
     // 모든 채용공고 가졍오기
-    public List<JobPost> selectJobData();
-
-    public List<JobPost> selectJobDataByKeyword(List<String> wordList);
+    public List<Edu> selectEdu();
 }
