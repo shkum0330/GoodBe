@@ -15,13 +15,14 @@ import java.util.UUID;
 
 @Component
 public class FileStore {
-    @Value("${file.dir}")
+    @Value("${file.dir.local}")
     private String fileDir;
 
     public String getFullPath(String fileName){
         return fileDir+fileName;
     }
 
+    // 이미지 파일들을 저장한다.
     public List<UploadFile> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
         List<UploadFile> storeFileResult=new ArrayList<>();
         for(MultipartFile multipartFile:multipartFiles){
@@ -30,6 +31,7 @@ public class FileStore {
         return storeFileResult;
     }
 
+    // 첨부파일을 저장한다.
     public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
         if(multipartFile == null || multipartFile.isEmpty()) {
             return null;
@@ -40,17 +42,20 @@ public class FileStore {
         return new UploadFile(originalFilename,storeFileName);
     }
 
+    // 서버에 저장되는 파일명을 UUID로 생성한다.
     private String createStoreFileName(String originalFilename){
         String ext=extractExt(originalFilename);
         String uuid= UUID.randomUUID().toString();
         return uuid+"."+ext;
     }
 
+    // 파일 확장자 추출
     private String extractExt(String originalFilename){
         int pos=originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos+1);
     }
 
+    // 파일 삭제
     public void deleteFile(String fileName) {
         try {
             Path filePath = Paths.get(fileDir).resolve(fileName);
@@ -59,5 +64,4 @@ public class FileStore {
             e.printStackTrace();
         }
     }
-
 }

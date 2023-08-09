@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Id
+//    @GeneratedValue(generator = "system-uuid")
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_id")
     private Long id;
@@ -57,6 +60,7 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
 
     @Column
     private String favoriteCompany;
+
     @Column
     private String favoriteJob;
 
@@ -69,7 +73,7 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     private boolean isWithdrawn; // 탈퇴 여부
 
     @Builder
-    public Member(String email, String password, String name, String nickname) {
+    public Member(String email, String name, String nickname) {
         this.email = email;
         this.name = name;
         this.nickname = nickname;

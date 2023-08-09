@@ -29,32 +29,34 @@ public class Post extends BaseTimeEntity {
 
 //    @JsonBackReference
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private List<UploadFile> files=new ArrayList<>();
+    private List<UploadFile> files=new ArrayList<>(); // 이미지
 
 //    @JsonBackReference
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments=new ArrayList<>(); // 댓글
 
     @OneToOne(cascade = CascadeType.ALL, fetch = LAZY)
     @JoinColumn(name = "file_id")
-    private UploadFile attachFile;
+    private UploadFile attachFile; // 첨부파일
 
     @Column(nullable = false)
     private String boardType; // 게시판 종류
 
     @Column(nullable = false)
-    private String nickname;
+    private String nickname; // 닉네임
 
     @Column(nullable = false)
-    private String title;
+    private String title; // 제목
 
     @Lob
     @Column(nullable = false)
-    private String content;
+    private String content; // 내용
 
     @Column(nullable = false)
-    private int likeCount;
+    private int hits; // 조회수
 
+    @Column(nullable = false)
+    private int likeCount; // 좋아요
     public Post(Member member, String boardType, String nickname, String title, String content, int likeCount) {
         this.member = member;
         this.boardType = boardType;
@@ -77,6 +79,7 @@ public class Post extends BaseTimeEntity {
         this.likeCount = likeCount;
     }
 
+    // 게시글 수정 로직
     public void update(String boardType, String title, String content, List<UploadFile> files, UploadFile attachFile) {
         this.boardType = boardType;
         this.title = title;
@@ -84,5 +87,13 @@ public class Post extends BaseTimeEntity {
         this.files = files;
         this.attachFile = attachFile;
     }
-
+    public void hit(){
+        this.hits++;
+    }
+    public void like(){
+        this.likeCount++;
+    }
+    public void likeCancel(){
+        this.likeCount--;
+    }
 }

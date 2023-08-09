@@ -26,7 +26,7 @@ public class PostWriteRequest {
     private String title;
     private String content;
     private int likeCount;
-    private List<UploadFile> files=new ArrayList<>();
+    private List<UploadFile> files;
     private UploadFile attachFile;
     @Builder
     public PostWriteRequest(Post entity) {
