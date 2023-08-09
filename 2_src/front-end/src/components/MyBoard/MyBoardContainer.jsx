@@ -5,6 +5,9 @@ import { AiOutlineLike, AiOutlineEye } from 'react-icons/ai';
 import { IoMdChatboxes } from 'react-icons/io';
 import React, { useEffect, useState } from 'react';
 
+
+const API_BASE_URL = 'http://localhost:8080';
+
 const BoardContainer = styled.div`
     border-radius: 10px;
     border: 1px solid #858585;
@@ -93,10 +96,11 @@ const ViewCount = styled.div`
 
 const MyBoardContainer = () => {
     const [boardData, setBoardData] = useState([]); 
+    
 
     useEffect(() => {
       axios
-        .get('http://localhost:8080/api/mypage/posts')
+        .get(`${API_BASE_URL}/api/mypage/posts`)
         .then(function (response) {
           console.log(response.data);
           setBoardData(response.data);

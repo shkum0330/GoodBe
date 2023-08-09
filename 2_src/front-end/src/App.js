@@ -1,13 +1,16 @@
-import React from 'react'
-import MyBoardContainer from './components/MyBoard/MyBoardContainer'
+import { Route, Routes } from 'react-router-dom';
+import React from 'react';
+import MyBoard from './pages/MyBoard';
+
+
 
 
 export default function App() {
   return (
     <div>
-      <MyBoardContainer/>
-      
-      
+      <Routes>
+        <Route path="/" element={<MyBoard />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
