@@ -12,6 +12,7 @@ const Tab = styled.a`
     text-transform: capitalize;
     
 `
+
 const EduTab = () => {
     const linkStyle = {
         display: 'inline-block',
