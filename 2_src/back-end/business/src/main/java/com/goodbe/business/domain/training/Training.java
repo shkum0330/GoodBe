@@ -10,8 +10,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Training { // 국비교육 엔티티
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @Column(name="trpr_id")
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
@@ -23,8 +24,23 @@ public class Training { // 국비교육 엔티티
     @Column(nullable = false)
     private String title; // 교육명
 
-    @Column(nullable = false)
-    private String name; // 기관명
+    @Column
+    private String titleLink;
+
+    @Column
+    private String subTitle; // 교육명
+
+    @Column
+    private String subTitleLink;
+
+    @Column
+    private String telNo;
+
+    @Column
+    private String address;
+
+    @Column
+    private String content;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -34,10 +50,14 @@ public class Training { // 국비교육 엔티티
     private String time; // 주 n일
 
     @Builder
-    public Training(String title, String name, TrainingType trainingType, String time) {
+    public Training(String id, String title, String titleLink, String subTitle, String subTitleLink, String telNo, String address, String content) {
+        this.id = id;
         this.title = title;
-        this.name = name;
-        this.trainingType = trainingType;
-        this.time = time;
+        this.titleLink = titleLink;
+        this.subTitle = subTitle;
+        this.subTitleLink = subTitleLink;
+        this.telNo = telNo;
+        this.address = address;
+        this.content = content;
     }
 }

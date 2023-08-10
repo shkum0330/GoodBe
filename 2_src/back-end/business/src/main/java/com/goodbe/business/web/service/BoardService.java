@@ -1,20 +1,22 @@
 package com.goodbe.business.web.service;
 
+import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.Post;
+import com.goodbe.business.domain.board.PostLike;
 import com.goodbe.business.domain.file.FileStore;
 import com.goodbe.business.domain.file.UploadFile;
-import com.goodbe.business.web.dto.board.PostUpdateRequest;
-import com.goodbe.business.web.dto.board.PostWriteRequest;
-import com.goodbe.business.web.repository.BoardRepository;
-import com.goodbe.business.web.repository.MemberRepository;
-import com.goodbe.business.web.repository.UploadFileRepository;
+import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.web.dto.board.comment.CommentUpdateRequest;
+import com.goodbe.business.web.dto.board.comment.CommentWriteRequest;
+import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
+import com.goodbe.business.web.dto.board.post.PostWriteRequest;
+import com.goodbe.business.web.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +41,15 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
+    private final PostLikeRepository postLikeRepository;
     private final MemberRepository memberRepository;
     private final UploadFileRepository uploadFileRepository;
     private final FileStore fileStore;
 
     WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8082") // 인증 서버
+            .baseUrl("http://localhost:8082") // 인증 서버(로컬)
+            .baseUrl("3.38.102.133:8083") // 인증 서버(EC2)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)// 기본 해더
             .build();
 
@@ -59,8 +64,11 @@ public class BoardService {
         return true;
     }
 
-    @Transactional
+    // 게시글 작성
     public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request) throws IOException {
+        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
+        request.setMember(member);
+        request.setNickname(member.getNickname());
 
         List<UploadFile> storeImageFiles=null;
         UploadFile attachFile = null;
@@ -92,6 +100,38 @@ public class BoardService {
         return id;
     }
 
+    // 댓글 작성
+    public void writeComment(Long postId, CommentWriteRequest request) {
+        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
+        request.setMember(member);
+        request.setPost(boardRepository.findById(postId).get());
+        commentRepository.save(request.toEntity());
+    }
+    public void updateComment(Long postId,Long commentId, CommentUpdateRequest request) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("해당 댓글이 없습니다. id="+commentId));
+        comment.update(request.getContent());
+    }
+
+
+    public void likePost(Long memberId, Long postId) throws Exception {
+
+        postLikeRepository.save(new PostLike(memberRepository.findById(memberId).get(),boardRepository.findById(postId).get()));
+        boardRepository.findById(postId).get().like();
+    }
+
+    public void unlikePost(Long memberId, Long postId) throws Exception {
+        PostLike like=postLikeRepository.findPostLikeByMemberIdAndPostId(memberId,postId);
+        postLikeRepository.delete(like);
+        boardRepository.findById(like.getPost().getId()).get().likeCancel();
+    }
+
+    public boolean isLike(Long memberId, Long postId) throws Exception {
+        if (postLikeRepository.findPostLikeByMemberIdAndPostId(memberId, postId) != null){ // 이미 좋아요를 했으면 취소
+            return true;
+        }
+        return false;
+    }
+
     public ResponseEntity<Resource> downloadAttach(Long postId)
             throws MalformedURLException {
         Post post = boardRepository.findById(postId).get();
@@ -106,18 +146,19 @@ public class BoardService {
                 .body(resource);
     }
 
-    public Post postDetail(Long id){
-        Post post=boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글을 찾을 수 없습니다. ID: " + id));
+    public Post postDetail(Long postId){
+        Post post=boardRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글을 찾을 수 없습니다. ID: " + postId));
 //        log.info("post member = {}",post.getMember().getNickname());
 //        Optional<Member> member=memberRepository.findById(post.getMember().getId());
         return post;
     }
 
-    public Long update(Long id,List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
-        Post post = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
+    public Long updatePost(Long postId, List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostUpdateRequest request) throws IOException{
+        Post post = boardRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id="+postId));
 
-        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(id);
+        // 원래 올린 파일들은 삭제
+        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(postId);
         for (UploadFile file:uploadFiles){
             fileStore.deleteFile(file.getStoreFileName());
         }
@@ -139,18 +180,27 @@ public class BoardService {
 
         post.update(request.getBoardType(),request.getTitle(),request.getContent(),request.getFiles(),request.getAttachFile());
 
-        return id;
+        return postId;
     }
-    public void deletePost(@PathVariable Long id) {
+    public void deletePost(@PathVariable Long postId) {
         //todo: 권한 체크
-        Post post = boardRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("삭제할 게시글이 없습니다. id="+id));
-        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(id);
+        Post post = boardRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("삭제할 게시글이 없습니다. id="+postId));
+        List<UploadFile> uploadFiles= uploadFileRepository.findByPostId(postId);
         for (UploadFile file:uploadFiles){
             fileStore.deleteFile(file.getStoreFileName());
         }
         boardRepository.delete(post);
 
     }
+
+    public void deleteComment(@PathVariable Long commentId) {
+        //todo: 권한 체크
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("삭제할 댓글이 없습니다. id="+commentId));
+        commentRepository.delete(comment);
+
+    }
+
+
     private String resolveToken(HttpServletRequest request){
         String bearerToken=request.getHeader("Authorization");
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")){
