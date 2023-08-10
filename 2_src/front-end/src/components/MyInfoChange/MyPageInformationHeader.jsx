@@ -167,30 +167,45 @@ const MyPageInformationHeader = () => {
     const handleSaveChanges = async () => {
         try {
             const memberUpdateData = {
-                // your memberUpdateData here
+                profileImage: userInfo.profileImage || null,
+                email: userInfo.email,
+                name: userInfo.name,
+                nickname: userInfo.nickname,
+                birth: userInfo.birth,
+                address: {
+                    city: userInfo.address.city,
+                    street: userInfo.address.street,
+                    zipcode: userInfo.address.zipcode
+                },
+                gender: userInfo.gender,
+                favoriteCompany: userInfo.favoriteCompany,
+                favoriteJob: userInfo.favoriteJob
             };
-
+    
             const formData = new FormData();
             formData.append('memberUpdateRequest', JSON.stringify(memberUpdateData));
-
-            const response = await axios.post(
-                'http://localhost:8080/api/mypage/memberinfo/update',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+    
+            try {
+                const response = await axios.post(
+                    'http://localhost:8080/api/mypage/memberinfo/update',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data' // 이 부분은 유지해주세요
+                        }
                     }
-                }
-            );
-
-            console.log('User information updated:', response.data);
-            // setUserInfo(response.data);
+                );
+    
+                console.log('User information updated:', response.data);
+                // setUserInfo(response.data);
+            } catch (error) {
+                console.error("수정 실패:", error);
+                alert("수정 실패");
+            }
         } catch (error) {
-            console.error("수정 실패:", error);
-            alert("수정 실패");
+            console.error("오류:", error);
         }
     };
-
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
