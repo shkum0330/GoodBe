@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "MEMBER")
-public class User implements UserDetails {
+public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+    @Column(name = "member_id")
+    private Long memberId;
 
     private String username;
     private String password;
@@ -48,6 +48,7 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

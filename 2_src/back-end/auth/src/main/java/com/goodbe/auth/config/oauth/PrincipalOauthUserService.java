@@ -1,6 +1,7 @@
 package com.goodbe.auth.config.oauth;
 
-import lombok.RequiredArgsConstructor;
+import com.goodbe.auth.jwt.JwtTokenInfo;
+import com.goodbe.auth.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -11,13 +12,13 @@ import org.springframework.stereotype.Service;
 import com.goodbe.auth.config.auth.PrincipalDetails;
 import com.goodbe.auth.config.oauth.provider.*;
 import com.goodbe.auth.domain.Role;
-import com.goodbe.auth.domain.User;
-import com.goodbe.auth.repository.UserRepository;
+import com.goodbe.auth.domain.Member;
+import com.goodbe.auth.repository.MemberRepository;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-// 컨트롤러 갈 필요없이 여기서 로그인 및 회원가입 처리
+
 @Service
 public class PrincipalOauthUserService extends DefaultOAuth2UserService {
 
@@ -25,7 +26,14 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
+
+    private final MemberService memberService;
+
+    @Autowired
+    public PrincipalOauthUserService(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     //구글, 카카오, 네이버로 부터 받은 userRequest 데이터에 대한 후처리되는 함수
     //함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
@@ -69,19 +77,23 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
         String password =  bCryptPasswordEncoder.encode("테스트"); //중요하지 않음 그냥 패스워드 암호화 하
         String email = oAuth2UserInfo.getEmail();
         Role role = Role.USER;
-        User userEntity = userRepository.findByUsername(username);
+        Member memberEntity = memberRepository.findByUsername(username);
         // 2. 이미 방문했던 회원인 경우
         //  DB에 해당 이메일을 가진 유저가 있다면
         //  Access Token, Refresh Token 발급해서 돌려주기
-        if(userEntity != null){
+        if(memberEntity != null){
             System.out.println("이미 가입하셨습니다.");
+            JwtTokenInfo jwtTokenInfo = memberService.login(email,password);
+            System.out.println(jwtTokenInfo.getGrantType());
+            System.out.println(jwtTokenInfo.getAccessToken());
+            System.out.println(jwtTokenInfo.getRefreshToken());
         }
         // 1. 처음 방문인 경우
         else{
             // 여기서 회원가입폼으로 리다이렉션 해줘야 함.
             // 회원가입폼 작성 완료되면 해당 정보 받아서 유저 객체 저장.
             LocalDateTime createTime = LocalDateTime.now();
-            userEntity = User.builder()
+            memberEntity = Member.builder()
                     .username(username)
                     .password(password)
                     .email(email)
@@ -90,9 +102,9 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
                     .provideId(providerId)
                     .createDate(createTime)
                     .build();
-            userRepository.save(userEntity);
+            memberRepository.save(memberEntity);
         }
 
-        return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
+        return new PrincipalDetails(memberEntity, oAuth2User.getAttributes());
     }
 }

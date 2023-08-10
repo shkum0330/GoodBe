@@ -24,17 +24,21 @@ spring:
   h2:
     console:
       enabled: true # H2 DB ??? ????? ?? (http://localhost:8080/h2-console)
+      path: /h2-console
 
   jpa:
     database: H2
-    show-sql: true # Jpa ?? ? SQL? ?? ??
+    show-sql: true
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
-        format_sql: true # ?? ??? ?? ????? ??
+        format_sql: true
         ddl-auto: create
     output:
       ansi:
         enabled: always
+    database-platform: org.hibernate.dialect.H2Dialect
 
   security:
     oauth2:
