@@ -15,7 +15,6 @@ def keyword_abstraction(keyword):
 
     for d in data_list:
         text += d
-    print(text)
     nouns = noun_extractor(text)
     text = ' '.join(nouns)
     keywords = kw_model.extract_keywords(text, keyphrase_ngram_range=(1, 1), stop_words=None, top_n=20)

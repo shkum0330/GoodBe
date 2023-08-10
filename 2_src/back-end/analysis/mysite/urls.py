@@ -25,6 +25,7 @@ urlpatterns = [
 
     # analysis
     path('api/anaysis/<str:keyword>', get_keyword_abstraction, name='get_keyword_abstraction'),
+    path('api/anaysis/test/<str:keyword>', get_keyword_abstraction_test, name='get_keyword_abstraction_test'),
 
     # swagger
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view_v1.without_ui(cache_timeout=0), name='schema-json'),
