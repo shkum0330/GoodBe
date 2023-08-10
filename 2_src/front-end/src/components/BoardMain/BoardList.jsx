@@ -2,17 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
-import './board.css';
 import data from './articles.json';
-import  './index.css';
+
 
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
-
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
 `
 
 const TabList=styled.div`
@@ -48,7 +47,6 @@ const TabItem = styled.li`
 
   &.selected {
     color: #4AA9FF;
-
   }
 
   &.not-selected {
@@ -58,24 +56,24 @@ const TabItem = styled.li`
 `;
 
 const ArticleList = styled.table`
-margin:10px 10px 0 10px;
+margin:10px 10px 10px 10px;
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
   frame:void;
+  align-items: center;
+  
 //   border: 1px solid black;
 
   
 `
 const Article = styled.tr`
-  width: 48%;
+  width: 40%;
   height: 200px;
-  padding: 10px;
-
-//   border: 1px solid #919191;
-//   margin:5px;
-//   border-radius: 10px;
-
+  padding: 20px;
+  border: 1px solid #919191;
+  margin:10px;
+  border-radius: 10px;
   display:flex;
   flex-direction: row;
 
@@ -132,11 +130,9 @@ const Nav=styled.ul`
 `
 
 function TabContent(props) {
-
     useEffect(() => {
         props.setOnOff(true);
     })
-
     if (props.clickedTab === 0) {
         return (<TabContentTitle className="mt-5">
             <ArticleList>
@@ -241,9 +237,14 @@ export default function BoardList() {
     
 
     return (
-        <div>
-           
 
+        <div style={{
+            display : 'flex',
+            alignItems : 'center',
+            flexDirection : 'column'
+            
+
+        }}  >
             <Nav class="nav nav-underline" variant="tabs" defaultActiveKey="0">
                 <TabItem class="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
                     <a aria-current="page" href="#" className={0 === clickedTab ? 'selected' : 'not-selected'}>전체</a>
