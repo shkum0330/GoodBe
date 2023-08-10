@@ -11,9 +11,14 @@ job_api_path = r"C:\SH\gpt\job_api_key.txt"
 
 # db 연결
 # db connection
-conn = pymysql.connect(host = "localhost",port=3306,
-                       user = "root",
-                       password = "ssafy",
+# conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
+#                        user = "ssafy",
+#                        password = "jinajjang1128!",
+#                        database = "test",
+#                        charset = "utf8")
+conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
+                       user = "ssafy",
+                       password = "jinajjang1128!",
                        database = "test",
                        charset = "utf8")
 

@@ -36,7 +36,12 @@ dependencies {
 
 	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
-	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+
+	// mysql setting
+	// runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+
+	// mariadb setting
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version:"2.7.0"
 }
 
 tasks.named('test') {
