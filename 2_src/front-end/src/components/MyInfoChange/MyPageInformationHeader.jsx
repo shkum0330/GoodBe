@@ -103,17 +103,7 @@ const ContentBox = styled.div`
     background: #FFF;
     height : auto;
 `
-const ContentBoxDetail = styled.div`
-    display: flex;
-    background: #FFF;
-    padding: 10px;
-    /* margin-top: 20px; */
-    /* margin-bottom: 10px; */
-    width: 100%; 
-    border: 1px solid #64686C;
-    background: #FFF;
-    height : 350px;
-`
+
 
 const ContentBoxDetailUnderlined = styled.div`
     display: flex;
@@ -152,34 +142,69 @@ const SeparatedContentBox3 = styled.div`
     background: #FFF;
     height : auto;
 `
-const SelectStyled = styled.select`
-  padding: 12px;
-  font-size: 16px;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  width: 30%; /* 원하는 너비 값으로 조정해주세요 */
-  height: 10%;
-`;
+
 
 const MyPageInformationHeader = () => {
-    const [formData, setFormData] = useState(new FormData());
-    const [userInfo, setUserInfo] = useState(null); // 상태 추가
-  
+
+    const [userInfo, setUserInfo] = useState(null);
+
+    const handleInputChange = (fieldName, value) => {
+        setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            [fieldName]: value,
+        }));
+    };
+
+    const handleInputBlur = (fieldName, value) => {
+        const updatedUserInfo = {
+            ...userInfo,
+            [fieldName]: value,
+        };
+        setUserInfo(updatedUserInfo);
+    };
+
+
+    const handleSaveChanges = async () => {
+        try {
+            const memberUpdateData = {
+                // your memberUpdateData here
+            };
+
+            const formData = new FormData();
+            formData.append('memberUpdateRequest', JSON.stringify(memberUpdateData));
+
+            const response = await axios.post(
+                'http://localhost:8080/api/mypage/memberinfo/update',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+
+            console.log('User information updated:', response.data);
+            // setUserInfo(response.data);
+        } catch (error) {
+            console.error("수정 실패:", error);
+            alert("수정 실패");
+        }
+    };
+
     useEffect(() => {
-      axios
-        .get('http://localhost:8080/api/mypage/memberinfo', formData)
-        .then((response) => {
-          // API 요청 성공 시 처리
-          console.log(response.data);
-          setUserInfo(response.data); // API 응답 데이터를 상태에 저장
-        })
-        .catch((error) => {
-          // API 요청 실패 시 처리
-          console.error('Error fetching data:', error);
-        });
-    }, [formData]);
+        const fetchUserInfo = async () => {
+            try {
+                const response = await axios.get(
+                    'http://localhost:8080/api/mypage/memberinfo'
+                );
+                setUserInfo(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
 
     const containerStyle = {
         display: 'flex',
@@ -193,12 +218,6 @@ const MyPageInformationHeader = () => {
         marginBottom: '10px' 
     };
 
-    const imgStyle2= {
-        width: '70px',
-        height: 'auto',
-        alignItems : 'auto',
-        // marginBottom: '10px'
-    }
 
     return (
         <div style={containerStyle}>
@@ -224,7 +243,7 @@ const MyPageInformationHeader = () => {
                         </FourthBox>
                     
                     </SecondBox>
-
+            
              <img src={Cyber_security_emoji} alt="myprofile" style={imgStyle} /> 
             </FirstBox>
 
@@ -264,7 +283,14 @@ const MyPageInformationHeader = () => {
                     닉네임
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.nickname : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.nickname : ''}
+                            onChange={(e) => handleInputChange('nickname', e.target.value)}
+                            onBlur={(e) => handleInputBlur('nickname', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+              
+                    />
 
                     </SeparatedContentBox2>
                   
@@ -275,7 +301,14 @@ const MyPageInformationHeader = () => {
                     생년월일
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.birth : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.birth : ''}
+                            onChange={(e) => handleInputChange('birth', e.target.value)}
+                            onBlur={(e) => handleInputBlur('birth', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                            placeholder='YYYY-MM-DD'
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>               
@@ -287,7 +320,14 @@ const MyPageInformationHeader = () => {
                     성별
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.gender : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.gender : ''}
+                            onChange={(e) => handleInputChange('gender', e.target.value)}
+                            onBlur={(e) => handleInputBlur('gender', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                            readOnly
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
@@ -322,7 +362,13 @@ const MyPageInformationHeader = () => {
                     관심 회사
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.favoriteCompany : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.favoriteCompany : ''}
+                            onChange={(e) => handleInputChange('favoriteCompany', e.target.value)}
+                            onBlur={(e) => handleInputBlur('favoriteCompany', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
@@ -332,7 +378,13 @@ const MyPageInformationHeader = () => {
                     관심 직무
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.favoriteJob : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.favoriteJob : ''}
+                            onChange={(e) => handleInputChange('favoriteJob', e.target.value)}
+                            onBlur={(e) => handleInputBlur('favoriteJob', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
@@ -365,7 +417,13 @@ const MyPageInformationHeader = () => {
                     이름
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.name : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.name : ''}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            onBlur={(e) => handleInputBlur('name', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                    />
                     </SeparatedContentBox2>
 
                    </ContentBoxDetailUnderlined>
@@ -375,27 +433,24 @@ const MyPageInformationHeader = () => {
                     이메일
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     {userInfo ? userInfo.email : ''}
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.email : ''}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            onBlur={(e) => handleInputBlur('email', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+       
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
-                   <ContentBoxDetailUnderlined >
-                    <SeparatedContentBox1>
-                    비밀번호
-                    </SeparatedContentBox1>
-                     <SeparatedContentBox2>
-                     **********
-                    </SeparatedContentBox2>
-                  
-                   </ContentBoxDetailUnderlined>               
-                   
                     <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     거주지역    
                     </SeparatedContentBox1>
                     <SeparatedContentBox2>
- 
+    
                     {userInfo?.address?.city} {userInfo?.address?.street} {userInfo?.address?.zipcode}
 
                     </SeparatedContentBox2>
@@ -407,7 +462,9 @@ const MyPageInformationHeader = () => {
         </ContentBox>
 
         <br/>
-        
+        <button onClick={handleSaveChanges}>수정하기
+        </button>
+
 
         </div>
     );

@@ -13,7 +13,7 @@ import  Chatroom   from './pages/Chatroom';
 import   Curriculumn  from './pages/Curriculumn';
 import   EduList  from './pages/EduList';
 import  EduReview   from './pages/EduReview';
-import   EmailFind  from './pages/EmailFind';
+// import   EmailFind  from './pages/EmailFind';
 import  InstitutionSignUp   from './pages/InstitutionSignUp';
 import   JobAnalyze  from './pages/JobAnalyze';
 import  JobDetail   from './pages/JobDetail';
@@ -51,7 +51,7 @@ export default function App() {
       <Route path = "/EduList" element={<EduList/>} />
       <Route path = "/EduReview" element={<EduReview/>} />
       <Route path = "/EduDetail" element={<EduDetail/>} />
-      <Route path = "/EmailFind" element={<EmailFind/>} />
+      {/* <Route path = "/EmailFind" element={<EmailFind/>} /> */}
       <Route path = "/InstitutionSignUp" element={<InstitutionSignUp/>} />
       <Route path = "/JobAnalyze" element={<JobAnalyze/>} />
       <Route path = "/JobDetail" element={<JobDetail/>} />
