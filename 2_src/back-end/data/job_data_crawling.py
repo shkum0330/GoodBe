@@ -7,13 +7,13 @@ import pymysql
 
 # api key 경로 설정
 #job_api_path =
-job_api_path = r"C:\SH\gpt\job_api_key.txt"
-
+# job_api_path = r"C:\SH\gpt\job_api_key.txt"
+job_api_path = "/Users/sehyun/Desktop/job_api_key.txt"
 # db 연결
 # db connection
 conn = pymysql.connect(host = "localhost",port=3306,
                        user = "root",
-                       password = "ssafy",
+                       password = "1234",
                        database = "test",
                        charset = "utf8")
 

@@ -25,7 +25,8 @@ public class SearchController {
     private String localhost;
     @Value("${server.ip.remote}")
     private String ip;
-    private final WebClient client = WebClient.builder()
+
+    private WebClient client = WebClient.builder()
             .baseUrl("http://localhost:8083/api/search") // 요청을 검색 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();

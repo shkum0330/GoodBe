@@ -5,7 +5,8 @@ import xml.etree.ElementTree as ET
 
 # 경로
 # job_api_path = r"edu_api_key.txt"
-edu_api_path = r"C:\SH\gpt\edu_api_key.txt"
+# edu_api_path = r"C:\SH\gpt\edu_api_key.txt"
+edu_api_path ="/Users/sehyun/Desktop/edu_api_key.txt"
 
 # api key
 with open(edu_api_path, "r") as f:
@@ -14,7 +15,7 @@ with open(edu_api_path, "r") as f:
 # db connection
 conn = pymysql.connect(host = "localhost",port=3306,
                        user = "root",
-                       password = "ssafy",
+                       password = "1234",
                        database = "test",
                        charset = "utf8")
 
