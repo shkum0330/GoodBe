@@ -71,6 +71,25 @@ public class MyPageController {
         memberService.update(1L,profileImage,memberUpdateRequest);
         return new MemberInfoResponse(member);
     }
+
+    @GetMapping("/consulting")
+    @Operation(summary = "[GET] 마이페이지 교육 상담 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
+    public MemberInfoResponse manageConsulting(HttpServletRequest request){ // JWT 갖고와야함
+        /*
+        인증 로직...
+         */
+        Member member=memberService.findById(1L); // 임시 회원
+        return new MemberInfoResponse(member);
+    }
+    @GetMapping("/job-posting")
+    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
+    public MemberInfoResponse interestedJobPosting(HttpServletRequest request){ // JWT 갖고와야함
+        /*
+        인증 로직...
+         */
+        Member member=memberService.findById(1L); // 임시 회원
+        return new MemberInfoResponse(member);
+    }
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "")
     public List<MyPostsResponse> myPosts(){

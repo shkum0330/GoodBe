@@ -13,7 +13,7 @@ public class JobPost { // 채용공고 엔티티
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="job_post_id")
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

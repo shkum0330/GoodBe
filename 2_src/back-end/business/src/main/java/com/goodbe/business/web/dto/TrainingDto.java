@@ -13,7 +13,6 @@ public class TrainingDto {
 
     public TrainingDto(Training entity) {
         this.title = entity.getTitle();
-        this.name = entity.getName();
         this.trainingType = entity.getTrainingType();
         this.time = entity.getTime();
     }
