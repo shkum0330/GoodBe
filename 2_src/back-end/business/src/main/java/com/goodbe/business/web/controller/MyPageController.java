@@ -59,7 +59,7 @@ public class MyPageController {
     }
 
     @PostMapping("/memberinfo/update")
-    @Operation(summary = "[GET] 마이페이지 회원정보 수정", description = "회원정보를 수정")
+    @Operation(summary = "[POST] 마이페이지 회원정보 수정", description = "회원정보를 수정")
     public MemberInfoResponse memberInfoUpdate(@RequestPart(value = "profileImage",required = false) MultipartFile profileImage,
                                                @RequestPart(value = "memberUpdateRequest") MemberUpdateRequest memberUpdateRequest,
                                                HttpServletRequest request) throws IOException {
