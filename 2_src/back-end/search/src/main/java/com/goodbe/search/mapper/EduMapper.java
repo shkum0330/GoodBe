@@ -10,4 +10,6 @@ import com.goodbe.search.dto.*;
 public interface EduMapper {
     // 모든 채용공고 가졍오기
     public List<Edu> selectEdu();
+
+    public List<Edu> selectEduDataByKeyword(List<String> wordList);
 }
