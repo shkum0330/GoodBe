@@ -13,12 +13,11 @@ with open(edu_api_path, "r") as f:
     api_key = f.read()
 
 # db connection
-conn = pymysql.connect(host = "localhost",port=3306,
-                       user = "root",
-                       password = "1234",
+conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
+                       user = "ssafy",
+                       password = "jinajjang1128!",
                        database = "test",
                        charset = "utf8")
-
 
 # 데이터 집어넣을 곳
 edu_df = pd.DataFrame(columns=['trprId', 'TITLE', 'TITLE_LINK', 'SUB_TITLE', 'SUB_TITLE_LINK', 'TEL_NO', 'ADDRESS', 'content'])
