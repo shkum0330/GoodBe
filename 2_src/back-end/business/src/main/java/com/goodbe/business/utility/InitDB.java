@@ -43,16 +43,24 @@ public class InitDB {
             Member m2=new Member("fgd@gmail.com","강해린","haerin");
             em.persist(m2);
 
-            Training t1=new Training("aaa","aaa", TrainingType.ONLINE,"주5일");
+            Training t1=new Training("ACG20223000845056","빅데이터의 개념이해와 분석역량강화",
+                    "https://www.hrd.go.kr/hrdp/co/pcobo/PCOBO0100P.do?tracseId=ACG20223000845056&tracseTme=225&trainstCstmrId=500020055611&crseTracseSe=C0031",
+                    "러닝핏",null,"02-1600-6842","서울 마포구","");
             em.persist(t1);
-            Training t2=new Training("bbb","bbb", TrainingType.OFFLINE,"주5일");
+            Training t2=new Training("ACG20223000845071","R을 활용한 빅데이터 및 통계분석",
+                    "https://www.hrd.go.kr/hrdp/co/pcobo/PCOBO0100P.do?tracseId=ACG20223000845071&tracseTme=225&trainstCstmrId=500020055611&crseTracseSe=C0031",
+                    "러닝핏",null,"02-1600-6842","서울 마포구","");
             em.persist(t2);
-            Training t3=new Training("ccc","ccc", TrainingType.OFFLINE,"주4일");
+            Training t3=new Training("ACG20223000847541","파이썬머신러닝완벽가이드",
+                    "https://www.hrd.go.kr/hrdp/co/pcobo/PCOBO0100P.do?tracseId=ACG20223000847541&tracseTme=19&trainstCstmrId=500020014456&crseTracseSe=C0031",
+                    "(주)알파코",null,"02-2163-5724","서울 영등포구","");
             em.persist(t3);
-            Training t4=new Training("ddd","ddd", TrainingType.MIX,"주5일");
-            em.persist(t4);
-            Training t5=new Training("eee","eee", TrainingType.ONLINE,"주4일");
-            em.persist(t5);
+            Training t4=new Training("ACG20223000847739","SW코딩강사 양성과정",
+                    "https://www.hrd.go.kr/hrdp/co/pcobo/PCOBO0100P.do?tracseId=ACG20223000847739&tracseTme=49&trainstCstmrId=500020020261&crseTracseSe=C0031",
+                    "(사)한국디지털컨버전스협회",null,"02-2038-0024","서울 영등포구","");
+            Training t5=new Training("ACG20223000847832","알아두면 쓸모 있는 신비한 사이버보안",
+                    "https://www.hrd.go.kr/hrdp/co/pcobo/PCOBO0100P.do?tracseId=ACG20223000847832&tracseTme=14&trainstCstmrId=500020014456&crseTracseSe=C0031",
+                    "(주)알파코",null,"02-2163-5724","서울 영등포구","");
 
             Post p1=new Post(m1,"취업준비",m1.getNickname(),"aaa","aaa",0);
             em.persist(p1);

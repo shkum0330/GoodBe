@@ -2,7 +2,9 @@ package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.member.Member;
-import com.goodbe.business.web.dto.mypage.MemberInfoDto;
+import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
+import com.goodbe.business.web.dto.mypage.MemberInfoResponse;
+import com.goodbe.business.web.dto.mypage.MemberUpdateRequest;
 import com.goodbe.business.web.dto.mypage.MyPageResponse;
 import com.goodbe.business.web.dto.mypage.MyPostsResponse;
 import com.goodbe.business.web.service.MemberService;
@@ -13,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,15 +50,46 @@ public class MyPageController {
 
     @GetMapping("/memberinfo")
     @Operation(summary = "[GET] 마이페이지 개인정보 화면", description = "회원정보를 응답으로 보낸다.")
-    public MemberInfoDto memberInfo(HttpServletRequest request){ // JWT 갖고와야함
+    public MemberInfoResponse memberInfo(HttpServletRequest request){ // JWT 갖고와야함
         /*
         인증 로직...
          */
         Member member=memberService.findById(1L); // 임시 회원
-        log.info("회원 = {}",member.toString());
-        return new MemberInfoDto(member);
+        return new MemberInfoResponse(member);
     }
 
+    @PostMapping("/memberinfo/update")
+    @Operation(summary = "[POST] 마이페이지 회원정보 수정", description = "회원정보를 수정")
+    public MemberInfoResponse memberInfoUpdate(@RequestPart(value = "profileImage",required = false) MultipartFile profileImage,
+                                               @RequestPart(value = "memberUpdateRequest") MemberUpdateRequest memberUpdateRequest,
+                                               HttpServletRequest request) throws IOException {
+        /*
+        인증 로직...
+         */
+
+        Member member=memberService.findById(1L); // 임시 회원, id는 jwt에서 따올거임
+        memberService.update(1L,profileImage,memberUpdateRequest);
+        return new MemberInfoResponse(member);
+    }
+
+    @GetMapping("/consulting")
+    @Operation(summary = "[GET] 마이페이지 교육 상담 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
+    public MemberInfoResponse manageConsulting(HttpServletRequest request){ // JWT 갖고와야함
+        /*
+        인증 로직...
+         */
+        Member member=memberService.findById(1L); // 임시 회원
+        return new MemberInfoResponse(member);
+    }
+    @GetMapping("/job-posting")
+    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
+    public MemberInfoResponse interestedJobPosting(HttpServletRequest request){ // JWT 갖고와야함
+        /*
+        인증 로직...
+         */
+        Member member=memberService.findById(1L); // 임시 회원
+        return new MemberInfoResponse(member);
+    }
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "")
     public List<MyPostsResponse> myPosts(){

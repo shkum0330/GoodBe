@@ -1,77 +1,60 @@
 package com.goodbe.auth.config;
 
-import com.goodbe.auth.oauth2.handler.OAuth2AuthenticationFailureHandler;
-import com.goodbe.auth.oauth2.handler.OAuth2AuthenticationSuccessHandler;
-import com.goodbe.auth.oauth2.service.CustomOAuth2AuthService;
-import com.goodbe.auth.oauth2.service.CustomOidcUserService;
+import com.goodbe.auth.jwt.JwtAuthenticationFilter;
+import com.goodbe.auth.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import com.goodbe.auth.config.oauth.PrincipalOauthUserService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Configuration
+@EnableWebSecurity //시큐리티 활성화 -> 기본 스프링 필터 체인에 등록
 @RequiredArgsConstructor
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig  {
 
-    private final CustomOAuth2AuthService customOAuth2AuthService;
+    @Autowired
+    private PrincipalOauthUserService principalOauthUserService;
 
-    private final CustomOidcUserService customOidcUserService;
-
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-
-    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-
-    private static final String[] PERMIT_URL_ARRAY = {
-            /* swagger v2 */
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-    };
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * configure
-     * @param http
-     * @throws Exception
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 기본 설정들
-                .httpBasic().disable() // HTTP 기본 인증 비활성화
-                .formLogin().disable() // 폼 로그인 비활성화
-                .csrf().disable() // CSRF 보안 비활성화
-                .cors() // CORS 허용 설정
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 생성 정책 설정
-                .and()
-                // 권한 설정 시작
                 .authorizeRequests()
-                .antMatchers(PERMIT_URL_ARRAY).permitAll() // PERMIT_URL_ARRAY에 있는 URL들은 모두 접근 허용
-                .anyRequest().authenticated() // 그 외의 요청은 인증된 사용자만 접근 가능
-                // 권한 설정 끝
-                // OAuth2 설정 시작
+                .antMatchers("/member/login").permitAll() // 모든 사용자에게 접근 허용
+                .antMatchers("/member/test").hasRole("USER") // "USER" 역할을 가진 사용자에게만 접근 허용
+                .antMatchers("/user/**").authenticated() // 인증된 사용자에게만 접근 허용
+                .antMatchers("/manager/**").hasAuthority("MANAGER") // "MANAGER" 역할을 가진 사용자에게만 접근 허용
+                .antMatchers("/admin/**").hasAuthority("ADMIN") // "ADMIN" 역할을 가진 사용자에게만 접근 허용
+                .anyRequest().permitAll()
+
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
+                .loginPage("/loginForm") //미인증자일경우 해당 uri를 호출
+                .loginProcessingUrl("/login") //login 주소가 호출되면 시큐리티가 낚아 채서(post로 오는것) 대신 로그인 진행 -> 컨트롤러를 안만들어도 된다.
+                .defaultSuccessUrl("/")
+
                 .and()
                 .oauth2Login()
+                .loginPage("/loginForm")
+                .defaultSuccessUrl("/")
                 .userInfoEndpoint()
-                .oidcUserService(customOidcUserService) // OIDC 사용자 서비스 설정
-                .userService(customOAuth2AuthService) // 사용자 서비스 설정
-                .and()
-                .successHandler(oAuth2AuthenticationSuccessHandler) // OAuth2 로그인 성공 시 핸들러 설정
-                .failureHandler(oAuth2AuthenticationFailureHandler); // OAuth2 로그인 실패 시 핸들러 설정
-                // OAuth2 설정 끝
+                .userService(principalOauthUserService);//구글 로그인이 완료된(구글회원) 뒤의 후처리가 필요함 . Tip.코드x, (엑세스 토큰+사용자 프로필 정보를 받아옴)
+
+
+        return http.build();
     }
 }
