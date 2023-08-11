@@ -139,8 +139,27 @@ const SeparatedContentBox3 = styled.div`
     background: #FFF;
     height : auto;
 `
+const SaveButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -40px; /* 조정할 값 */
+    margin-bottom: 30px;
+`;
 
-
+const ReviseButton = styled.button`
+    border : rgba(85, 143, 255, 0.65);
+    border-radius: 10px;
+    background: rgba(85, 143, 255, 0.65);
+    color: #FFF;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    padding: 5px;
+`
 const MyPageInformationHeader = () => {
 
     const [userInfo, setUserInfo] = useState(null);
@@ -175,40 +194,51 @@ const MyPageInformationHeader = () => {
         fetchUserInfo();
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('memberUpdateRequest', JSON.stringify({
-            profileImage: userInfo.profileImage || '',
-            email: userInfo.email,
-            name: userInfo.name,
-            nickname: userInfo.nickname,
-            birth: userInfo.birth,
-            gender: userInfo.gender,
-            favoriteCompany: userInfo.favoriteCompany,
-            favoriteJob: userInfo.favoriteJob,
-            address: {
-                city: userInfo.address.city,
-                street: userInfo.address.street,
-                zipcode: userInfo.address.zipcode,
-            }
-        }));
-
+    const handleSaveChanges = async () => {
         try {
-            const response = await axios.post("http://localhost:8080/api/mypage/memberinfo/update", 
-            formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data' 
-                }
-            });
-    
-            console.log("User information updated:", response.data);
-        } catch (error) {
-            console.error("에러 발생:", error);
-            alert(error);
-        }
+            const memberUpdateData = {
+                name: userInfo.name,
+                nickname: userInfo.nickname,
+                birth: userInfo.birth,
+                address: {
+                    city: userInfo.address.city,
+                    street: userInfo.address.street,
+                    zipcode: userInfo.address.zipcode
+                },
+                gender: userInfo.gender,
+                favoriteCompany: userInfo.favoriteCompany,
+                favoriteJob: userInfo.favoriteJob
+            };
 
+            const formData = new FormData();
+            formData.append('memberUpdateRequest', new Blob([JSON.stringify(memberUpdateData)], {
+                type: "application/json"
+            }));
+
+            try {
+                const response = await axios.post(
+                    'http://localhost:8080/api/mypage/memberinfo/update',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data' 
+                        }
+                    }
+                );
+
+                console.log('User information updated:', response.data);
+                alert('정상적으로 수정되었습니다!')
+                // setUserInfo(response.data);
+            } catch (error) {
+                console.error("수정 실패:", error);
+                alert("수정 실패");
+            }
+        } catch (error) {
+            console.error("오류:", error);
+        }
     };
+
+
 
     const containerStyle = {
         display: 'flex',
@@ -227,7 +257,7 @@ const MyPageInformationHeader = () => {
 
     return (
         <div style={containerStyle}>
-            <form onSubmit={handleSubmit}>
+            <div>
 
   
             <Title>개인 정보</Title>
@@ -468,11 +498,12 @@ const MyPageInformationHeader = () => {
         </ContentBox>
 
         <br/>
-        <button onClick={handleSubmit}>수정하기
-        </button>
+        <SaveButtonContainer>
+            <ReviseButton onClick={handleSaveChanges}>수정하기</ReviseButton>
+        </SaveButtonContainer>
 
 
-        </form>
+        </div>
         </div>
     );
 };
