@@ -1,8 +1,9 @@
 import React from 'react';
-// import myprofile from '../../assets/MyPageHome/myprofile.svg';
 import styled from 'styled-components'
 import Cyber_security_emoji from '../../assets/MyInfoChange/Cyber_security_emoji.svg'
 import CatProfile_Circle from '../../assets/MyInfoChange/CatProfile_Circle.svg'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Title = styled.p`
     color: #000;
@@ -30,7 +31,7 @@ const TitleSmall = styled.p`
     color: #000;
     text-align: center;
     font-family: Istok Web;
-    font-size: 40px;
+    font-size: 30px;
     font-style: normal;
     line-height: normal;
     text-transform: capitalize;
@@ -52,42 +53,40 @@ const FirstBox = styled.div`
     display: flex;
     align-items: center;
     background: #FFF;
-    padding: 10px;
-    margin-bottom: 10px;
     width: 1000px; 
-    /* border: 1px solid #64686C; */
     background: #FFF;
     height : 350px;
-    
+    margin-bottom: 20px;
 `
 const SecondBox = styled.div`
     display: flex;
     background: #FFF;
     width: 100%; 
     margin: auto;
-    /* border: 1px solid #64686C; */
     padding-top: 20px;
     padding-left: 20px;
     background: #FFF;
     flex-direction: column;
     height : 100%;
+    margin-bottom: 20px;
 `   
 const ThirdBox = styled.div`
     display: flex;
     background: #FFF;
     width: 100%; 
-    /* border: 1px solid #64686C; */
     background: #FFF;
     height : auto;
+    // margin-bottom : 10px;
+
 `
 const FourthBox = styled.div`
     display: flex;
     background: #FFF;
     width: 90%; 
-    /* border: 1px solid #64686C; */
     background: #FFF;
     height : auto;
     flex-direction: column;
+    margin-top: 10px;
 `
 
 const ContentBox = styled.div`
@@ -95,30 +94,18 @@ const ContentBox = styled.div`
     background: #FFF;
     padding: 10px;
     /* margin : auto; */
-    /* margin-bottom: 10px; */
+    margin-bottom: 30px;
     width: 1000px; 
     border-radius: 10px;
     border: 1px solid #64686C;
     background: #FFF;
     height : auto;
 `
-const ContentBoxDetail = styled.div`
-    display: flex;
-    background: #FFF;
-    padding: 10px;
-    /* margin-top: 20px; */
-    /* margin-bottom: 10px; */
-    width: 100%; 
-    border: 1px solid #64686C;
-    background: #FFF;
-    height : 350px;
-`
+
 
 const ContentBoxDetailUnderlined = styled.div`
     display: flex;
     background: #FFF;
-    /* padding: 10px; */
-    /* padding-top : auto; */
     padding-bottom: 0%;
     width: 95%; 
     background: #FFF;
@@ -138,7 +125,6 @@ const SeparatedContentBox2 = styled.div`
     display: flex;
     background: #FFF;
     padding-top: 30px;
-    /* margin-bottom: 10px; */
     width: 60%; 
     background: #FFF;
     height : 15px;
@@ -151,23 +137,84 @@ const SeparatedContentBox3 = styled.div`
     background: #FFF;
     height : auto;
 `
-const SelectStyled = styled.select`
-  padding: 12px;
-  font-size: 16px;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  width: 30%; /* 원하는 너비 값으로 조정해주세요 */
-  height: 10%;
-`;
+
 
 const MyPageInformationHeader = () => {
+
+    const [userInfo, setUserInfo] = useState(null);
+
+    const handleInputChange = (fieldName, value) => {
+        setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            [fieldName]: value,
+        }));
+    };
+
+    const handleInputBlur = (fieldName, value) => {
+        const updatedUserInfo = {
+            ...userInfo,
+            [fieldName]: value,
+        };
+        setUserInfo(updatedUserInfo);
+    };
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = await axios.get(
+                    'http://localhost:8080/api/mypage/memberinfo'
+                );
+                setUserInfo(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('memberUpdateRequest', JSON.stringify({
+            profileImage: userInfo.profileImage || '',
+            email: userInfo.email,
+            name: userInfo.name,
+            nickname: userInfo.nickname,
+            birth: userInfo.birth,
+            gender: userInfo.gender,
+            favoriteCompany: userInfo.favoriteCompany,
+            favoriteJob: userInfo.favoriteJob,
+            address: {
+                city: userInfo.address.city,
+                street: userInfo.address.street,
+                zipcode: userInfo.address.zipcode,
+            }
+        }));
+
+        try {
+            const response = await axios.post("http://localhost:8080/api/mypage/memberinfo/update", 
+            formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' 
+                }
+            });
+    
+            console.log("User information updated:", response.data);
+        } catch (error) {
+            console.error("에러 발생:", error);
+            alert(error);
+        }
+
+    };
+
     const containerStyle = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        minHeight: '90vh'
+        minHeight: '90vh',
+        maxWidth: '1000px',
+        marginLeft : '350px',
     };
     const imgStyle = {
         width: '350px',
@@ -175,25 +222,18 @@ const MyPageInformationHeader = () => {
         marginBottom: '10px' 
     };
 
-    const imgStyle2= {
-        width: '70px',
-        height: 'auto',
-        alignItems : 'auto',
-        // marginBottom: '10px'
-    }
 
     return (
         <div style={containerStyle}>
-            {/* <img src={myprofile} alt="myprofile" style={imgStyle} /> */}
+            <form onSubmit={handleSubmit}>
+
+  
             <Title>개인 정보</Title>
             <TitleDetail>맞춤 교육 및 채용공고정보를 제공하기 위해 사용되는 나와 내 환경설정에 관한 정보입니다.</TitleDetail>
             <br/>
             <br/>
             <FirstBox>
-              
-
                     <SecondBox>
-                   
                         <ThirdBox>
                         <TitleSmall>
                         GoodBe에 표시되는 프로필 정보
@@ -210,7 +250,7 @@ const MyPageInformationHeader = () => {
                         </FourthBox>
                     
                     </SecondBox>
-
+            
              <img src={Cyber_security_emoji} alt="myprofile" style={imgStyle} /> 
             </FirstBox>
 
@@ -241,7 +281,7 @@ const MyPageInformationHeader = () => {
                      사진을 추가하면 다른 사람이 나를 알아보기 쉬워지며 내가 계정에 로그인되어 있는지 확인할 수 있습니다.
                     </SeparatedContentBox2>
                     <SeparatedContentBox3>
-                    <img src={CatProfile_Circle} alt="myprofile" style={imgStyle2} /> 
+                    {userInfo ? userInfo.profileImage : ''}
                     </SeparatedContentBox3>
                    </ContentBoxDetailUnderlined>
                
@@ -250,7 +290,15 @@ const MyPageInformationHeader = () => {
                     닉네임
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     지르나르냥
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.nickname : ''}
+                            onChange={(e) => handleInputChange('nickname', e.target.value)}
+                            onBlur={(e) => handleInputBlur('nickname', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+              
+                    />
+
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
@@ -260,7 +308,14 @@ const MyPageInformationHeader = () => {
                     생년월일
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     1999.11.28
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.birth : ''}
+                            onChange={(e) => handleInputChange('birth', e.target.value)}
+                            onBlur={(e) => handleInputBlur('birth', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                            placeholder='YYYY-MM-DD'
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>               
@@ -272,12 +327,17 @@ const MyPageInformationHeader = () => {
                     성별
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     여성
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.gender : ''}
+                            onChange={(e) => handleInputChange('gender', e.target.value)}
+                            onBlur={(e) => handleInputBlur('gender', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                            readOnly
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
-
-
 
             </SecondBox>
 
@@ -285,11 +345,6 @@ const MyPageInformationHeader = () => {
 
 
         <br/>
-
-
-
-
-
 
 
         <ContentBox>
@@ -305,44 +360,45 @@ const MyPageInformationHeader = () => {
                    </ThirdBox>
 
                    <FourthBox>
-
                        <DetailSmall>
                        관심 취업 정보는  GoodBe 서비스를 사용하는 과정에서 이용될 수 있습니다
                    </DetailSmall>
-                   
                    </FourthBox>
-                   
-               
                    <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     관심 회사
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     현대자동차
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.favoriteCompany : ''}
+                            onChange={(e) => handleInputChange('favoriteCompany', e.target.value)}
+                            onBlur={(e) => handleInputBlur('favoriteCompany', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
-                   
-                   
-                   
                     <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     관심 직무
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     경로탐색 sW개발
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.favoriteJob : ''}
+                            onChange={(e) => handleInputChange('favoriteJob', e.target.value)}
+                            onBlur={(e) => handleInputBlur('favoriteJob', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
-
-
             </SecondBox>
 
         </ContentBox>
-
-
 
 <ContentBox>
 
@@ -368,7 +424,13 @@ const MyPageInformationHeader = () => {
                     이름
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     유지나
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.name : ''}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            onBlur={(e) => handleInputBlur('name', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+                    />
                     </SeparatedContentBox2>
 
                    </ContentBoxDetailUnderlined>
@@ -378,58 +440,40 @@ const MyPageInformationHeader = () => {
                     이메일
                     </SeparatedContentBox1>
                      <SeparatedContentBox2>
-                     wlskb@naver.com
+                     <input
+                            type="text"
+                            value={userInfo ? userInfo.email : ''}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            onBlur={(e) => handleInputBlur('email', e.target.value)}
+                            style={{ width: '100%', padding: '13px', fontSize: '17px' }}
+       
+                    />
                     </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
 
-                   <ContentBoxDetailUnderlined >
-                    <SeparatedContentBox1>
-                    비밀번호
-                    </SeparatedContentBox1>
-                     <SeparatedContentBox2>
-                     **********
-                    </SeparatedContentBox2>
-                  
-                   </ContentBoxDetailUnderlined>               
-                   
-                   
-                   
                     <ContentBoxDetailUnderlined >
                     <SeparatedContentBox1>
                     거주지역    
                     </SeparatedContentBox1>
                     <SeparatedContentBox2>
-                            {/* 여기에 option 태그를 넣어주세요 */}
-                            <SelectStyled>
-                                <option value="Seoul, South Korea">Seoul, South Korea</option>
-                                <option value="New York, USA">New York, USA</option>
-                                <option value="Tokyo, Japan">Tokyo, Japan</option>
-                                {/* 다른 옵션들도 추가할 수 있습니다 */}
-                            </SelectStyled>
-                        </SeparatedContentBox2>
+    
+                    {userInfo?.address?.city} {userInfo?.address?.street} {userInfo?.address?.zipcode}
+
+                    </SeparatedContentBox2>
                   
                    </ContentBoxDetailUnderlined>
-
-
 
             </SecondBox>
 
         </ContentBox>
 
-
         <br/>
-        
+        <button onClick={handleSubmit}>수정하기
+        </button>
 
 
-
-
-
-
-
-
-
-
+        </form>
         </div>
     );
 };
