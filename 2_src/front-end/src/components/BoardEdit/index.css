@@ -1,0 +1,64 @@
+.header{
+    color: #000;
+font-family: Istok Web;
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+text-transform: capitalize;
+}
+
+.blueline{
+    background: rgba(32, 0, 231, 0.96);
+    width: 1371.044px;
+height: 2px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.hiddenbox{
+    width: 110px;
+    height: 20px;
+}
+
+.regist-btn{
+    width: 200px;
+    height: 40px;
+    background-color: #425CE7;
+    border-radius: 5px;
+
+    color: white;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+
+}
+
+.cancel-btn{
+    color: #030303;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    background-color: white;
+
+ 
+    border: 1px solid #676767;
+    border-radius: 5px;
+    text-decoration: none;
+
+    fill: #FFF;
+stroke-width: 1px;
+stroke: #676767;
+}
