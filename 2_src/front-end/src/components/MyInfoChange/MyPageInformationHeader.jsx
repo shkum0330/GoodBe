@@ -55,8 +55,9 @@ const FirstBox = styled.div`
     background: #FFF;
     width: 1000px; 
     background: #FFF;
-    height : 350px;
+    height : auto;
     margin-bottom: 20px;
+    /* border: 1px solid #64686C; */
 `
 const SecondBox = styled.div`
     display: flex;
@@ -69,6 +70,7 @@ const SecondBox = styled.div`
     flex-direction: column;
     height : 100%;
     margin-bottom: 20px;
+    /* border: 1px solid #64686C; */
 `   
 const ThirdBox = styled.div`
     display: flex;
@@ -76,7 +78,7 @@ const ThirdBox = styled.div`
     width: 100%; 
     background: #FFF;
     height : auto;
-    // margin-bottom : 10px;
+    /* border: 1px solid #64686C; */
 
 `
 const FourthBox = styled.div`
@@ -93,7 +95,7 @@ const ContentBox = styled.div`
     display: flex;
     background: #FFF;
     padding: 10px;
-    /* margin : auto; */
+    margin : auto;
     margin-bottom: 30px;
     width: 1000px; 
     border-radius: 10px;
@@ -248,9 +250,7 @@ const MyPageInformationHeader = () => {
                         프로필 정보도 한눈에 확인할 수도 있습니다.
                         </DetailSmall>
                         </FourthBox>
-                    
                     </SecondBox>
-            
              <img src={Cyber_security_emoji} alt="myprofile" style={imgStyle} /> 
             </FirstBox>
 
@@ -344,8 +344,7 @@ const MyPageInformationHeader = () => {
         </ContentBox>
 
 
-        <br/>
-
+        
 
         <ContentBox>
 
