@@ -14,7 +14,7 @@ const BoardContainer = styled.div`
     background: #FFF;
     margin-left: 350px;
     margin-top: 30px;
-    width: 1000px;
+    width: 600px;
     margin-bottom: 30px;
 
 `
