@@ -29,19 +29,19 @@ export default function CustomNavbar() {
               alt='Logo'
               height='45'
               width='135'
-              marginLeft='10px'
+              style={{ marginLeft: '10px' }}
             />
 
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/JobMain">채용공고</Nav.Link>
-            <Nav.Link href="/EduList">국비교육</Nav.Link>
-            <Nav.Link href="/BoardMain">게시판</Nav.Link>
+            <Nav.Link href="/JobMain" style={{ fontSize: '17px' }}>채용공고</Nav.Link>
+            <Nav.Link href="/EduList" style={{ fontSize: '17px' }}>국비교육</Nav.Link>
+            <Nav.Link href="/BoardMain" style={{ fontSize: '17px' }}>게시판</Nav.Link>
           </Nav>
 
           <div style={navbarIconStyle}>
             <Nav.Link href="/MyPageHome">
-              <img src={profile} alt="profile" width="40px" height="34px" />
+              <img src={profile} alt="profile" width="40px" height="40px"  />
             </Nav.Link>
           </div>
 
@@ -53,7 +53,7 @@ export default function CustomNavbar() {
 
           <div style={navbarIconStyle}>
             <Nav.Link href="#">
-              <img src={messagetext} alt="profile" width="40px" height="34px"/>
+              <img src={messagetext} alt="profile" width="40px" height="40px" />
             </Nav.Link>
           </div>
       </Navbar>
