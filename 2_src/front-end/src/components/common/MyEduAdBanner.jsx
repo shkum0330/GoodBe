@@ -9,7 +9,7 @@ const ImgStyle = styled.img`
 
 
 `
-const AdBanner = () => {
+const MyEduAdBanner = () => {
     return (
 
         <div>
@@ -21,4 +21,4 @@ const AdBanner = () => {
     );
 };
 
-export default AdBanner;
+export default MyEduAdBanner;

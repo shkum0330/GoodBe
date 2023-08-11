@@ -61,37 +61,37 @@ export default function Sidebar() {
         <SidebarContainer>
         <SidebarItemWrapper>
             <CgProfile />
-            <SidebarItemText href="#">홈</SidebarItemText>
+            <SidebarItemText href="/MyPageHome">홈</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
           <BsFillPersonVcardFill />
-          <SidebarItemText href="#">개인정보 수정</SidebarItemText>
+          <SidebarItemText href="/MyInfoChange">개인정보 수정</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
           <AiFillCheckSquare />
-          <SidebarItemText href="#">교육 상담 내역</SidebarItemText>
+          <SidebarItemText href="/MyConsulting">교육 상담 내역</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
           <FaBookOpen/>
-          <SidebarItemText href="#">관심 교육</SidebarItemText>
+          <SidebarItemText href="/MyEduLike">관심 교육</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
           <GiRoyalLove/>
-          <SidebarItemText href="#">관심 채용공고</SidebarItemText>
+          <SidebarItemText href="/MyJobLike">관심 채용공고</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
           <BsPencilSquare />
-          <SidebarItemText href="#">내가 쓴 글</SidebarItemText>
+          <SidebarItemText href="/MyBoard">내가 쓴 글</SidebarItemText>
         </SidebarItemWrapper>
 
         <SidebarItemWrapper>
           <AiFillInfoCircle />
-          <SidebarItemText href="#">정보</SidebarItemText>
+          <SidebarItemText href="/TeamInfo">정보</SidebarItemText>
         </SidebarItemWrapper>
      
         </SidebarContainer>

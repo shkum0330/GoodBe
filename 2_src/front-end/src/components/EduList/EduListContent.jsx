@@ -168,8 +168,10 @@ const EduList = () => {
 
                 </div>
               </div>
+
             </div>
           ))}
+
         </div>
     );
 };
