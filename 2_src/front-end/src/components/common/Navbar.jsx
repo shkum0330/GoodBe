@@ -27,8 +27,9 @@ export default function CustomNavbar() {
             <img
               src={goodbelogo}
               alt='Logo'
-              height='35'
-              width='140'
+              height='45'
+              width='135'
+              marginLeft='10px'
             />
 
           </Navbar.Brand>
@@ -44,11 +45,11 @@ export default function CustomNavbar() {
             </Nav.Link>
           </div>
 
-          <div style={navbarIconStyle}>
+          {/* <div style={navbarIconStyle}>
             <Nav.Link href="#">
               <img src={bell} alt="bell" width="40px" height="34px" />
             </Nav.Link>
-          </div>
+          </div> */}
 
           <div style={navbarIconStyle}>
             <Nav.Link href="#">
