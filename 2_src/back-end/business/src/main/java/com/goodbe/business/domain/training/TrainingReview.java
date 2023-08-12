@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,7 +19,7 @@ public class TrainingReview {
 
     @ManyToOne
     @JoinColumn(name = "training_id")
-    private Training training;
+    private Edu edu;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

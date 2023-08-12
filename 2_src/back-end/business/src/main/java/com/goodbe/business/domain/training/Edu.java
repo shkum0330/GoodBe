@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Training { // 국비교육 엔티티
+public class Edu { // 국비교육 엔티티
     @Id
     @Column(name="trpr_id")
     private String id;
@@ -18,7 +18,7 @@ public class Training { // 국비교육 엔티티
     @JoinColumn(name = "school_id")
     private School school;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "edu")
     private List<TrainingReview> trainingReviews=new ArrayList<>();
 
     @Column(nullable = false)
@@ -50,7 +50,7 @@ public class Training { // 국비교육 엔티티
     private String time; // 주 n일
 
     @Builder
-    public Training(String id, String title, String titleLink, String subTitle, String subTitleLink, String telNo, String address, String content) {
+    public Edu(String id, String title, String titleLink, String subTitle, String subTitleLink, String telNo, String address, String content) {
         this.id = id;
         this.title = title;
         this.titleLink = titleLink;

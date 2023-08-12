@@ -30,7 +30,7 @@ spring:
 
 file:
   dir:
-    local: /Users/seadshyun/study/filde/
+    local: /Users/sehyun/study/file/
 
 server:
   ip:

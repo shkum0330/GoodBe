@@ -1,7 +1,7 @@
 package com.goodbe.business.web.dto;
 
 import com.goodbe.business.domain.training.TrainingType;
-import com.goodbe.business.domain.training.Training;
+import com.goodbe.business.domain.training.Edu;
 import lombok.Data;
 
 @Data
@@ -11,7 +11,7 @@ public class TrainingDto {
     private TrainingType trainingType; // 대면 여부
     private String time; // 주 n일
 
-    public TrainingDto(Training entity) {
+    public TrainingDto(Edu entity) {
         this.title = entity.getTitle();
         this.trainingType = entity.getTrainingType();
         this.time = entity.getTime();

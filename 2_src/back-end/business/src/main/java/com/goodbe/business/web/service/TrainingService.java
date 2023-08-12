@@ -1,6 +1,6 @@
 package com.goodbe.business.web.service;
 
-import com.goodbe.business.domain.training.Training;
+import com.goodbe.business.domain.training.Edu;
 import com.goodbe.business.web.repository.TrainingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,10 @@ import java.util.List;
 public class TrainingService {
     private final TrainingRepository trainingRepository;
 
-    public List<Training> findTrainings(){
+    public List<Edu> findTrainings(){
         return trainingRepository.findAll();
     }
-    public List<Training> findRandomTrainings(){
+    public List<Edu> findRandomTrainings(){
         return trainingRepository.findByRand();
     }
 }

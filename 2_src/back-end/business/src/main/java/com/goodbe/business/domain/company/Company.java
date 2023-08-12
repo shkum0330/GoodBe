@@ -16,8 +16,8 @@ public class Company { // 기업 엔티티
     @Column(name="company_id")
     private String id;
 
-    @OneToMany(mappedBy = "company")
-    private List<CompanyMember> members=new ArrayList<>();
+//    @OneToMany(mappedBy = "company")
+//    private List<CompanyMember> members=new ArrayList<>();
 
     @Column(nullable = false)
     private String name;
