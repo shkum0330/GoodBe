@@ -89,6 +89,7 @@ const ConsultItemContainer = styled.div`
     margin-left: 350px;
     margin-top: 30px;
     height: 200px;
+    margin-bottom : 50px;
 
 `
 const EduDetailsContainer = styled.div`
@@ -143,6 +144,10 @@ const ReservaionButton = styled.button`
 
 `
 
+const Container = styled.div`
+    margin-bottom : 100px;
+`
+
 const MyConsultingReservation = () => {
     const dummyData = [
         { id: 1, Edutitle: '자바/스프링 개발자 양성과정', EduInstitution: '이젠아카데미컴퓨터학원', reservationDate: '2023-07-26 15:30', image:myconsulting},
@@ -156,7 +161,8 @@ const MyConsultingReservation = () => {
         <div>
             <AllButton>전체</AllButton>
             <DateButton>예약일 빠른순</DateButton>
-  
+            <Container>
+
             {dummyData.map((item) => (
                 <ConsultItemContainer key={item.id}>
                     <ConsultImg src={item.image} />
@@ -173,6 +179,7 @@ const MyConsultingReservation = () => {
                     </EduDetailsContainer>
                 </ConsultItemContainer>
             ))}
+            </Container>
      
 
         </div>

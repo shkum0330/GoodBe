@@ -10,6 +10,7 @@ const MyLikeEduTitle = styled.p`
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    margin-top : 30px;
     
 `
 const MyLikeEduDetail = styled.p`

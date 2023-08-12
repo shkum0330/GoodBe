@@ -12,9 +12,9 @@ const Box = styled.div`
     display: flex;
     align-items: flex-start;
     background: #FFF;
-    padding: 10px;
+    padding: 30px;
     margin-bottom: 10px;
-    width: 700px; 
+    width: 750px; 
     border-radius: 10px;
     border: 1px solid #64686C;
     background: #FFF;
@@ -67,7 +67,7 @@ const HorizontalLine = styled.div`
     width: 100%;
     height: 1px;
     background-color: #64686c;
-    margin-top: 60px;
+    margin-top: 30px;
     margin-bottom: 30px;
 `;
 const MypageHome = () => {

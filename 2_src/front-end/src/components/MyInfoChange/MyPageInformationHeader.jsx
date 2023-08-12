@@ -14,6 +14,7 @@ const Title = styled.p`
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    margin-top : 30px;
 `;
 
 const TitleDetail = styled.p`

@@ -41,7 +41,7 @@ export default function CustomNavbar() {
 
           <div style={navbarIconStyle}>
             <Nav.Link href="/MyPageHome">
-              <img src={profile} alt="profile" width="40px" height="40px"  />
+              <img src={profile} alt="profile" width="40px" height="35px"  />
             </Nav.Link>
           </div>
 
@@ -53,7 +53,7 @@ export default function CustomNavbar() {
 
           <div style={navbarIconStyle}>
             <Nav.Link href="#">
-              <img src={messagetext} alt="profile" width="40px" height="40px" />
+              <img src={messagetext} alt="profile" width="40px" height="35px" />
             </Nav.Link>
           </div>
       </Navbar>

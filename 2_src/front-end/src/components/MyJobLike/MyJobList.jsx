@@ -55,6 +55,7 @@ const Container = styled.div`
   margin-left: 400px;
   width: 700px;
   height: 100%;
+  margin-bottom : 100px;
 `;
 
 const JobItemContainer = styled.div`
