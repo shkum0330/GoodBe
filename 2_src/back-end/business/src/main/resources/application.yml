@@ -1,9 +1,10 @@
 spring:
+  spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/goodbe
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ssafy
+    url: jdbc:mariadb://i9a801.p.ssafy.io:3306/test
+    password: jinajjang1128!
   jpa:
     hibernate:
       ddl-auto: create

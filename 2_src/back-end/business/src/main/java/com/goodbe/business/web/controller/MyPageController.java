@@ -2,13 +2,9 @@ package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.member.Member;
-<<<<<<< HEAD
 import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
 import com.goodbe.business.web.dto.mypage.MemberInfoResponse;
 import com.goodbe.business.web.dto.mypage.MemberUpdateRequest;
-=======
-import com.goodbe.business.web.dto.mypage.MemberInfoDto;
->>>>>>> front-end
 import com.goodbe.business.web.dto.mypage.MyPageResponse;
 import com.goodbe.business.web.dto.mypage.MyPostsResponse;
 import com.goodbe.business.web.service.MemberService;
@@ -19,21 +15,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-=======
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import javax.servlet.http.HttpServletRequest;
->>>>>>> front-end
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,16 +50,11 @@ public class MyPageController {
 
     @GetMapping("/memberinfo")
     @Operation(summary = "[GET] 마이페이지 개인정보 화면", description = "회원정보를 응답으로 보낸다.")
-<<<<<<< HEAD
     public MemberInfoResponse memberInfo(HttpServletRequest request){ // JWT 갖고와야함
-=======
-    public MemberInfoDto memberInfo(HttpServletRequest request){ // JWT 갖고와야함
->>>>>>> front-end
         /*
         인증 로직...
          */
         Member member=memberService.findById(1L); // 임시 회원
-<<<<<<< HEAD
         return new MemberInfoResponse(member);
     }
 
@@ -108,12 +90,6 @@ public class MyPageController {
         Member member=memberService.findById(1L); // 임시 회원
         return new MemberInfoResponse(member);
     }
-=======
-        log.info("회원 = {}",member.toString());
-        return new MemberInfoDto(member);
-    }
-
->>>>>>> front-end
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "")
     public List<MyPostsResponse> myPosts(){
