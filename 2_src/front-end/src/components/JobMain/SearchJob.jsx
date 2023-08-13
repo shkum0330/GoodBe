@@ -29,7 +29,6 @@ const SearchJob = () => {
           width: '80%',
           height: '20%',
           borderRadius: '20px',
-
           padding: '10px',
           display: 'flex',
           justifyContent: 'space-between', // 여백을 포함한 가로 일정 간격 배치
