@@ -71,8 +71,9 @@ public class MyPageController {
         return new MemberInfoResponse(member);
     }
 
+    //todo: 입장하기 버튼 누르면 상담하러 들어갈 수 있어야 하고, 끝나면 상담 내역을 삭제해야 함
     @GetMapping("/consulting")
-    @Operation(summary = "[GET] 마이페이지 교육 상담 내역", description = "예약한 교육 상담들을 응답으로 보낸다.")
+    @Operation(summary = "[GET] 마이페이지 교육 상담 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
     public List<MyConsultingResponse> myConsulting(HttpServletRequest request){ // JWT 갖고와야함
         /*
         인증 로직...
@@ -82,10 +83,12 @@ public class MyPageController {
         List<MyConsultingResponse> result=new ArrayList<>();
 
         for (Consulting c:consultings) {
-            result.add(new MyConsultingResponse(c.getEdu(),c.getReserveTime()));
+            result.add(new MyConsultingResponse(c));
         }
         return result;
     }
+
+
     @GetMapping("/edu")
     @Operation(summary = "[GET] 마이페이지 관심 교육 관리", description = "회원의 관심 교육들을 응답으로 보낸다.")
     public MemberInfoResponse interestedJobPosting(HttpServletRequest request){ // JWT 갖고와야함
@@ -95,6 +98,9 @@ public class MyPageController {
         Member member=memberService.findById(1L); // 임시 회원
         return new MemberInfoResponse(member);
     }
+
+
+
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "내가 쓴 글들을 응답으로 보낸다.")
     public List<MyPostsResponse> myPosts(){

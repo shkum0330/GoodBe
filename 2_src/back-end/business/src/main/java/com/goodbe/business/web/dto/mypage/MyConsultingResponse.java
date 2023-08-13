@@ -14,14 +14,16 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MyConsultingResponse {
+    private Long id; // 상담id
     private String title; // 교육명
     private String subTitle; // 교육기관
-    private LocalDateTime reserveTime;
+    private String reserveTime;
 
     @Builder
-    public MyConsultingResponse(Edu entity,LocalDateTime time) {
-        this.title = entity.getTitle();
-        this.subTitle = entity.getSubTitle();
-        this.reserveTime=time;
+    public MyConsultingResponse(Consulting entity) {
+        this.id=id;
+        this.title = entity.getEdu().getTitle();
+        this.subTitle = entity.getEdu().getSubTitle();
+        this.reserveTime=entity.getReserveTime().toString().replace("T"," ");
     }
 }
