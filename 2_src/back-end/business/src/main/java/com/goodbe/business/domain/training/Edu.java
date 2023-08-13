@@ -1,10 +1,14 @@
 package com.goodbe.business.domain.training;
 
+import com.goodbe.business.domain.member.Consulting;
+import com.goodbe.business.domain.member.Member;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -18,8 +22,15 @@ public class Edu { // 국비교육 엔티티
     @JoinColumn(name = "school_id")
     private School school;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy = "edu", cascade = CascadeType.ALL)
+    private List<Consulting> consulting;
+
     @OneToMany(mappedBy = "edu")
-    private List<TrainingReview> trainingReviews=new ArrayList<>();
+    private List<EduReview> eduReviews =new ArrayList<>();
 
     @Column(nullable = false)
     private String title; // 교육명

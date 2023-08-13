@@ -3,6 +3,7 @@ package com.goodbe.business.utility;
 import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Address;
+import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.training.Edu;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -93,6 +95,12 @@ public class InitDB {
             em.persist(c1);
             Comment c2=new Comment(m2,p1,"반갑습니다.");
             em.persist(c2);
+
+            Member member=em.find(Member.class,1L);
+            Consulting con1=new Consulting(member,em.find(Edu.class,"ACG20223000845056"), LocalDateTime.of(2023, 8, 25, 15, 00, 00));
+            em.persist(con1);
+            Consulting con2=new Consulting(member,em.find(Edu.class,"ACG20223000845071"), LocalDateTime.of(2023, 8, 25, 14, 25, 00));
+            em.persist(con2);
         }
     }
 }

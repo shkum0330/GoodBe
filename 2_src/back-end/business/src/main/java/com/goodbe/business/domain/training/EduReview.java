@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TrainingReview {
+public class EduReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="training_review_id")
