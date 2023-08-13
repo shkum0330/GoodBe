@@ -44,14 +44,16 @@ const CustomContainer = styled.div`
   margin-top: 2rem;
   width: 80%;
   height: 20rem;
-  background-color: '#FAFAFA';
+  background-color: #f1eeeebb;
   border-color: grey;
-  border: 1px solid grey;
+  // border: 1px solid grey;
   padding: 1rem;
 `;
+
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px; /* 테이블 내 글자 크기 조정 */
 `;
 
 const TableRow = styled.tr`
@@ -61,15 +63,18 @@ const TableRow = styled.tr`
 const TableCell = styled.td`
   padding: 0.5rem;
   text-align: center;
+  border-right: 1px solid #ddd;
 `;
-
 
 const TableHeader = styled.th`
   padding: 0.5rem;
   text-align: center;
-  position: relative; /* 부모 요소를 relative로 설정 */
-  background-color: rgba(200, 200, 200, 0.3); /* 옅은 회색 배경 추가 */
+  position: relative;
+  background-color: rgba(200, 200, 200, 0.3);
+  border-right: 1px solid #ddd;
+  color: #333; /* 테이블 헤더 글씨 색상 변경 */
 `;
+
 
 const ArrowIcon = styled.span`
   margin-left: 0.2rem;
@@ -171,17 +176,17 @@ export default function EduRecommendRelatedJob() {
                   <TableHeader>교육명</TableHeader>
                   <TableHeader>과정</TableHeader>
                   <TableHeader>
-                    모집상태 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
+                   모집상태 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
                   </TableHeader>
                   <TableHeader onClick={handleCostSort}>
                     총 비용
-                    {costOrder === 'asc' ? <UpArrow /> : <DownArrow />}
+                    {costOrder === 'asc' ? <UpArrow /> : <DownArrow />}   
                   </TableHeader>
                   <TableHeader>
                     수업장소 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
                   </TableHeader>
                   <TableHeader>
-                    모집마감일 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
+                      모집마감일   <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
                   </TableHeader>
                   <TableHeader>
                     개강일 <ArrowIcon>{/* 화살표 아이콘 */}</ArrowIcon>
