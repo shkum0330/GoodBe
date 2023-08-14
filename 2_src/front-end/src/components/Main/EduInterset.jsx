@@ -14,14 +14,15 @@ const Container1 = styled.div`
     /* border: 1px solid #0c0d0d; */
     padding : auto;
     /* margin:auto; */
+    position: relative;
 
 `
 
 const Container2 = styled.div`
     width: 95%;
     padding-left : 10px;
-    flex-direction: row; /* 가로로 나열하도록 설정 */
-    justify-content: space-between; /* 컨테이너들을 가로 방향으로 공간을 벌리며 나열 */
+    flex-direction: row; 
+    justify-content: space-between; 
     align-items: center;
     background: #F7F7F7;
     /* border: 1px solid #0c0d0d; */
@@ -32,7 +33,7 @@ const Container2 = styled.div`
 const Container2_1 = styled.div`
     width: 95%;
     display: flex;
-    flex-direction: row; /* 가로로 나열하도록 설정 */
+    flex-direction: row; 
     background: #F7F7F7;
     /* border: 1px solid #0c0d0d; */
     margin: auto;
@@ -49,7 +50,7 @@ const Container3 = styled.div`
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
-    position: relative; /* 버튼 위치를 조정하기 위해 상대적인 위치 설정 */
+    position: relative; 
 `;
 
 const AddButton = styled.button`
@@ -61,11 +62,11 @@ const AddButton = styled.button`
     font-size: 20px;
     font-weight: bold;
     color: #C1BDBD;
-    display: flex; /* 버튼 내부의 글자를 가운데로 정렬하기 위해 */
-    align-items: center; /* 버튼 내부의 글자를 가운데로 정렬하기 위해 */
-    justify-content: center; /* 버튼 내부의 글자를 가운데로 정렬하기 위해 */
-    margin: auto; /* 가운데 정렬을 위해 */
-    margin-top: auto; /* 하단 여백을 자동 조절하여 버튼을 가운데에 위치시킴 */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin: auto; 
+    margin-top: auto; 
 `;
 
 
@@ -135,6 +136,7 @@ export default function EduInterest() {
             </Container2_1>
           </Container2>
         </Container1>
+        
       </div>
     );
   }

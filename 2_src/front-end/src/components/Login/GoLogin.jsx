@@ -149,7 +149,7 @@ const GoLogin = ({ closeModal }) => {
 
 
       <InstitutionLogin href="다음페이지 주소 넣어주셈">혹시 기업회원이신가요?</InstitutionLogin>
-      <SignUp href="PersonalRegisterComponent">회원가입</SignUp>
+      <SignUp href="../SignUp">회원가입</SignUp>
 
 
     </Container>
