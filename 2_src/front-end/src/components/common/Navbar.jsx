@@ -94,7 +94,6 @@ export default function CustomNavbar() {
         </div>
       </Navbar>
       {modalOpen && (
- 
           <GoLogin closeModal={closeModal} />
 
       )}

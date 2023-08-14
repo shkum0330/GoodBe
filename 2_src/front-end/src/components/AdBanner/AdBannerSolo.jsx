@@ -4,7 +4,6 @@ import AdBanner from '../../assets/MyEduLike/AdBannerImg.svg';
 
 const Container = styled.div`
     margin : auto
-
     width: 80%;
     height: auto; /* 변경: 픽셀 단위로 지정 */
     display: flex;
@@ -13,7 +12,9 @@ const Container = styled.div`
 `;
 
 const ImageAdBannerSolo = styled.img`
-margin : auto;
+    margin : auto;
+    margin-top : 70px;
+    margin-bottom: 70px;
     width: 80%; /* 이미지 요소의 너비를 100%로 설정 */
     height: 100%; /* 이미지 요소의 높이를 100%로 설정 */
 `;

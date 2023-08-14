@@ -93,6 +93,7 @@ const EduList = () => {
         width: '60%',
         margin: '0 auto',
         justifyContent: 'center',
+        marginTop: '50px',
     
       };
       const lineStyle = {

@@ -1,72 +1,85 @@
 import React, { useState } from 'react';
 import backgroundImage from '../../assets/JobMain/background.svg';
+import styled from 'styled-components';
+import {BsSearch} from 'react-icons/bs';
+
+const SearchContainer = styled.div`
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    maxwidth: 1000px;
+    height: 300px;
+    margin-bottom: 200px;
+`;
+
+const SearchInput = styled.input`
+    padding: 15px 13px;
+    border: none;
+    font-size: 20px;
+    width: 800px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.00);
+    color : #ccc;
+
+    &::placeholder {
+        color: #ccc;
+    }
+`;
+
+const BackgroundImage = styled.img`
+    position: absolute; 
+    width: 100%;
+    height: 550px;
+    z-index: -1; 
+    
+
+`;
+
+const SearchIcon = styled(BsSearch)`
+    color : #FFF;
+    margin-left : 20px;
+
+    
+
+`
+const Box = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    border: 1px solid #FFF;
+    margin-top: 75px;
+    box-shadow: 0px 0px 7px 3px #E7EDFF;
+
+`
 
 const SearchJob = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = () => {
-    console.log('검색어:', searchText);
+  const handleSearchChange = (event) => {
+      setSearchTerm(event.target.value);
   };
+  
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '66.66%',
-        height: '300px',
-        margin: '0 auto',
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '80%',
-          height: '20%',
-          borderRadius: '20px',
-          padding: '10px',
-          display: 'flex',
-          justifyContent: 'space-between', // 여백을 포함한 가로 일정 간격 배치
-          alignItems: 'center',
-        }}
-      >
-        <input
-          type="text"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          placeholder="어떤 직업을 찾고 계신가요?"
-          style={{
-            flex: 1,
-            padding: '12px',
-            border: 'none',
-            borderRadius: '20px',
-            background: '#f0f0f0',
-            outline: 'none',
-            textAlign: 'left',
-            marginRight: '10px',
-          }}
+    
+    <SearchContainer>
+      <BackgroundImage src={backgroundImage} alt="backgroundImage" />
+      <Box>
+        <SearchIcon size={30}/>
+
+        <SearchInput
+            type="text"
+            placeholder="취업을 희망하는 회사나 직무를 입력하세요"
+            value={searchTerm}
+            onChange={handleSearchChange}
         />
-        <button
-          onClick={handleSearch}
-          style={{
-            padding: '12px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '20px',
-            cursor: 'pointer',
-          }}
-        >
-          검색
-        </button>
-      </div>
-    </div>
+      </Box>
+    </SearchContainer>
+   
   );
 };
+
 
 export default SearchJob;

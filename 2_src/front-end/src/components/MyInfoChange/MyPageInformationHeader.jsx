@@ -5,6 +5,9 @@ import CatProfile_Circle from '../../assets/MyInfoChange/CatProfile_Circle.svg'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+const API_BASE_URL = 'http://localhost:8080';
+
 const Title = styled.p`
     color: #000;
     text-align: center;
@@ -184,7 +187,7 @@ const MyPageInformationHeader = () => {
         const fetchUserInfo = async () => {
             try {
                 const response = await axios.get(
-                    'http://localhost:8080/api/mypage/memberinfo'
+                `${API_BASE_URL}/api/mypage/memberinfo`
                 );
                 setUserInfo(response.data);
             } catch (error) {

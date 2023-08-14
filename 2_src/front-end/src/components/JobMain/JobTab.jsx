@@ -1,13 +1,49 @@
-import React from 'react'
+import React from 'react';
 
-export default function JobTab() {
-  return (
-    <div style={{ 
-      border: '1px solid black', 
-      padding: '10px', 
-      marginTop: '20px' }}>
-    {/* Your JobTab component content */}
-    JobTab Component
-  </div>
-  )
-}
+import styled from 'styled-components'
+
+
+const Container = styled.div`
+    margin-top : 170px;
+
+`
+
+const Title = styled.p`
+    color: #000;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    margin: 0;
+`
+const TitleDetail = styled.p`
+    color: #64686C;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    margin: 0;
+
+`
+
+
+
+const JobTab = () => {
+
+
+    return (
+        <Container>
+            <Title>채용공고</Title>
+            <TitleDetail>관심있는 기업과 직무를 골라보세요</TitleDetail>
+
+        </Container>
+    );
+};
+
+export default JobTab;

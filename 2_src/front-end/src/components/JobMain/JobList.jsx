@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {AiOutlineHeart} from 'react-icons/ai';
+import {AiFillHeart} from 'react-icons/ai';
 
 const JobList = () => {
   const [activeTab, setActiveTab] = useState('전체');
@@ -44,6 +46,15 @@ const JobList = () => {
   dummyData.filter((job) => activeTab === '전체' || job.category === activeTab).length / itemsPerPage
 );
 
+  const [favoriteJobs, setFavoriteJobs] = useState([]); 
+
+  const handleFavoriteClick = (jobId) => {
+    const job = dummyData.find((job) => job.id === jobId);
+    if (!favoriteJobs.includes(job)) {
+      setFavoriteJobs([...favoriteJobs, job]);
+      alert('찜했습니다');
+    }
+  };
 return (
   <div
     style={{
@@ -57,10 +68,7 @@ return (
       marginTop: '50px',
     }}
   >
-    <h2 style={{
-      marginTop : '2rem',
-    }}>채용공고</h2>
-    <h3 style={{ color: '#575757', fontSize :'15px' }}>관심있는 기업과 직무를 골라보세요</h3>
+
     <div style={{ display: 'flex', marginBottom: '10px', justifyContent: 'space-between' }}>
       {['전체', '대기업', '중견중소', '공기업공사', '외국계'].map((tab) => (
         <div
@@ -106,6 +114,11 @@ return (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <button style={{ backgroundColor: '#A4C3FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', marginBottom: '5px', fontWeight: 'bold', width : '100%'}}>상세보기</button>
             <button style={{ backgroundColor: '#EBD2FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>채팅방 입장</button>
+            <AiOutlineHeart onClick={() => handleFavoriteClick(job.id)}
+                style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}/>
+            <AiFillHeart onClick={() => handleFavoriteClick(job.id)}
+                style={{ cursor: 'pointer', marginTop: '5px' }}/>
+
           </div>
         </div>
       ))}
