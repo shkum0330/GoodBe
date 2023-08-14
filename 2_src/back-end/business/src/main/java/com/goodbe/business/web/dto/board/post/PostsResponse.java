@@ -5,8 +5,6 @@ import com.goodbe.business.domain.board.Post;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Schema(description = "게시물 리스트 응답 DTO")
 @Data
 public class PostsResponse {

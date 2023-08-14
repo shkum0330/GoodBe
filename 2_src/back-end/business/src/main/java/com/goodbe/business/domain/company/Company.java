@@ -14,10 +14,10 @@ import java.util.List;
 public class Company { // 기업 엔티티
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="company_id")
-    private Long id;
+    private String id;
 
-    @OneToMany(mappedBy = "company")
-    private List<CompanyMember> members=new ArrayList<>();
+//    @OneToMany(mappedBy = "company")
+//    private List<CompanyMember> members=new ArrayList<>();
 
     @Column(nullable = false)
     private String name;

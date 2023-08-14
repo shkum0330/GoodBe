@@ -4,7 +4,9 @@ import com.goodbe.business.domain.BaseTimeEntity;
 import com.goodbe.business.domain.board.Comment;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.file.UploadFile;
-import com.goodbe.business.domain.training.TrainingReview;
+import com.goodbe.business.domain.training.Edu;
+import com.goodbe.business.domain.training.EduReview;
+import com.goodbe.business.web.dto.mypage.MemberUpdateRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,8 +31,14 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     private Long id;
 //    private UUID id;
 
+    @OneToMany(mappedBy = "memberId", cascade = CascadeType.REMOVE)
+    private List<MemberEdu> memberEdus=new ArrayList<>(); // 관심 교육
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Consulting> consultings=new ArrayList<>(); // 상담
+
     @OneToMany(mappedBy = "member")
-    private List<TrainingReview> trainingReviews=new ArrayList<>();
+    private List<EduReview> eduReviews =new ArrayList<>(); // 교육 후기
 
     @OneToMany(mappedBy = "member")
     private List<Post> posts=new ArrayList<>();
@@ -94,5 +102,17 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
         this.favoriteCompany = favoriteCompany;
         this.favoriteJob = favoriteJob;
         this.isWithdrawn = isWithdrawn;
+    }
+
+
+    public void update(MemberUpdateRequest request) {
+        this.profileImage = request.getProfileImage();
+        this.name = request.getName();
+        this.nickname = request.getNickname();
+        this.birth = request.getBirth();
+        this.address = request.getAddress();
+        this.gender = request.getGender();
+        this.favoriteCompany = request.getFavoriteCompany();
+        this.favoriteJob = request.getFavoriteJob();
     }
 }

@@ -1,50 +1,77 @@
 package com.goodbe.business.web.controller;
 
-import com.goodbe.business.web.dto.search.SearchDetailResponse;
-import com.goodbe.business.web.dto.search.SearchRequest;
-import com.goodbe.business.web.dto.search.SearchResponse;
+import com.goodbe.business.web.dto.search.EduResponse;
+import com.goodbe.business.web.dto.jobpost.JobPostHomeResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/search")
 @Tag(name = "Search", description = "국비교육 검색 화면 API Document")
 public class SearchController {
 
-    WebClient client=WebClient.create("http://localhost:8090");
-    @GetMapping("/recommend")
-    @Operation(summary = "[GET] 국비교육 검색 페이지", description = "검색 페이지로 이동")
-    public String search(){ // 교육 검색 페이지로 이동
-        return "페이지 이동 성공";
-    }
+    @Value("${server.ip.local}")
+    private String localhost;
+    @Value("${server.ip.remote}")
+    private String ip;
 
-    // 요청 예시: /api/recommend/search?region=서울&keyword=싸피
-    @GetMapping("/recommend/search")
-    @Operation(summary = "[GET] 국비교육 검색", description = "지역, 키워드 입력으로 검색")
-    public List<SearchResponse> search(@RequestHeader HttpHeaders headers,
-                                      @RequestParam String region,
-                                      @RequestParam String keyword){
-        SearchRequest searchRequest=new SearchRequest(region,keyword);
-        List<SearchResponse> result= client
-                .get().uri("api/recommend/search?region="+region+"&keyword="+keyword)
-                .retrieve().bodyToFlux(SearchResponse.class).collectList().block();
+    private WebClient client = WebClient.builder()
+            .baseUrl("http://localhost:8083/api/search") // 요청을 검색 서버로 보냄
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
+            .build();
+
+    @GetMapping("/jobPost/all")
+    @Operation(summary = "[GET] 전체 채용공고 불러오기")
+    public List<JobPostHomeResponse> searchAllJobPost() {
+        Mono<List<JobPostHomeResponse>> responseMono=client.get().uri("/jobPost/all").retrieve()
+                .bodyToFlux(JobPostHomeResponse.class)
+                .collectList();
+        List<JobPostHomeResponse> result=responseMono.block();
         return result;
     }
 
-    @GetMapping("/recommend/search/{id}")
-    @Operation(summary = "[GET] 국비교육 검색", description = "지역, 키워드 입력으로 검색")
-    public SearchDetailResponse searchDetail(@RequestHeader HttpHeaders headers,
-                                             @PathVariable Long id){
-        SearchDetailResponse result= client
-                .get().uri("api/recommend/search/"+String.valueOf(id))
-                .retrieve().bodyToMono(SearchDetailResponse.class).block();
+    @GetMapping("/jobPost/{keyword}")
+    @Operation(summary = "[GET] 검색어로 채용공고 불러오기")
+    public List<JobPostHomeResponse> searchJobPostByKeyword(@PathVariable String keyword) {
+        log.info("{}",keyword);
+        Mono<List<JobPostHomeResponse>> responseMono=client.get().uri("/jobPost/{keyword}",keyword)
+                .retrieve()
+                .bodyToFlux(JobPostHomeResponse.class)
+                .collectList();
+        List<JobPostHomeResponse> result=responseMono.block();
+        return result;
+    }
+
+    @GetMapping("/edu/all")
+    @Operation(summary = "[GET] 전체 국비교육 불러오기")
+    public List<EduResponse> searchAllEdu() {
+        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/all").retrieve()
+                .bodyToFlux(EduResponse.class)
+                .collectList();
+        List<EduResponse> result=responseMono.block();
+        return result;
+    }
+
+
+    @GetMapping("/edu/{keyword}")
+    @Operation(summary = "[GET] 검색어로 국비교육 불러오기")
+    public List<EduResponse> searchEduByKeyword(@PathVariable String keyword) {
+        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
+                .retrieve()
+                .bodyToFlux(EduResponse.class)
+                .collectList();
+        List<EduResponse> result=responseMono.block();
         return result;
     }
 

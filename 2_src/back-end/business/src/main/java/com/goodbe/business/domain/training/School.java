@@ -18,7 +18,7 @@ public class School {
     private Long id;
 
     @OneToMany(mappedBy = "school")
-    private List<Training> trainings=new ArrayList<>();
+    private List<Edu> edus =new ArrayList<>();
 
     @Column(nullable = false)
     private String name; // 기관명

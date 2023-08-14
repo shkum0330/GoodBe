@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class MemberController {
     private final MemberService memberService;
-    WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8082") // 요청을 인증 서버로 보냄
+    private final WebClient client = WebClient.builder()
+            .baseUrl("http://localhost:8100") // 요청을 인증 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
     @PostMapping("/register")
@@ -42,7 +42,7 @@ public class MemberController {
 //                .retrieve()
 //                .toEntity(String.class)
 //                .block();
-        Mono<String> result=client.post().uri("/login")
+        Mono<String> result=client.post().uri("/oauth2/authorization/google")
                 .bodyValue(memberLoginRequest).retrieve().bodyToMono(String.class); // JWT를 반환한다.
         String token=result.block();
         return token;
