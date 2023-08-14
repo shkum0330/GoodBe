@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/jobpost")
+@RequestMapping("/api/job-post")
 public class JobPostController {
     private final JobPostService jobPostService;
 

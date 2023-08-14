@@ -1,6 +1,7 @@
 package com.goodbe.business.domain.member;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberEduId implements Serializable {
     private Long memberId;
     private String eduId;

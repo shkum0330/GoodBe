@@ -2,6 +2,7 @@ package com.goodbe.business.domain.member;
 
 import com.goodbe.business.domain.training.Edu;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,9 @@ public class MemberEdu {
     @JoinColumn(name="trpr_id")
     private Edu eduId;
 
+    @Builder
+    public MemberEdu(Member memberId, Edu eduId) {
+        this.memberId = memberId;
+        this.eduId = eduId;
+    }
 }

@@ -38,13 +38,13 @@ server:
     remote: 172.26.3.26
 #  session:
 #    store-type: redis
-logging:
-  level:
-    org:
-      apache:
-        coyote:
-          http11: debug
-
+#logging:
+#  level:
+#    org:
+#      apache:
+#        coyote:
+#          http11: debug
+#
 
 #swagger
 springdoc:

@@ -23,10 +23,6 @@ public class Edu { // 국비교육 엔티티
     @JoinColumn(name = "school_id")
     private School school;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
     @OneToMany(mappedBy = "edu", cascade = CascadeType.ALL)
     private List<Consulting> consulting;
 

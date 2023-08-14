@@ -27,7 +27,7 @@ public class HomeController {
     @GetMapping("/")
     public List<TrainingDto> home() {
         log.info("home controller");
-        List<Edu> edus = eduService.findRandomTrainings();
+        List<Edu> edus = eduService.findRandomEdus();
         return edus.stream().map(TrainingDto::new).collect(Collectors.toList());
     }
 }
