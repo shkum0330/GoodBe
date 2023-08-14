@@ -60,7 +60,6 @@ const JobList = () => {
   };
 
 return (
-  <div>
   <div
     style={{
       fontFamily: 'Istok Web, sans-serif',
@@ -143,9 +142,6 @@ return (
     ))}
   </div>
 
-
-
-
     {/* 페이지네이션 버튼 */}
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
       {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
@@ -168,8 +164,10 @@ return (
       </div>
     </div>
 
-
+      
+      
 );
-};
+        }
+
 
 export default JobList; 
