@@ -1,4 +1,4 @@
-package com.goodbe.auth.config.auth;
+package com.goodbe.auth.oauth2;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

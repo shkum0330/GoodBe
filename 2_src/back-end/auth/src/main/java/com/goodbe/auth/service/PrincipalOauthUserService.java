@@ -1,21 +1,28 @@
-package com.goodbe.auth.config.oauth;
+package com.goodbe.auth.service;
 
 import com.goodbe.auth.controller.AuthController;
 import com.goodbe.auth.jwt.TokenInfo;
-import com.goodbe.auth.service.MemberService;
+import com.goodbe.auth.oauth2.provider.GoogleUserInfo;
+import com.goodbe.auth.oauth2.provider.KakaoUserInfo;
+import com.goodbe.auth.oauth2.provider.NaverUserInfo;
+import com.goodbe.auth.oauth2.provider.OAuth2UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import com.goodbe.auth.config.auth.PrincipalDetails;
-import com.goodbe.auth.config.oauth.provider.*;
+import com.goodbe.auth.oauth2.PrincipalDetails;
 import com.goodbe.auth.domain.Role;
 import com.goodbe.auth.domain.Member;
 import com.goodbe.auth.repository.MemberRepository;
+import org.springframework.web.client.RestTemplate;
 
+import org.springframework.http.HttpHeaders;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -85,7 +92,18 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
         //  Access Token, Refresh Token 발급해서 돌려주기
         if(memberEntity != null){
             System.out.println("이미 가입하셨습니다.");
-            TokenInfo jwtTokenInfo = memberService.login(email,email);
+            TokenInfo tokenInfo = memberService.login(email,email);
+            System.out.println("액세스 토큰: "+tokenInfo.getAccessToken());
+            System.out.println("리프레쉬 토큰: "+tokenInfo.getRefreshToken());
+            // 발급한 Jwt를 REST 방식으로 비즈니스 서버에 전달
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<TokenInfo> request = new HttpEntity<>(tokenInfo, headers);
+            System.out.println(request.toString());
+            //ResponseEntity<String> response = restTemplate.postForEntity("localhost:8080/login/token", request, String.class);
+            //System.out.println("비즈니스 서버로부터의 응답: " + response.getBody());
+
         }
         // 1. 처음 방문인 경우
         else{
