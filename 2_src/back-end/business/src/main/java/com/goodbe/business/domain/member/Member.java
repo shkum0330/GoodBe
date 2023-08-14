@@ -31,8 +31,8 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     private Long id;
 //    private UUID id;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Edu> favoriteEdu=new ArrayList<>(); // 관심 교육
+    @OneToMany(mappedBy = "memberId", cascade = CascadeType.REMOVE)
+    private List<MemberEdu> memberEdus=new ArrayList<>(); // 관심 교육
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Consulting> consultings=new ArrayList<>(); // 상담

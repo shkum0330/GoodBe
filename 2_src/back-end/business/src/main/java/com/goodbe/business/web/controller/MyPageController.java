@@ -3,7 +3,6 @@ package com.goodbe.business.web.controller;
 import com.goodbe.business.domain.board.Post;
 import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
-import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
 import com.goodbe.business.web.dto.mypage.*;
 import com.goodbe.business.web.service.MemberService;
 import com.goodbe.business.web.service.MyPageService;
@@ -19,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,10 +62,9 @@ public class MyPageController {
     public MemberInfoResponse memberInfoUpdate(@RequestPart(value = "profileImage",required = false) MultipartFile profileImage,
                                                @RequestPart(value = "memberUpdateRequest") MemberUpdateRequest memberUpdateRequest,
                                                HttpServletRequest request) throws IOException {
-        /*
-        인증 로직...
-         */
-
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
         Member member=memberService.findById(1L); // 임시 회원, id는 jwt에서 따올거임
         memberService.update(1L,profileImage,memberUpdateRequest);
         return new MemberInfoResponse(member);
@@ -91,15 +90,24 @@ public class MyPageController {
 
     @GetMapping("/edu")
     @Operation(summary = "[GET] 마이페이지 관심 교육 관리", description = "회원의 관심 교육들을 응답으로 보낸다.")
-    public MemberInfoResponse interestedJobPosting(HttpServletRequest request){ // JWT 갖고와야함
-        /*
-        인증 로직...
-         */
+    public MemberInfoResponse interestedEdu(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
         Member member=memberService.findById(1L); // 임시 회원
         return new MemberInfoResponse(member);
     }
 
 
+    @GetMapping("/job-post")
+    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "회원의 관심 채용공고들을 응답으로 보낸다.")
+    public MemberInfoResponse interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
+        Member member=memberService.findById(1L); // 임시 회원
+        return new MemberInfoResponse(member);
+    }
 
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "내가 쓴 글들을 응답으로 보낸다.")
@@ -108,4 +116,7 @@ public class MyPageController {
         return posts.stream().map(MyPostsResponse::new).collect(Collectors.toList());
     }
 
+    private Boolean authorization(HttpServletRequest request){
+        return true;
+    }
 }

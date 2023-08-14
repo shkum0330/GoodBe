@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface JobPostRepository extends JpaRepository<JobPost,String> {
 //    List<JobPost> findAllOrderByEndDateAsc(); // 마감임박순
+//    List<JobPost> findByMemberId(Long memberId);
 }

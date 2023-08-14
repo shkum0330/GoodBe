@@ -2,6 +2,7 @@ package com.goodbe.business.domain.training;
 
 import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.domain.member.MemberEdu;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,9 @@ public class Edu { // 국비교육 엔티티
 
     @OneToMany(mappedBy = "edu", cascade = CascadeType.ALL)
     private List<Consulting> consulting;
+
+    @OneToMany(mappedBy = "eduId", cascade = CascadeType.REMOVE)
+    private List<MemberEdu> memberEdus=new ArrayList<>(); // 관심 교육
 
     @OneToMany(mappedBy = "edu")
     private List<EduReview> eduReviews =new ArrayList<>();
