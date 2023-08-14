@@ -2,13 +2,10 @@ import {React, useState} from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import goodbelogo from '../../assets/navbar/goodbelogo.svg';
-import bell from '../../assets/navbar/bell.svg';
-import messagetext from '../../assets/navbar/messagetext.svg';
-import profile from '../../assets/navbar/profile.svg';
 import styled from 'styled-components';
 import GoLogin from '../Login/GoLogin';
 import { CgProfile } from "react-icons/cg";
-import { BiMessageDetail } from "react-icons/bi";
+import { BiBorderRadius, BiMessageDetail } from "react-icons/bi";
 
 const Navbbar=styled.div`
   width: 100%;
@@ -49,6 +46,7 @@ export default function CustomNavbar() {
 
   const navbarIconStyle = {
     marginRight: '6px', 
+  
   }
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -63,7 +61,7 @@ export default function CustomNavbar() {
 
   return (
     <Navbbar className="App">
-      <Navbar bg="light" variant="light">
+      <Navbar bg="white" variant="light">
         <Navbar.Brand href="/">
           <img
             src={goodbelogo}
@@ -80,7 +78,7 @@ export default function CustomNavbar() {
         </Nav>
 
         <div style={navbarIconStyle}>
-          <button onClick={openModal}>로그인</button>
+          <button onClick={openModal} style={{ border: 'none', borderRadius: '10px' }}>로그인</button>
         </div>
 
         <NavbarLink href="/MyPageHome">

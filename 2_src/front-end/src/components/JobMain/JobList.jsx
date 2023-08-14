@@ -55,12 +55,12 @@ const JobList = () => {
       alert('찜이 취소되었습니다');
     } else {
       setFavoriteJobs([...favoriteJobs, job]);
-      alert('찜했습니다');
+      alert('찜 했습니다');
     }
   };
-  
+
 return (
-  
+  <div>
   <div
     style={{
       fontFamily: 'Istok Web, sans-serif',
@@ -74,14 +74,14 @@ return (
     }}
   >
 
-    <div style={{ display: 'flex', marginBottom: '10px', justifyContent: 'space-between' }}>
+    <div style={{ fontSize: '18px', color: '#676060', borderBottom:'1px solid #ccc', display: 'flex', marginBottom: '10px', justifyContent: 'space-between' }}>
       {['전체', '대기업', '중견중소', '공기업공사', '외국계'].map((tab) => (
         <div
           key={tab}
           style={{
             padding: '8px 16px',
             cursor: 'pointer',
-            color: activeTab === tab ? '#0432D6' : '#000',
+            color: activeTab === tab ? '#60A0EF' : '#000',
           }}
           onClick={() => handleTabClick(tab)}
         >
@@ -90,7 +90,7 @@ return (
             style={{
               width: '100%',
               height: '4px',
-              backgroundColor: activeTab === tab ? '#0432D6' : '#ccc',
+              backgroundColor: activeTab === tab ? '#60A0EF' : '#ccc',
               visibility: activeTab === tab ? 'visible' : 'hidden',
             }}
           />
@@ -99,14 +99,13 @@ return (
     </div>
 
     
-      <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+      <div style={{ padding: '10px', marginBottom: '10px' }}>
     {currentItems.map((job, index) => (
       <div
         key={job.id}
         style={{
           borderBottom: '1px solid #ccc',
           padding: '10px',
-          backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -119,29 +118,30 @@ return (
           <p>Category: {job.category}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button style={{ backgroundColor: '#A4C3FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', marginBottom: '5px', fontWeight: 'bold', width : '100%'}}>상세보기</button>
-          <button style={{ backgroundColor: '#EBD2FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>채팅방 입장</button>
+          <button style={{ backgroundColor: '#A4C3FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer', marginBottom: '5px', width : '100%'}}>상세보기</button>
+          <button style={{ backgroundColor: '#EBD2FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer' }}>채팅방 입장</button>
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
-            <AiFillHeart
-              onClick={() => handleFavoriteClick(job.id)}
-              style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
-            />
-          ) : (
-            <AiOutlineHeart
-              onClick={() => handleFavoriteClick(job.id)}
-              style={{ cursor: 'pointer', marginTop: '5px' }}
-            />
+               <div
+               onClick={() => handleFavoriteClick(job.id)}
+               style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
+             >
+               <AiFillHeart style={{ fontSize: '27px' }} />
+             </div>
+           ) : (
+             <div
+               onClick={() => handleFavoriteClick(job.id)}
+               style={{ cursor: 'pointer', marginTop: '5px' }}
+             >
+               <AiOutlineHeart style={{ fontSize: '27px' }} />
+             </div>
           )}
         </div>
         </div>
       </div>
     ))}
   </div>
-
-
-
 
     {/* 페이지네이션 버튼 */}
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
@@ -151,7 +151,7 @@ return (
           style={{
             padding: '5px 10px',
             margin: '0 5px',
-            backgroundColor: currentPage === pageNumber ? '#0432D6' : '#EBEBEB',
+            backgroundColor: currentPage === pageNumber ? '#60A0EF' : '#EBEBEB',
             color: currentPage === pageNumber ? 'white' : 'black',
             border: 'none',
             borderRadius: '4px',
@@ -165,8 +165,10 @@ return (
       </div>
     </div>
 
-
+      
+      
 );
-};
+        }
+
 
 export default JobList; 

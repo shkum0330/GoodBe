@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AdBanner from '../../assets/main/AdBanner.svg';
 
 const Adimg = styled.img`
-    width: 80%;
+    width: 72%;
     max-width: 100%; 
     height: auto;
     border-radius: 20px;

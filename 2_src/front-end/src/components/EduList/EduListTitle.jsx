@@ -38,7 +38,7 @@ const EduListTitle = () => {
 
     return (
         <Container>
-            <Title>교육 추천 List</Title>
+            <Title>교육 과정 추천</Title>
             <TitleDetail>취업을 희망하는 회사나 직무를 입력하면 그에 적합한 교육과정을 추천해드립니다.</TitleDetail>
 
         </Container>
