@@ -103,7 +103,7 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
         this.favoriteJob = favoriteJob;
         this.isWithdrawn = isWithdrawn;
     }
-<<<<<<< HEAD
+
 
 
     public void update(MemberUpdateRequest request) {
@@ -116,6 +116,5 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
         this.favoriteCompany = request.getFavoriteCompany();
         this.favoriteJob = request.getFavoriteJob();
     }
-=======
->>>>>>> front-end
+
 }

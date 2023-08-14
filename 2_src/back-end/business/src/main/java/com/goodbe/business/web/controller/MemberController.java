@@ -22,9 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 public class MemberController {
     private final MemberService memberService;
     private final WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8100") // 요청을 인증 서버로 보냄
+            .baseUrl("http://localhost:8089") // 요청을 인증 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
+    @GetMapping("/test")
+    public String test(){
+        return client.get().uri("/login/google").retrieve().bodyToMono(String.class).block();
+    }
     @PostMapping("/register")
     public ResponseEntity<MemberRegisterRequest> register(@RequestBody MemberRegisterRequest memberRegisterRequest){
         log.info("business memberdto={}",memberRegisterRequest);
@@ -34,18 +38,19 @@ public class MemberController {
                 .toEntity(MemberRegisterRequest.class)
                 .block();
     }
-    @PostMapping("/login")
-    public String login(@RequestBody MemberLoginRequest memberLoginRequest, HttpServletResponse response){
+    @GetMapping ("/login/google")
+    public void login(HttpServletResponse response){
         // todo: 자체 로그인 구현..?
 //        return client.post().uri(uriBuilder -> uriBuilder.path("/member/login").build())
 //                .bodyValue(memberLoginRequest)
 //                .retrieve()
 //                .toEntity(String.class)
 //                .block();
-        Mono<String> result=client.post().uri("/oauth2/authorization/google")
-                .bodyValue(memberLoginRequest).retrieve().bodyToMono(String.class); // JWT를 반환한다.
-        String token=result.block();
-        return token;
+//        Mono<String> result=client.post().uri("/oauth2/authorization/google")
+//                .retrieve().bodyToMono(String.class); // JWT를 반환한다.
+//        String token=result.block();
+//        return token;
+        client.get().uri("/oauth2/authorization/google").retrieve().bodyToMono(String.class).block();
     }
 
     @PostMapping("/logout")

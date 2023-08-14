@@ -59,7 +59,6 @@ public class SecurityConfig  {
                 .userInfoEndpoint()
                 .userService(principalOauthUserService);// 소셜 로그인이 완료된 뒤의 후처리가 필요함 . Tip.코드x, (엑세스 토큰+사용자 프로필 정보를 받아옴)
 
-
         return http.build();
     }
 
