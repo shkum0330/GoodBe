@@ -50,11 +50,15 @@ const JobList = () => {
 
   const handleFavoriteClick = (jobId) => {
     const job = dummyData.find((job) => job.id === jobId);
-    if (!favoriteJobs.includes(job)) {
+    if (favoriteJobs.some((favJob) => favJob.id === job.id)) {
+      setFavoriteJobs(favoriteJobs.filter((favJob) => favJob.id !== job.id));
+      alert('찜이 취소되었습니다');
+    } else {
       setFavoriteJobs([...favoriteJobs, job]);
       alert('찜했습니다');
     }
   };
+  
 return (
   <div>
   <div
@@ -119,18 +123,18 @@ return (
           <button style={{ backgroundColor: '#EBD2FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>채팅방 입장</button>
           
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
-              <AiFillHeart
-                onClick={() => handleFavoriteClick(job.id)}
-                style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
-              />
-            ) : (
-              <AiOutlineHeart
-                onClick={() => handleFavoriteClick(job.id)}
-                style={{ cursor: 'pointer', marginTop: '5px' }}
-              />
-            )}
-          </div>
+          {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
+            <AiFillHeart
+              onClick={() => handleFavoriteClick(job.id)}
+              style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
+            />
+          ) : (
+            <AiOutlineHeart
+              onClick={() => handleFavoriteClick(job.id)}
+              style={{ cursor: 'pointer', marginTop: '5px' }}
+            />
+          )}
+        </div>
         </div>
       </div>
     ))}
@@ -160,7 +164,7 @@ return (
       ))}
       </div>
     </div>
-  </div>
+
 
 );
 };
