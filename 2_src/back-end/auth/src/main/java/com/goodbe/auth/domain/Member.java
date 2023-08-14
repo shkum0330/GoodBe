@@ -18,14 +18,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "MEMBER")
-public class User implements UserDetails {
+public class Member implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+    @Column(updatable = false, unique = true, nullable = false)
+    private String memberId;
 
     private String username;
+    private String name; // 실명
+    private String nickname; // 닉네임
     private String password;
     private String email;
 
@@ -41,13 +42,14 @@ public class User implements UserDetails {
     private String residence; // 거주 지역
     private String interestCompany; // 관심 회사
     private String interestJob; // 관심 직무
-    private String gender; // 성별 M/F
+    private String sex; // 성별 M/F
     private String profileImage; // 프로필 이미지 업로드 url
-    private boolean withdrawalStatus; // 회원탈퇴여부
+    private boolean isWithdrawn; // 회원탈퇴여부
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
