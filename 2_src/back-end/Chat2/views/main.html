@@ -1,0 +1,229 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="navbar navbar-expand-lg bg-body-tertiary">
+  <h1>GOOD BE 국비교육 채팅방</h1>
+</div>
+
+<div class="input-group rounded mt-3">
+  <input type="search" class="form-control rounded" placeholder="국비교육명을 검색하세요" aria-label="Search"
+    aria-describedby="search-addon" id="search" />
+  <span class="input-group-text border-0" id="search-addon">
+    <i class="fas fa-search" id="searchbtn"></i>
+  </span>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <ul class="list-unstyled mb-0">
+      {% for room in rooms %}
+      <li class="p-2 border-bottom" style="background-color: #eee;">
+        <a href="#!" class="d-flex justify-content-between">
+          <div class="d-flex flex-row">
+
+            <!-- <div>{{room}}  </div> -->
+
+            {% if room.img %}
+            <img src="{{ room.img }}" alt="avatar" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+              width="60">
+            {% else %}
+            <img src="https://goodpointagency.com/wp-content/uploads/2020/01/Logo_Mobile@2x.png" alt="avatar"
+              class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+            {% endif %}
+
+            <div class="pt-1">
+              <p class="fw-bold mb-0">{{room.title}}</p>
+              <p class="small text-muted">{{room.introduction}}</p>
+            </div>
+          </div>
+
+          <div class="pt-1">
+            <button data-id="{{room._id}}" id="join-btn" class="btn btn-info btn-rounded float-end">입장
+            </button>
+          </div>
+
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="error-message">{{error}}</div>
+<a href="/room" id="makeChatroom">채팅방 만들기></a>
+</fieldset>
+
+
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io.connect('http://localhost:8092/room', { // 네임스페이스
+    path: '/socket.io',
+  });
+// socket.on('newRoom', function (data) { // 새 방 이벤트 시 새 방 생성
+  socket.on('newRoom', function (data) {
+    console.log(data);
+  const li = document.createElement('li');
+  li.classList.add('p-2', 'border-bottom');
+  li.style.backgroundColor = '#eee';
+
+  const a = document.createElement('a');
+  a.classList.add('d-flex', 'justify-content-between');
+  li.appendChild(a);
+
+  const divFlexRow = document.createElement('div');
+  divFlexRow.classList.add('d-flex', 'flex-row');
+  a.appendChild(divFlexRow);
+
+  if (data.img) {
+    const img = document.createElement('img');
+    img.src = data.img;
+    img.alt = 'avatar';
+    img.classList.add('rounded-circle', 'd-flex', 'align-self-center', 'me-3', 'shadow-1-strong');
+    img.width = 60;
+    divFlexRow.appendChild(img);
+  } else {
+    const defaultImg = document.createElement('img');
+    defaultImg.src = 'https://goodpointagency.com/wp-content/uploads/2020/01/Logo_Mobile@2x.png';
+    defaultImg.alt = 'avatar';
+    defaultImg.classList.add('rounded-circle', 'd-flex', 'align-self-center', 'me-3', 'shadow-1-strong');
+    defaultImg.width = 60;
+    divFlexRow.appendChild(defaultImg);
+  }
+
+  const divPt1 = document.createElement('div');
+  divPt1.classList.add('pt-1');
+  divFlexRow.appendChild(divPt1);
+
+  const titleP = document.createElement('p');
+  titleP.classList.add('fw-bold', 'mb-0');
+  titleP.textContent = data.title;
+  divPt1.appendChild(titleP);
+
+  const introP = document.createElement('p');
+  introP.classList.add('small', 'text-muted');
+  introP.textContent = data.introduction;
+  divPt1.appendChild(introP);
+
+  const divPt2 = document.createElement('div');
+  divPt2.classList.add('pt-1');
+  a.appendChild(divPt2);
+
+  const joinBtn = document.createElement('button');
+  joinBtn.classList.add('join-btn', 'btn', 'btn-info', 'btn-rounded', 'float-end');
+  joinBtn.dataset.id = data._id;
+  joinBtn.textContent = '입장';
+  divPt2.appendChild(joinBtn);
+
+  document.querySelector('.list-unstyled').appendChild(li);
+});
+
+
+  socket.on('removeRoom', function (data) { // 방 제거 이벤트 시 id가 일치하는 방 제거
+    document.querySelectorAll('tbody tr').forEach(function (tr) {
+      if (tr.dataset.id === data) {
+        tr.parentNode.removeChild(tr);
+      }
+    });
+  });
+
+  function addBtnEvent(e) { // 방 입장 클릭 시
+
+    location.href = '/room/' + e.target.dataset.id;
+
+  }
+
+  document.querySelectorAll('#join-btn').forEach(function (btn) {
+    btn.addEventListener('click', addBtnEvent);
+  });
+
+
+  const searchButton = document.getElementById('searchbtn');
+  // const searchInput = document.getElementById('#search').value;
+  const roomList = document.querySelector('.list-unstyled');
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const joinButtons = document.querySelectorAll('.join-btn'); // 수정된 부분
+
+  joinButtons.forEach(btn => {
+    btn.addEventListener('click', addBtnEvent);
+  });
+
+
+  searchButton.addEventListener('click', async () => {
+    const searchQuery = document.querySelector("#search").value;
+
+    try {
+      const response = await fetch(`/search?q=${searchQuery}`);
+      const rooms = await response.json();
+
+      roomList.innerHTML = '';
+
+      rooms.forEach(room => {
+        const li = document.createElement('li');
+        li.classList.add('p-2', 'border-bottom');
+        li.style.backgroundColor = '#eee';
+
+        const a = document.createElement('a');
+        a.classList.add('d-flex', 'justify-content-between');
+
+        const imgSrc = room.img ? room.img : "https://goodpointagency.com/wp-content/uploads/2020/01/Logo_Mobile@2x.png";
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = 'avatar';
+        img.classList.add('rounded-circle', 'd-flex', 'align-self-center', 'me-3', 'shadow-1-strong');
+        img.width = 60;
+
+        const divFlexRow = document.createElement('div');
+        divFlexRow.classList.add('d-flex', 'flex-row');
+        divFlexRow.appendChild(img);
+
+        const divText = document.createElement('div');
+        divText.classList.add('pt-1');
+        const title = document.createElement('p');
+        title.classList.add('fw-bold', 'mb-0');
+        title.textContent = room.title;
+        const introduction = document.createElement('p');
+        introduction.classList.add('small', 'text-muted');
+        introduction.textContent = room.introduction;
+        divText.appendChild(title);
+        divText.appendChild(introduction);
+
+        divFlexRow.appendChild(divText);
+
+        const divButton = document.createElement('div');
+        divButton.classList.add('pt-1');
+        const joinButton = document.createElement('button');
+        joinButton.dataset.id = room._id;
+        joinButton.classList.add('join-btn', 'btn', 'btn-info', 'btn-rounded', 'float-end');
+        joinButton.textContent = '입장';
+        divButton.appendChild(joinButton);
+
+        a.appendChild(divFlexRow);
+        a.appendChild(divButton);
+
+        li.appendChild(a);
+        roomList.appendChild(li);
+      });
+
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  });
+});
+
+</script>
+{% endblock %}
+
+{% block script %}
+<script>
+  window.onload = () => {
+    if (new URL(location.href).searchParams.get('error')) {
+      alert(new URL(location.href).searchParams.get('error'));
+    }
+  };
+</script>
+{% endblock %}

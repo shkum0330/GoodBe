@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <main >
+
+    <fieldset id="chatroomForm" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <legend class="mb-3">채팅방 생성</legend>
+      <form action="/room" method="post">
+        <div class="mb-3">
+          <label for="title" class="form-label">방 제목</label>
+          <input type="text" name="title" class="form-control" placeholder="방 제목">
+        </div>
+        <div class="mb-3">
+          <label for="max" class="form-label">수용 인원</label>
+          <input type="number" name="max" class="form-control" placeholder="수용 인원" min="1" value="50">
+          <div id="maxHelp" class="form-text">최대 50명까지 가능합니다.</div>
+        </div>
+        <div class="mb-3" >
+          <label for="introduction" class="form-label">한 줄 소개</label>
+          <input type="text" name="introduction" class="form-control" placeholder="채팅방에 대한 간단한 설명을 작성해주세요">
+        </div>
+   
+        <div>
+          <button type="submit" class="btn btn-primary mt-5">생성</button>
+        </div>
+      </form>
+    </fieldset>
+  </main>
+{% endblock %}
