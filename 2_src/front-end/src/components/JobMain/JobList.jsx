@@ -56,6 +56,7 @@ const JobList = () => {
     }
   };
 return (
+  <div>
   <div
     style={{
       fontFamily: 'Istok Web, sans-serif',
@@ -164,4 +165,4 @@ return (
 );
 };
 
-export default JobList;
+export default JobList; 
