@@ -1,4 +1,4 @@
-package com.goodbe.auth.config.oauth.provider;
+package com.goodbe.auth.oauth2.provider;
 
 import java.util.Map;
 

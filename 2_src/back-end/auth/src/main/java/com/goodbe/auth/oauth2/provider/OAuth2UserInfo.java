@@ -1,6 +1,4 @@
-package com.goodbe.auth.config.oauth.provider;
-
-import java.util.Map;
+package com.goodbe.auth.oauth2.provider;
 
 public interface OAuth2UserInfo {
 

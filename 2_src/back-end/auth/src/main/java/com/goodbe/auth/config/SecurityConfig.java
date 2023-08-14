@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.goodbe.auth.config.oauth.PrincipalOauthUserService;
+import com.goodbe.auth.service.PrincipalOauthUserService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -24,11 +23,18 @@ public class SecurityConfig  {
     @Autowired
     private PrincipalOauthUserService principalOauthUserService;
 
+    @Autowired
+    private CorsConfig corsConfig;
+
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+
+                .cors().configurationSource(corsConfig.corsConfigurationSource()) // CORS 설정 사용
+                .and()
+
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -45,21 +51,19 @@ public class SecurityConfig  {
 
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                // 자체 로그인 하는 경우
+                // 자체 로그인
                 .formLogin()
-//                .loginPage("/loginForm") //미인증자일경우 해당 uri를 호출
-//                .loginProcessingUrl("/login") //login 주소가 호출되면 시큐리티가 낚아 채서(post로 오는것) 대신 로그인 진행 -> 컨트롤러를 안만들어도 된다.
-//                .defaultSuccessUrl("/")
+                //.loginPage("/loginForm") //미인증자일경우 해당 uri를 호출
+                //.loginProcessingUrl("/login") //login 주소가 호출되면 시큐리티가 낚아 채서(post로 오는것) 대신 로그인 진행 -> 컨트롤러를 안만들어도 된다.
+                //.defaultSuccessUrl("/")
 
-                // oauth2 소셜로그인 하는 경우
+                // oAuth2 소셜로그인
                 .and()
                 .oauth2Login()
                 .loginPage("/loginForm")
                 .defaultSuccessUrl("/login/check") // 성공했을때 보내지는 url
                 .userInfoEndpoint()
                 .userService(principalOauthUserService);// 소셜 로그인이 완료된 뒤의 후처리가 필요함 . Tip.코드x, (엑세스 토큰+사용자 프로필 정보를 받아옴)
-
-
         return http.build();
     }
 
