@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 
 const Container1 = styled.div`
+margin-top : 5%;
     position: absolute;
     width: 85%;
     flex-direction : column;
@@ -15,9 +16,12 @@ const Container1 = styled.div`
     padding : auto;
     /* margin:auto; */
     position: relative;
+    
 
 `
-
+const h4 = styled.div`
+  font-size: 1rem;
+`
 const Container2 = styled.div`
     width: 95%;
     padding-left : 10px;
@@ -27,6 +31,7 @@ const Container2 = styled.div`
     background: #F7F7F7;
     /* border: 1px solid #0c0d0d; */
     margin: auto;
+    border-radius: 10px;
 `;
 
 
@@ -88,8 +93,7 @@ const LogoImage2 = styled.img`
   margin-left: -250px;
 
 `;
-const Title = styled.h3`
-  font-family: 'Istok Web';
+const TitleInform = styled.h3`
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -97,7 +101,15 @@ const Title = styled.h3`
   color: #070707;
   justify-content: space-evenly;
 `;
-
+const Title = styled.h3`
+margin-left: 10%;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 47px;
+  color: #070707;
+  justify-content: space-evenly;
+`;
 const Fonts = styled.span`
 font-family: 'Istok Web';
   font-style: normal;
@@ -119,10 +131,11 @@ export default function EduInterest() {
           <Title>
             ✈ 로그인 후 관심 교육을 관리하세요
           </Title>
+          <br/>
           <Container2>
-            <Title>
+            <TitleInform>
               관심 있는 교육 리스트
-            </Title>
+            </TitleInform>
             <Container2_1>
               <Container3>
                 <AddButton>+ 관심있는 교육 추가</AddButton>

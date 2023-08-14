@@ -3,14 +3,22 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 
+const Container1 = styled.div`
+  width : 80%;
+  padding : 10px;
+  height: auto;
+  margin-top : 10px;
+  margin-left : 15%;
+  /* border: 1px solid black; */
+`
 const VideoCard = styled.div`
-  border: 1px solid #ccc;
+  border: 1px solid #ffffffd0;
   padding: 10px;
   box-sizing: border-box;
   cursor: pointer;
-
+  background-color: #fffffff8;
   &:hover {
-    background-color: #f0f0f0;
+    /* background-color: #ffffffed; */
   }
 
   img {
@@ -18,16 +26,29 @@ const VideoCard = styled.div`
   }
 
   h3 {
-    margin: 10px 0;
-    font-size: 16px;
-    color: #333;
+    margin-top: 10px;
+    font-size: 1rem; /* 조금 작은 글씨 크기 */
+    font-weight: bold;
+    color: #2121c8d0;
+    text-decoration: none; /* 밑줄 없음 */
   }
-`;
+  h4 {
+    margin-top: 10px;
+    font-size: 1.5rem; /* 조금 작은 글씨 크기 */
+    font-weight: bold;
+    color: #0000ffbe;
+    text-decoration: none; /* 밑줄 없음 */
+  }
+`
+;
+
 const VideoRecommendWrapper = styled.div`
-  margin: 30px;
+  width: auto;
   display: flex;
-  justify-content: space-between;
-  position: absolute;
+  justify-content: center;
+  align-items: center; /* 중앙 정렬 */
+  margin-top: 20px;
+  /* border : 1px solid black; */
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
@@ -35,8 +56,8 @@ const VideoRecommendWrapper = styled.div`
 `;
 
 const LeftVideoCard = styled(VideoCard)`
-  width: 50%;
-  
+  width: 55%;
+
   @media (max-width: 768px) {
     width: 100%;
     margin-bottom: 20px;
@@ -44,53 +65,79 @@ const LeftVideoCard = styled(VideoCard)`
 `;
 
 const RightVideoCard = styled(VideoCard)`
-  width: 50%;
+  width: 55%; /* 오른쪽 썸네일 크기를 늘림 */
 
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
-
+function truncateText(text, maxLength) {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '...';
+  }
+  return text;
+}
 
 function VideoRecommend() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    // YouTube API 요청을 보내고 결과를 받아옵니다.
-    const apiKey = 'AIzaSyC2ZUra2a_fg_lpD3zFO8OoFaM7s1BZ-Ac';
+    const apiKey = 'YOUR_YOUTUBE_API_KEY'; // 여기에 본인의 YouTube API 키를 넣어주세요.
     const searchQuery = 'IT코딩 취업후기';
 
-    axios.get(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchQuery}&maxResults=3&part=snippet&type=video`)
-      .then(response => {
+    axios
+      .get(
+        `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchQuery}&maxResults=3&part=snippet&type=video`
+      )
+      .then((response) => {
         setVideos(response.data.items);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching YouTube videos:', error);
       });
   }, []);
 
   return (
-    <VideoRecommendWrapper>
-      {videos.slice(0, 1).map(video => (
-        <LeftVideoCard key={video.id.videoId}>
-          <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank" rel="noopener noreferrer">
-            <img src={video.snippet.thumbnails.medium.url} alt={video.snippet.title} />
-            <h3>{video.snippet.title}</h3>
-          </a>
-        </LeftVideoCard>
-      ))}
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        {videos.slice(1).map(video => (
-          <RightVideoCard key={video.id.videoId}>
-            <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank" rel="noopener noreferrer">
-              <img src={video.snippet.thumbnails.medium.url} alt={video.snippet.title} />
-              <h3>{video.snippet.title}</h3>
+    
+      <Container1>
+      <h2 style={{ fontSize: '2rem', fontWeight: 'bolder' }}>✈요즘 국비 교육</h2>
+      <VideoRecommendWrapper>
+        {videos.slice(0, 1).map((video) => (
+          <LeftVideoCard key={video.id.videoId}>
+            <a
+              href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={video.snippet.thumbnails.medium.url}
+                alt={video.snippet.title}
+              />
+              <h4>{truncateText(video.snippet.title, 20)}</h4>
             </a>
-          </RightVideoCard>
+          </LeftVideoCard>
         ))}
-      </div>
-    </VideoRecommendWrapper>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
+          {videos.slice(1).map((video) => (
+            <RightVideoCard key={video.id.videoId}>
+              <a
+                href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={video.snippet.thumbnails.medium.url}
+                  alt={video.snippet.title}
+                />
+                <h3>{truncateText(video.snippet.title, 20)}</h3>
+              </a>
+            </RightVideoCard>
+          ))}
+        </div>
+      </VideoRecommendWrapper>
+      </Container1>
+   
   );
 }
 

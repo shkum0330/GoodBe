@@ -11,7 +11,7 @@ import EduInterest from '../components/Main/EduInterset';
 import VideoRecommend from '../components/Main/VideoRecommend';
 import LargeLink from '../components/Main/LargeLink';
 import Footer from '../components/common/Footer';
-
+import AdBannerSolo from '../components/AdBanner/AdBannerSolo';
 
 export default function Main() {
   return (
@@ -30,7 +30,7 @@ export default function Main() {
 
       
         <VideoRecommend/>
-        <LargeLink/>
+        <AdBannerSolo/>
         <ChatListSample/>
         <br/>
         <br/>
