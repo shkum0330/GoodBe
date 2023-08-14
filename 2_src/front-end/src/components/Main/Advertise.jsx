@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import AdBanner from '../../assets/main/AdBanner.svg';
 
 const Adimg = styled.img`
-    width: 1000px;
+    width: 80%;
     max-width: 100%; 
     height: auto;
     border-radius: 20px;
+    object-fit: contain;
 `
 
 const Container = styled.div`
