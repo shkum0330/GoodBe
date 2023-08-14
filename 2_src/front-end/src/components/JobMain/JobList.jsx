@@ -92,37 +92,51 @@ return (
         </div>
       ))}
     </div>
-    <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-      {currentItems.map((job, index) => (
-        <div
-          key={job.id}
-          style={{
-            borderBottom: '1px solid #ccc',
-            padding: '10px',
-            backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <p style={{ marginRight: '10px', fontWeight: 'bold' }}>{job.company}</p>
-          <div style={{ flex: 1, textAlign: 'center' }}>
-            <h3 style={{ marginBottom: '5px' }}>{job.title}</h3>
-            <p style={{ marginBottom: '3px' }}>Location: {job.location}</p>
-            <p>Category: {job.category}</p>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <button style={{ backgroundColor: '#A4C3FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', marginBottom: '5px', fontWeight: 'bold', width : '100%'}}>상세보기</button>
-            <button style={{ backgroundColor: '#EBD2FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>채팅방 입장</button>
-            <AiOutlineHeart onClick={() => handleFavoriteClick(job.id)}
-                style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}/>
-            <AiFillHeart onClick={() => handleFavoriteClick(job.id)}
-                style={{ cursor: 'pointer', marginTop: '5px' }}/>
 
+    
+      <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+    {currentItems.map((job, index) => (
+      <div
+        key={job.id}
+        style={{
+          borderBottom: '1px solid #ccc',
+          padding: '10px',
+          backgroundColor: index % 2 === 0 ? 'white' : '#f2f2f2',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <p style={{ marginRight: '10px', fontWeight: 'bold' }}>{job.company}</p>
+        <div style={{ flex: 1, textAlign: 'center' }}>
+          <h3 style={{ marginBottom: '5px' }}>{job.title}</h3>
+          <p style={{ marginBottom: '3px' }}>Location: {job.location}</p>
+          <p>Category: {job.category}</p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <button style={{ backgroundColor: '#A4C3FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', marginBottom: '5px', fontWeight: 'bold', width : '100%'}}>상세보기</button>
+          <button style={{ backgroundColor: '#EBD2FF', color: 'black', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' }}>채팅방 입장</button>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
+              <AiFillHeart
+                onClick={() => handleFavoriteClick(job.id)}
+                style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
+              />
+            ) : (
+              <AiOutlineHeart
+                onClick={() => handleFavoriteClick(job.id)}
+                style={{ cursor: 'pointer', marginTop: '5px' }}
+              />
+            )}
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
+  </div>
+
+
+
 
     {/* 페이지네이션 버튼 */}
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
@@ -143,6 +157,7 @@ return (
           {pageNumber}
         </button>
       ))}
+      </div>
     </div>
   </div>
 

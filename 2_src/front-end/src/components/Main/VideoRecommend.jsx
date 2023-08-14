@@ -2,6 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
+
+const VideoCard = styled.div`
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h3 {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+  }
+`;
 const VideoRecommendWrapper = styled.div`
   margin: 30px;
   display: flex;
@@ -30,26 +51,7 @@ const RightVideoCard = styled(VideoCard)`
   }
 `;
 
-const VideoCard = styled.div`
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
-  cursor: pointer;
 
-  &:hover {
-    background-color: #f0f0f0;
-  }
-
-  img {
-    width: 100%;
-  }
-
-  h3 {
-    margin: 10px 0;
-    font-size: 16px;
-    color: #333;
-  }
-`;
 
 function VideoRecommend() {
   const [videos, setVideos] = useState([]);
