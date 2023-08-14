@@ -11,7 +11,7 @@ const Container1 = styled.div`
     /* align-items: center; */
     left: 50%;
     top: 50%;
-    margin-left : 5%;
+    margin-left : 8%;
     background: #FFFFFF;
     /* border: 1px solid #0c0d0d; */
     padding : 5px;
@@ -22,14 +22,13 @@ const Container2 = styled.div`
     flex-direction : row;
     align-items: center;
     display : flex;
-    height : 150px;
+    height : auto;
     align-items: center;
     left: 50%;
+    border-radius: 10px;
     top: 50%;
-    background: #FFFFFF;
-    /* border: 1px solid #0c0d0d; */
-    padding : 10px;
-    margin : auto;
+    /* background: #e2e2e2de; */
+    
     margin-top : 0;
 `
 
@@ -38,16 +37,19 @@ const Container3 = styled.div`
     flex-direction : column;
     display : flex;
     height : auto;
-    align-items: center;
+    align-items: center;            
     left: 50%;
     top: 50%;
-    background: #FFFFFF;
-    border: 1px solid #e4e4e4;
-    padding : 10px;
+    /* border-radius: 10px; */
+    background: #ffffffde;
+    /* padding : 10px; */
     align-items: center;
     align-content: center;
     margin: auto;
     margin-top: 0;
+    border: 1px solid #d0ccccb4;
+    border-bottom-color : white;
+    border-top-color: white;
 `
 
 const Container4 = styled.div`
@@ -56,14 +58,11 @@ const Container4 = styled.div`
     justify-content: center; 
     border-radius: 10px;
     display : flex;
-    height : 10px;
     left: 50%;
     top: 50%;
     background: #FFFDD9;
     /* border: 1px solid #0c0d0d; */
-    padding : 10px;
-    margin : auto;
-    margin-top : 0;
+
     
 `
 const LogoImage1 = styled.img`
@@ -74,13 +73,13 @@ const LogoImage1 = styled.img`
   z-index: 1;
 `;
 const LogoImage2 = styled.img`
-  max-width: 150px;
+  max-width: 100px;
   height: auto;
   /* display: flex; */
   margin: auto;
   z-index: 2;
   position : absolute;
-  margin-top : 100px;
+  margin-top : 110px;
   margin-left: -250px;
 
 `;
@@ -95,8 +94,8 @@ const Title = styled.h3`
 `;
 
 const RedSmallText = styled.span`
-  font-size: 12px;
-  color: red;
+  font-size: 1rem;
+  color: #B26000;
   font-weight: bold;
   font-family: 'Istok Web';
   align-items: center;
@@ -131,11 +130,13 @@ export default function EnterpriseIntroduction() {
     </Container2>
     <Container2>
     <Container3>
-        <h_2>삼성전자</h_2>
+        <h6 style={{
+            fontWeight : 'bold',
+        }}>삼성전자</h6>
         
-        <h_3>
+        <h6>
             대기업
-        </h_3>
+            </h6>
         <Container4>
             <RedSmallText>
             FICS 반도체 및 관련장비
@@ -143,11 +144,13 @@ export default function EnterpriseIntroduction() {
         </Container4>
     </Container3>
     <Container3>
-        <h_2>삼성전자</h_2>
+    <h6 style={{
+            fontWeight : 'bold',
+        }}>삼성전자</h6>
         
-        <h_3>
+        <h6>
             대기업
-        </h_3>
+            </h6>
         <Container4>
             
             <RedSmallText>
@@ -156,11 +159,13 @@ export default function EnterpriseIntroduction() {
         </Container4>
     </Container3>
     <Container3>
-        <h_2>삼성전자</h_2>
+    <h6 style={{
+            fontWeight : 'bold',
+        }}>삼성전자</h6>
         
-        <h_3>
+        <h6>
             대기업
-        </h_3>
+            </h6>
         <Container4>
             <RedSmallText>
             FICS 반도체 및 관련장비

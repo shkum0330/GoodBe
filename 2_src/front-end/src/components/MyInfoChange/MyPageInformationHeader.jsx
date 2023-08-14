@@ -31,7 +31,7 @@ const TitleSmall = styled.p`
     color: #000;
     text-align: center;
     font-family: Istok Web;
-    font-size: 40px;
+    font-size: 30px;
     font-style: normal;
     line-height: normal;
     text-transform: capitalize;
@@ -53,50 +53,50 @@ const FirstBox = styled.div`
     display: flex;
     align-items: center;
     background: #FFF;
-    padding: 10px;
-    margin-bottom: 10px;
     width: 1000px; 
-    /* border: 1px solid #64686C; */
     background: #FFF;
-    height : 350px;
-    
+    height : auto;
+    margin-bottom: 20px;
+    /* border: 1px solid #64686C; */
 `
 const SecondBox = styled.div`
     display: flex;
     background: #FFF;
     width: 100%; 
     margin: auto;
-    /* border: 1px solid #64686C; */
     padding-top: 20px;
     padding-left: 20px;
     background: #FFF;
     flex-direction: column;
     height : 100%;
+    margin-bottom: 20px;
+    /* border: 1px solid #64686C; */
 `   
 const ThirdBox = styled.div`
     display: flex;
     background: #FFF;
     width: 100%; 
-    /* border: 1px solid #64686C; */
     background: #FFF;
     height : auto;
+    /* border: 1px solid #64686C; */
+
 `
 const FourthBox = styled.div`
     display: flex;
     background: #FFF;
     width: 90%; 
-    /* border: 1px solid #64686C; */
     background: #FFF;
     height : auto;
     flex-direction: column;
+    margin-top: 10px;
 `
 
 const ContentBox = styled.div`
     display: flex;
     background: #FFF;
     padding: 10px;
-    /* margin : auto; */
-    /* margin-bottom: 10px; */
+    margin : auto;
+    margin-bottom: 30px;
     width: 1000px; 
     border-radius: 10px;
     border: 1px solid #64686C;
@@ -108,8 +108,6 @@ const ContentBox = styled.div`
 const ContentBoxDetailUnderlined = styled.div`
     display: flex;
     background: #FFF;
-    /* padding: 10px; */
-    /* padding-top : auto; */
     padding-bottom: 0%;
     width: 95%; 
     background: #FFF;
@@ -129,7 +127,6 @@ const SeparatedContentBox2 = styled.div`
     display: flex;
     background: #FFF;
     padding-top: 30px;
-    /* margin-bottom: 10px; */
     width: 60%; 
     background: #FFF;
     height : 15px;
@@ -142,8 +139,27 @@ const SeparatedContentBox3 = styled.div`
     background: #FFF;
     height : auto;
 `
+const SaveButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -40px; /* 조정할 값 */
+    margin-bottom: 30px;
+`;
 
-
+const ReviseButton = styled.button`
+    border : rgba(85, 143, 255, 0.65);
+    border-radius: 10px;
+    background: rgba(85, 143, 255, 0.65);
+    color: #FFF;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    padding: 5px;
+`
 const MyPageInformationHeader = () => {
 
     const [userInfo, setUserInfo] = useState(null);
@@ -163,49 +179,6 @@ const MyPageInformationHeader = () => {
         setUserInfo(updatedUserInfo);
     };
 
-
-    const handleSaveChanges = async () => {
-        try {
-            const memberUpdateData = {
-                profileImage: userInfo.profileImage || null,
-                email: userInfo.email,
-                name: userInfo.name,
-                nickname: userInfo.nickname,
-                birth: userInfo.birth,
-                address: {
-                    city: userInfo.address.city,
-                    street: userInfo.address.street,
-                    zipcode: userInfo.address.zipcode
-                },
-                gender: userInfo.gender,
-                favoriteCompany: userInfo.favoriteCompany,
-                favoriteJob: userInfo.favoriteJob
-            };
-    
-            const formData = new FormData();
-            formData.append('memberUpdateRequest', JSON.stringify(memberUpdateData));
-    
-            try {
-                const response = await axios.post(
-                    'http://localhost:8080/api/mypage/memberinfo/update',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data' // 이 부분은 유지해주세요
-                        }
-                    }
-                );
-    
-                console.log('User information updated:', response.data);
-                // setUserInfo(response.data);
-            } catch (error) {
-                console.error("수정 실패:", error);
-                alert("수정 실패");
-            }
-        } catch (error) {
-            console.error("오류:", error);
-        }
-    };
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
@@ -221,11 +194,59 @@ const MyPageInformationHeader = () => {
         fetchUserInfo();
     }, []);
 
+    const handleSaveChanges = async () => {
+        try {
+            const memberUpdateData = {
+                name: userInfo.name,
+                nickname: userInfo.nickname,
+                birth: userInfo.birth,
+                address: {
+                    city: userInfo.address.city,
+                    street: userInfo.address.street,
+                    zipcode: userInfo.address.zipcode
+                },
+                gender: userInfo.gender,
+                favoriteCompany: userInfo.favoriteCompany,
+                favoriteJob: userInfo.favoriteJob
+            };
+
+            const formData = new FormData();
+            formData.append('memberUpdateRequest', new Blob([JSON.stringify(memberUpdateData)], {
+                type: "application/json"
+            }));
+
+            try {
+                const response = await axios.post(
+                    'http://localhost:8080/api/mypage/memberinfo/update',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data' 
+                        }
+                    }
+                );
+
+                console.log('User information updated:', response.data);
+                alert('정상적으로 수정되었습니다!')
+                // setUserInfo(response.data);
+            } catch (error) {
+                console.error("수정 실패:", error);
+                alert("수정 실패");
+            }
+        } catch (error) {
+            console.error("오류:", error);
+        }
+    };
+
+
+
     const containerStyle = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        minHeight: '90vh'
+        minHeight: '90vh',
+        maxWidth: '1000px',
+        marginLeft : '350px',
     };
     const imgStyle = {
         width: '350px',
@@ -236,6 +257,9 @@ const MyPageInformationHeader = () => {
 
     return (
         <div style={containerStyle}>
+            <div>
+
+  
             <Title>개인 정보</Title>
             <TitleDetail>맞춤 교육 및 채용공고정보를 제공하기 위해 사용되는 나와 내 환경설정에 관한 정보입니다.</TitleDetail>
             <br/>
@@ -256,9 +280,7 @@ const MyPageInformationHeader = () => {
                         프로필 정보도 한눈에 확인할 수도 있습니다.
                         </DetailSmall>
                         </FourthBox>
-                    
                     </SecondBox>
-            
              <img src={Cyber_security_emoji} alt="myprofile" style={imgStyle} /> 
             </FirstBox>
 
@@ -352,8 +374,7 @@ const MyPageInformationHeader = () => {
         </ContentBox>
 
 
-        <br/>
-
+        
 
         <ContentBox>
 
@@ -477,10 +498,12 @@ const MyPageInformationHeader = () => {
         </ContentBox>
 
         <br/>
-        <button onClick={handleSaveChanges}>수정하기
-        </button>
+        <SaveButtonContainer>
+            <ReviseButton onClick={handleSaveChanges}>수정하기</ReviseButton>
+        </SaveButtonContainer>
 
 
+        </div>
         </div>
     );
 };

@@ -11,9 +11,9 @@ import pymysql
 job_api_path = "/Users/sehyun/Desktop/job_api_key.txt"
 # db 연결
 # db connection
-conn = pymysql.connect(host = "localhost",port=3306,
-                       user = "root",
-                       password = "1234",
+conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
+                       user = "ssafy",
+                       password = "jinajjang1128!",
                        database = "test",
                        charset = "utf8")
 

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import styled from 'styled-components';
 import { AiOutlineLike, AiOutlineEye } from 'react-icons/ai';
-import { IoMdChatboxes } from 'react-icons/io';
+import { BiMessageDots } from 'react-icons/bi';
 import React, { useEffect, useState } from 'react';
 
 
@@ -14,7 +14,8 @@ const BoardContainer = styled.div`
     background: #FFF;
     margin-left: 350px;
     margin-top: 30px;
-    width: 1059px;
+    width: 600px;
+    margin-bottom: 30px;
 
 `
 const BoardType = styled.p`
@@ -50,6 +51,7 @@ const EduDate = styled.p`
 
 const BoardBox = styled.div`
     padding: 20px;
+
 `
 const IconContainer = styled.div`
     display: flex;
@@ -121,7 +123,7 @@ const MyBoardContainer = () => {
               <IconContainer>
                 <AiOutlineLike size={26} />
                 <LikeCount>{item.likes}개</LikeCount>
-                <IoMdChatboxes size={26} />
+                <BiMessageDots size={26} />
                 <CommentCount>{item.comments}개</CommentCount>
                 <AiOutlineEye size={26} />
                 <ViewCount>{item.hits}개</ViewCount>

@@ -49,8 +49,9 @@ const Container = styled.div`
   grid-gap: 10px; 
   align-items: center;
   justify-content: center;
-  margin-left: 350px;
+  margin-left: 400px;
   width: 700px;
+  margin-bottom: 100px;
 `;
 
 const EduItemContainer = styled.div`

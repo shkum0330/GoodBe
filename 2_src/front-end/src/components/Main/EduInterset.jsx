@@ -4,16 +4,17 @@ import styled from 'styled-components';
 
 const Container1 = styled.div`
     position: absolute;
-    width: 90%;
+    width: 85%;
     flex-direction : column;
-    display : flex;
+    /* display : flex; */
     height : 350px;
+    margin-left : 8%;
     /* align-items: center; */
-    margin-left : 5%;
-    margin-top : 5%;
     background: #FFFFFF;
     /* border: 1px solid #0c0d0d; */
-    padding : 5px;
+    padding : auto;
+    /* margin:auto; */
+
 `
 
 const Container2 = styled.div`
@@ -24,6 +25,7 @@ const Container2 = styled.div`
     align-items: center;
     background: #F7F7F7;
     /* border: 1px solid #0c0d0d; */
+    margin: auto;
 `;
 
 
@@ -33,6 +35,7 @@ const Container2_1 = styled.div`
     flex-direction: row; /* 가로로 나열하도록 설정 */
     background: #F7F7F7;
     /* border: 1px solid #0c0d0d; */
+    margin: auto;
     
 `;
 

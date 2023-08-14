@@ -1,29 +1,20 @@
 package com.goodbe.auth.controller;
 
-import com.nimbusds.jose.shaded.json.JSONObject;
+import com.goodbe.auth.config.oauth.PrincipalOauthUserService;
+import com.goodbe.auth.jwt.TokenInfo;
+import com.goodbe.auth.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.goodbe.auth.config.auth.PrincipalDetails;
-import com.goodbe.auth.config.oauth.provider.OAuth2UserInfo;
 import com.goodbe.auth.domain.Role;
-import com.goodbe.auth.domain.User;
-import com.goodbe.auth.repository.UserRepository;
+import com.goodbe.auth.domain.Member;
+import com.goodbe.auth.repository.MemberRepository;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.LocalDateTime;
 
 
@@ -31,12 +22,37 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final MemberService memberService;
+    private final PrincipalOauthUserService principalOauthUserService;
 
-    @GetMapping("/auth/{id}")
-    public String get(@PathVariable String id) {
-        return id;
+    @GetMapping("/login/google")
+    public String googleLogin(){
+        return "redirect:/oauth2/authorization/google";
+    }
+
+    @GetMapping("/login/check")
+    public String getToken(){
+        return "redirect:/oauth2/authorization/google";
+    }
+
+
+
+    //@GetMapping("/auth/{id}")
+    //public String get(@PathVariable String id) {
+    //    return id;
+    ///}
+
+    @GetMapping("/test")
+    public String test(){
+        memberService.login("gowns0204@gmail.com","gowns0204@gmail.com");
+        return "redirect:/test/gogo";
+    }
+
+    @GetMapping("/test/gogo")
+    public String testGogo(){
+        return "음 그렇군";
     }
 
     @ResponseBody
@@ -48,11 +64,11 @@ public class AuthController {
         //방법 1
         System.out.println("/test/login =============================");
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("authentication:" + principalDetails.getUser());
+        System.out.println("authentication:" + principalDetails.getMember());
 
 
         //방법 2
-        System.out.println("userDetails:" + userDetails.getUser());
+        System.out.println("userDetails:" + userDetails.getMember());
 
         return "세션 정보 확인";
     }
@@ -76,7 +92,7 @@ public class AuthController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "socialLogin success";
     }
 
     @ResponseBody
@@ -108,16 +124,16 @@ public class AuthController {
 //    }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute User user){
-        user.setRole(Role.USER);
+    public String join(@ModelAttribute Member member){
+        member.setRole(Role.USER);
         //user.setRole("USER");
-        user.setCreateDate(LocalDateTime.now());
+        member.setCreateDate(LocalDateTime.now());
 
-        String rawPassword = user.getPassword();
+        String rawPassword = member.getPassword();
         String encPassword = passwordEncoder.encode(rawPassword);
 
-        user.setPassword(encPassword);
-        userRepository.save(user);
+        member.setPassword(encPassword);
+        memberRepository.save(member);
 
         return "redirect:/loginForm";
     }

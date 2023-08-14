@@ -13,8 +13,8 @@ export default function MyInfoChange() {
         <SideBar/>
         <Navbar/>
         <MyPageInformationHeader/>
-        <UserInfo/>
-        <MyPageChangeButton/>
+        {/* <UserInfo/>
+        <MyPageChangeButton/> */}
         <Footer/>
 
     </div>

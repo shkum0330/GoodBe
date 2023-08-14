@@ -31,7 +31,20 @@ export default function Main() {
         <VideoRecommend/>
         <LargeLink/>
         <ChatListSample/>
-        
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <Footer/>
     </div>
   )
