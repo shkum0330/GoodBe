@@ -14,39 +14,19 @@ let TabContentTitle = styled.div`
 
 `
 
-const TabList=styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`
-
-const Tab= styled.div`
-    text-align: center;
-    font-family: Istok Web;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    text-transform: capitalize;
-
-    width:300px;
-`
-
-
-
-
-
 const TabItem = styled.li`
-    text-align: center;
+    text-align: left;
     font-family: Istok Web;
-    font-size: 20px;
+    font-size: 23px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    cursor: pointer;
 
   &.selected {
-    color: #4AA9FF;
+    background-color: #4AA9FF; /* 선택된 탭의 배경색 */
+    color: #fff; /* 선택된 탭의 텍스트 색상 */
   }
 
   &.not-selected {
@@ -55,25 +35,24 @@ const TabItem = styled.li`
   }
 `;
 
+
 const ArticleList = styled.table`
-margin:10px 10px 10px 10px;
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
   frame:void;
   align-items: center;
-  
-//   border: 1px solid black;
-
+  width: 100%;
+  margin-bottom : 100px;
   
 `
 const Article = styled.tr`
   width: 40%;
   height: 200px;
   padding: 20px;
-  border: 1px solid #919191;
-  margin:10px;
-  border-radius: 10px;
+  border-top: 1px solid #919191;
+  margin : 30px;
+  margin-bottom : 1px;
   display:flex;
   flex-direction: row;
 
@@ -83,7 +62,7 @@ const Title = styled.h2`
 height: 20%;
 color: #000;
 font-family: Istok Web;
-font-size: 20px;
+font-size: 18px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
@@ -121,12 +100,54 @@ const Left = styled.div`
   width:75%;
 `
 
-const Nav=styled.ul`
-  width: 90%;
+const Nav=styled.div`
+  width: 47%;
   justify-content: space-between;
-
   display: flex;
-  flex-direction: row;
+  margin-left : 180px;
+  margin-top: 30px;
+//   margin: 0 auto; 
+`
+
+const Tab = styled.a`
+  text-align: center;
+  font-family: Istok Web;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+
+  &.selected {
+    color: #4AA9FF;
+  }
+
+  &.not-selected {
+    color: #919191;
+  }
+
+`;
+
+const Line = styled.hr`
+    width: 76%;
+    height: 0px;
+    flex-shrink: 0;
+    stroke-width: 3px;
+    stroke: #B8B8B8;
+    // margin-left : 30px;
+    margin: 0 auto; 
+    margin-top: 10px;
+`
+const WriteButton = styled.button`
+    color : #FFF;
+    border : none;
+    border-radius: 5px;
+    background-color : #A4C3FF;
+    padding: 5px 13px;
+
 `
 
 function TabContent(props) {
@@ -134,7 +155,12 @@ function TabContent(props) {
         props.setOnOff(true);
     })
     if (props.clickedTab === 0) {
-        return (<TabContentTitle className="mt-5">
+        
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+       
+
+        <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) => (
@@ -152,9 +178,13 @@ function TabContent(props) {
             </ArticleList>
 
 
-        </TabContentTitle>)
+        </TabContentTitle>
+  
+        </div>)
     } else if (props.clickedTab === 1) {
-        return (<TabContentTitle className="mt-5">
+        return (
+        <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+        <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) =>
@@ -171,9 +201,12 @@ function TabContent(props) {
                     ) : null
                 )}
             </ArticleList>
-        </TabContentTitle>)
+        </TabContentTitle>
+        </div>)
     } else if (props.clickedTab === 2) {
-        return (<TabContentTitle className="mt-5">
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+                <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) =>
@@ -189,11 +222,14 @@ function TabContent(props) {
                     ) : null
                 )}
             </ArticleList>
-        </TabContentTitle>)
+        </TabContentTitle>
+        </div>)
     }
     
     else if (props.clickedTab === 3) {
-        return (<TabContentTitle className="mt-5">
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+            <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) =>
@@ -209,9 +245,13 @@ function TabContent(props) {
                     ) : null
                 )}
             </ArticleList>
-        </TabContentTitle>)
+        </TabContentTitle>
+        </div>)
     } else if (props.clickedTab === 4) {
-        return (<TabContentTitle className="mt-5">
+
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+            <TabContentTitle className="mt-5">
             <ArticleList>
                 {data.map((item) =>
                     item.type === 4 ? (
@@ -226,53 +266,47 @@ function TabContent(props) {
                     ) : null
                 )}
             </ArticleList>
-        </TabContentTitle>)
+        </TabContentTitle>
+        </div>)
     }
 };
 
-export default function BoardList() {
 
+
+export default function BoardList() {
     let [clickedTab, setClickedTab] = useState(0);
     let [onOff, setOnOff] = useState(false);
 
-    
-
     return (
-
-        <div style={{
-            display : 'flex',
-            alignItems : 'center',
-            flexDirection : 'column'
-            
-
-        }}  >
-            <Nav class="nav nav-underline" variant="tabs" defaultActiveKey="0">
-                <TabItem class="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
-                    <a aria-current="page" href="#" className={0 === clickedTab ? 'selected' : 'not-selected'}>전체</a>
+        <div >
+            <Nav className="nav nav-underline" variant="tabs" defaultActiveKey="0">
+                <TabItem className="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
+                    <Tab aria-current="page" href="#" className={0 === clickedTab ? 'selected' : 'not-selected'}>전체</Tab>
                 </TabItem>
-                <TabItem class="nav-item" eventKey="1" onClick={() => { setOnOff(false); setClickedTab(1) }}>
-                    <a class="nav-link" href="#" className={1 === clickedTab ? 'selected' : 'not-selected'}>취업준비</a>
+                
+                <TabItem className="nav-item" eventKey="1" onClick={() => { setOnOff(false); setClickedTab(1) }}>
+                    <Tab className={1 === clickedTab ? 'selected' : 'not-selected'}>취업준비</Tab>
                 </TabItem>
-                <TabItem class="nav-item" eventKey="2" onClick={() => { setOnOff(false); setClickedTab(2) }}>
-                    <a class="nav-link" href="#" className={2 === clickedTab ? 'selected' : 'not-selected'}>국비교육</a>
+                <TabItem className="nav-item" eventKey="2" onClick={() => { setOnOff(false); setClickedTab(2) }}>
+                    <Tab className={2 === clickedTab ? 'selected' : 'not-selected'}>국비교육</Tab>
                 </TabItem>
-                <TabItem class="nav-item" eventKey="3" onClick={() => { setOnOff(false); setClickedTab(3) }}>
-                    <a class="nav-link" href="#" className={3 === clickedTab ? 'selected' : 'not-selected'}>학습공유</a>
+                <TabItem className="nav-item" eventKey="3" onClick={() => { setOnOff(false); setClickedTab(3) }}>
+                    <Tab className={3 === clickedTab ? 'selected' : 'not-selected'}>학습공유</Tab>
                 </TabItem>
-                <TabItem class="nav-item" eventKey="4" onClick={() => { setOnOff(false); setClickedTab(4) }}>
-                    <a class="nav-link" href="#" className={4 === clickedTab ? 'selected' : 'not-selected'}>취뽀후기</a>
+                <TabItem className="nav-item" eventKey="4" onClick={() => { setOnOff(false); setClickedTab(4) }}>
+                    <Tab className={4 === clickedTab ? 'selected' : 'not-selected'}>취뽀후기</Tab>
                 </TabItem>
-
+            <WriteButton>글쓰기</WriteButton>
             </Nav>
+        <Line />
 
             <CSSTransition in={onOff} classNames="show" timeout={1000}>
                 <TabContent clickedTab={clickedTab} setOnOff={setOnOff} />
             </CSSTransition>
-
-
-
         </div>
-    )
+    );
 }
+
+
 
 
