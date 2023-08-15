@@ -7,8 +7,8 @@ import pymysql
 
 # api key 경로 설정
 #job_api_path =
-# job_api_path = r"C:\SH\gpt\job_api_key.txt"
-job_api_path = "/Users/sehyun/Desktop/job_api_key.txt"
+job_api_path = r"C:\SH\gpt\job_api_key.txt"
+# job_api_path = "/Users/sehyun/Desktop/job_api_key.txt"
 # db 연결
 # db connection
 conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
@@ -19,7 +19,22 @@ conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
 
 # 데이터 저장할 리스트
 auth_no_list = deque()
-job_df = pd.DataFrame(columns=['id', 'company_id', 'company_data', 'company_url', 'job_content', 'end_date', 'sal', 'job_data'])
+job_df = pd.DataFrame(columns=["id", # 공고 아이디
+                               "wanted_title", # 공고 제목 wantedTitle
+                               "company_name", # 회사 이름 corpNm
+                               "company_url", # 회사 링크 homePg
+                               "degree", # 채용시 필요한 학력 eduNm
+                               "major", # 전공 major
+                               "address", # 근무지 위치 corpAddr
+                               "work_address", # 근무 예정지 workRegion
+                               "preference", # 우대 조건 pfCond, etcPfCond
+                               "career", # 신입 / 경력 enterTpNm
+                               "certificate", # 필요 자격증 certificate
+                               "job_content", # 상세내용 jobCont
+                               "sal", # 급여 salTpNm
+                               "employment_form", # 고용 형태 workdayWorkhrCont
+                               "end_date" # 접수 마감일 receiptCloseDt
+                               ])
 
 occupation = ['023', # 컴퓨터시스템
               '024', # 소프트웨어
@@ -55,71 +70,103 @@ def get_job_data(url):
     soup = BeautifulSoup(req.text, 'xml')
 
     id = wanted_auth_no
-    company_id = soup.find('corpNm').text
 
+    # 공고 제목
     try:
-        reper_nm = soup.find('reperNm').text
+        company_name = soup.find("wantedTitle").text
     except:
-        reper_nm = ' '
-    try:
-        tot_psncnt = soup.find('totPsncnt').text
-    except:
-        tot_psncnt = ' '
-    try:
-        capital_amt = soup.find('capitalAmt').text
-    except:
-        capital_amt = ' '
-    try:
-        yr_sales_amt = soup.find('yrSalesAmt').text
-    except:
-        yr_sales_amt = ' '
-    try:
-        ind_tpCd_nm = soup.find('indTpCdNm').text
-    except:
-        ind_tpCd_nm = ' '
-    company_data = reper_nm + ',' + tot_psncnt +','+ capital_amt +','+ yr_sales_amt +','+ ind_tpCd_nm
-
-    try:
-        company_url = soup.find('homePg').text
-    except:
-        company_url = ' '
-
-    try:
-        job_content = soup.find('jobCont').text
-    except:
-        job_content = ' '
-
-    try:
-        end_date = soup.find('receiptCloseDt').text
-    except:
-        end_date = ' '
+        company_name = ""
     
+    # 회사 이름
     try:
-        sal = soup.find('salTpNm').text
+        wanted_title = soup.find("corpNm").text
     except:
-        sal = ' '
+        wanted_title = ""
 
+    # 회사 링크
     try:
-        major = soup.find('major').text
+        company_url = soup.find("homePg").text
     except:
-        major = ' '
+        company_url = ""
+
+    # 채용시 필요한 학력
     try:
-        certificate = soup.find('certificate').text
+        degree = soup.find("eduNm").text
     except:
-        certificate = ' '
+        degree = ""
+
+    # 전공
     try:
-        pfCond = soup.find('pfCond').text
+        major = soup.find("major").text
     except:
-        pfCond = ' '
+        major = ""
+
+    # 회사 주소
     try:
-        etcPfCond = soup.find('etcPfCond').text
+        address = soup.find("corpAddr").text
     except:
-        etcPfCond = ' '
-    job_data = major + ',' + certificate + ',' + pfCond +','+ etcPfCond
+        address = ""
+
+    # 근무 예정지
+    try:
+        work_address = soup.find("workRegion").text
+    except:
+        work_address = ""
+
+    # 우대조건
+    try:
+        pfCond = soup.find("pfCond").text
+    except:
+        pfCond = ""
+    try:
+        etcPfCond = soup.find("etcPfCond").text
+    except:
+        etcPfCond = ""
+    preference = pfCond + "," + etcPfCond
+
+
+    # 신입 / 경력
+    try:
+        career = soup.find("enterTpNm").text
+    except:
+        career = ""
     
-    job_data_list = [id, company_id, company_data, company_url, job_content, end_date, sal, job_data]
+    # 신입 / 경력
+    try:
+        certificate = soup.find("certificate").text
+    except:
+        certificate = ""
+
+    # 상세 내용
+    try:
+        job_content = soup.find("jobCont").text
+    except:
+        job_content = ""
+
+    # 급여
+    try:
+        sal = soup.find("salTpNm").text
+    except:
+        sal = ""
     
-    print(job_data_list)
+    # 고용 형태
+    try:
+        employment_form = soup.find("workdayWorkhrCont").text
+    except:
+        employment_form = ""
+
+    # 접수 마감일
+    try:
+        end_date = soup.find("receiptCloseDt").text
+    except:
+        end_date = ""
+    
+    
+    job_data_list = [id, company_name, wanted_title, company_url, degree,major,
+                     address, work_address, preference, career, certificate, job_content, 
+                     sal, employment_form, end_date]
+    
+    print(company_name)
 
     return job_data_list
 
@@ -136,18 +183,27 @@ for wanted_auth_no in auth_no_list:
 
 curs = conn.cursor()
 
+print("데이터 수집 완료")
+
 # db insert
 for i in range(len(job_df)):
     id = job_df.id.loc[i]
-    company_id = job_df.company_id.loc[i]
-    company_data = job_df.company_data.loc[i]
+    company_name = job_df.company_name.loc[i]
+    wanted_title = job_df.wanted_title.loc[i]
     company_url = job_df.company_url.loc[i]
+    degree = job_df.degree.loc[i]
+    major = job_df.major.loc[i]
+    address = job_df.address.loc[i]
+    work_address = job_df.work_address.loc[i]
+    preference = job_df.preference.loc[i]
+    career = job_df.career.loc[i]
+    certificate = job_df.certificate.loc[i]
     job_content = job_df.job_content.loc[i]
-    end_date = job_df.end_date.loc[i]
     sal = job_df.sal.loc[i]
-    job_data = job_df.job_data.loc[i]
+    employment_form = job_df.employment_form.loc[i]
+    end_date = job_df.end_date.loc[i]
 
-    sql2 = f"insert into job_post values('{id}','{company_id}','{company_data}','{company_url}','{job_content}','{end_date}','{sal}','{job_data}')"
+    sql2 = f"insert into job_post values('{id}','{company_name}','{wanted_title}','{company_url}','{degree}','{major}','{address}','{work_address}','{preference}','{career}','{certificate}','{job_content}','{sal}','{employment_form}','{end_date}')"
 
     try:
         curs.execute(sql2)

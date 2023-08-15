@@ -5,8 +5,8 @@ import xml.etree.ElementTree as ET
 
 # 경로
 # job_api_path = r"edu_api_key.txt"
-# edu_api_path = r"C:\SH\gpt\edu_api_key.txt"
-edu_api_path ="/Users/sehyun/Desktop/edu_api_key.txt"
+edu_api_path = r"C:\SH\gpt\edu_api_key.txt"
+# edu_api_path ="/Users/sehyun/Desktop/edu_api_key.txt"
 
 # api key
 with open(edu_api_path, "r") as f:
@@ -20,15 +20,27 @@ conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
                        charset = "utf8")
 
 # 데이터 집어넣을 곳
-edu_df = pd.DataFrame(columns=['trprId', 'TITLE', 'TITLE_LINK', 'SUB_TITLE', 'SUB_TITLE_LINK', 'TEL_NO', 'ADDRESS', 'content'])
-# trprId : 훈련과정 ID
-# TITLE : 훈련과정 이름
-# TITLE_LINK : 훈련과정 url
-# SUB_TITLE : 훈련기관 이름
-# SUB_TITLE_LINK : 훈련기관 url
-# TEL_NO : 훈련기관 전화번호
-# ADDRESS : 훈련기관 주소
-# content : 훈련 정보
+edu_df = pd.DataFrame(columns=["id", # 고유번호 trprId
+                               "title", # 교육 제목 TITLE
+                               "title_link", # 교육 링크 TITLE_LINK
+                               "title_icon", # 교육 아이콘 TITLE_ICON
+                               "company", # 교육기관 SUB_TITLE
+                               "company_link", # 교육기관 링크 SUB_TITLE_LINK
+                               "address", # 교육 장소 ADDRESS
+                               "tel", # 전화번호 TEL_NO
+                               "period", # 교육 기간 TRA_END_DATE + TRA_START_DATE
+                               "onoff", # 온/오프라인 srchTraGbn
+                                    # 'M1001' : 일반과정
+                                    # 'M1005' : 인터넷과정
+                                    # 'M1010' : 혼합과정(BL)
+                                    # 'M1014' : 스마트혼합훈련
+                               "expense", # 교육비 COURSE_MAN
+                               "real_expense", # 실제 훈련비 REAL_MAN
+                               "content", # 교육 내용 CONTENTS
+                               "detail", # 디테일 
+                               "man", # 정원 YARD_MAN
+                               "end_date" # 모집 마감일
+                               ])
 
 page_size = 100
 
@@ -44,35 +56,108 @@ for page in range(1,1000):
     for i in root.findall('.//scn_list'): 
         cnt += 1
         edu = {}
+
+        # 고유 id
         try:
-            edu["trprId"] = i.find("trprId").text
+            edu["id"] = i.find("trprId").text
         except:
-            edu["trprId"] = " "
+            edu["id"] = ""
+        
+        # 교육 제목
         try:
             edu["title"] = i.find("title").text
         except:
-            edu["title"] = " "
+            edu["title"] = ""
+        
+        # 교육 제목 링크
         try:
             edu["title_link"] = i.find("titleLink").text
         except:
-            edu["title_link"]= " "
+            edu["title_link"]= ""
+
+        # 교육 아이콘
         try:
-            edu["sub_title"] = i.find("subTitle").text
+            edu["title_icon"] = i.find("TITLE_ICON").text
         except:
-            edu["sub_title"] = " "
+            edu["title_icon"]= ""
+        
+        # 교육 기관
         try:
-            edu["sub_title_link"] = i.find("subTitleLink").text
+            edu["company"] = i.find("subTitle").text
         except:
-            edu["sub_title_link"] = " "
+            edu["company"] = ""
+        
+        # 교육 기관 링크
         try:
-            edu["tel_no"] = i.find("telNo").text
+            edu["company_link"] = i.find("subTitleLink").text
         except:
-            edu["tel_no"] = " "
+            edu["company_link"] = ""
+
+        # 교육 장소
         try:
-            edu["address"] = i.find("address").text
+            edu["address"] = i.find("ADDRESS").text
         except:
-            edu["address"]  = " "
-        edu["content"] = " "
+            edu["address"] = ""
+
+        # 전화번호
+        try:
+            edu["tel"] = i.find("TEL_NO").text
+        except:
+            edu["tel"]  = ""
+
+        # 교육 기간
+        try:
+            tra_start = i.find("TRA_END_DATE").text
+        except:
+            tra_start  = ""
+        try:
+            tra_end = i.find("TRA_START_DATE").text
+        except:
+            tra_end  = ""
+        edu["period"] = tra_start + "~" + tra_end
+
+        # 온/오프
+        try:
+            onoff = i.find("srchTraGbn").text
+        except:
+            onoff  = ""
+        if onoff == "M1001":
+            edu["onoff"] = '오프라인(일반과정)'
+        elif onoff == "M1005":
+            edu["onoff"] = '온라인(인터넷과정)'
+        elif onoff == "M1010":
+            edu["onoff"] = '온/오프 혼합과정'
+        elif onoff == "M1014":
+            edu["onoff"] = '스마트혼합훈련'
+        else:
+            edu["onoff"] = ''
+
+        # 교육비
+        try:
+            edu["expense"] = i.find("COURSE_MAN").text
+        except:
+            edu["expense"]  = ""
+
+        # 실제 교육비
+        try:
+            edu["real_expense"] = i.find("REAL_MAN").text
+        except:
+            edu["real_expense"]  = ""
+
+        # 교육 내용
+        try:
+            edu["content"] = i.find("CONTENTS").text
+        except:
+            edu["content"]  = ""
+
+        # 디테일
+        edu["detail"] = ""
+
+        # 정원
+        try:
+            edu["man"] = i.find("YARD_MAN").text
+        except:
+            edu["man"]  = ""
 
         edu_data.append(edu)
     if cnt == 0:
@@ -85,16 +170,24 @@ print(edu_df)
 curs = conn.cursor()
 
 for i in range(len(edu_df)):
-    trprId = edu_df.trprId.loc[i]
+    id = edu_df.id.loc[i]
     title = edu_df.title.loc[i]
     title_link = edu_df.title_link.loc[i]
-    sub_title = edu_df.sub_title.loc[i]
-    sub_title_link = edu_df.sub_title_link.loc[i]
-    tel_no = edu_df.tel_no.loc[i]
+    title_icon = edu_df.title_icon.loc[i]
+    company = edu_df.company.loc[i]
+    company_link = edu_df.company_link.loc[i]
+    tel = edu_df.tel.loc[i]
     address = edu_df.address.loc[i]
+    period = edu_df.period.loc[i]
+    onoff = edu_df.onoff.loc[i]
+    expense = edu_df.expense.loc[i]
+    real_expense = edu_df.real_expense.loc[i]
+    detail = edu_df.detail.loc[i]
     content = edu_df.content.loc[i]
+    man = edu_df.man.loc[i]
 
-    sql2 = f"insert into edu values('{trprId}','{title}','{title_link}','{sub_title}','{sub_title_link}','{tel_no}','{address}','{content}')"
+
+    sql2 = f"insert into edu values('{id}','{title}','{title_link}','{title_icon}','{company}','{company_link}','{address}','{tel}','{period}','{onoff}','{expense}','{real_expense}','{content}','{detail}','{man}')"
 
     try:
         curs.execute(sql2)
