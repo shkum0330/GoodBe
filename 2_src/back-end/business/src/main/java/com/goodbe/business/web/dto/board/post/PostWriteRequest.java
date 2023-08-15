@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Schema(description = "게시물 작성 DTO")
+@Schema(description = "게시물 작성 요청 DTO")
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostWriteRequest {

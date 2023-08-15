@@ -1,16 +1,14 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.web.dto.edu.ReserveConsultingRequest;
 import com.goodbe.business.web.service.EduService;
 import com.goodbe.business.web.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
@@ -39,7 +37,26 @@ public class EduController {
             eduService.unlikeEdu(member,eduId);
             return "관심 교육 목록에서 삭제하였습니다.";
         }
+    }
+    @GetMapping("/{eduId}")
+    @Operation(summary = "[GET] 상담 예약 페이지", description = "교육명 반환")
+    public String getReservePage(@PathVariable String eduId, HttpServletRequest request) throws AccessDeniedException {
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
+        return eduService.findById(eduId).getTitle();
+    }
 
+    @PostMapping("/{eduId}")
+    @Operation(summary = "[GET] 상담 예약 페이지", description = "예약 시간을 지정한다.")
+    public String reserveConsulting(@PathVariable String eduId,
+                                    @RequestBody ReserveConsultingRequest reserveConsultingRequest, HttpServletRequest request) throws AccessDeniedException {
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
+        Member member=memberService.findById(1L); // 임시 회원
+        eduService.reserveConsulting(member,eduId,reserveConsultingRequest.getReserveTime());
+        return "예약 완료";
     }
 
     private Boolean authorization(HttpServletRequest request){

@@ -21,7 +21,7 @@ public class MyConsultingResponse {
 
     @Builder
     public MyConsultingResponse(Consulting entity) {
-        this.id=id;
+        this.id=entity.getId();
         this.title = entity.getEdu().getTitle();
         this.subTitle = entity.getEdu().getSubTitle();
         this.reserveTime=entity.getReserveTime().toString().replace("T"," ");
