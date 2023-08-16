@@ -1,7 +1,7 @@
 package com.goodbe.business.web.controller;
 
-import com.goodbe.business.web.dto.search.EduResponse;
-import com.goodbe.business.web.dto.search.JobPostResponse;
+import com.goodbe.business.web.dto.edu.EduListResponse;
+import com.goodbe.business.web.dto.jobpost.JobPostListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -33,45 +33,45 @@ public class SearchController {
 
     @GetMapping("/jobPost/all")
     @Operation(summary = "[GET] 전체 채용공고 불러오기")
-    public List<JobPostResponse> searchAllJobPost() {
-        Mono<List<JobPostResponse>> responseMono=client.get().uri("/jobPost/all").retrieve()
-                .bodyToFlux(JobPostResponse.class)
+    public List<JobPostListResponse> searchAllJobPost() {
+        Mono<List<JobPostListResponse>> responseMono=client.get().uri("/jobPost/all").retrieve()
+                .bodyToFlux(JobPostListResponse.class)
                 .collectList();
-        List<JobPostResponse> result=responseMono.block();
+        List<JobPostListResponse> result=responseMono.block();
         return result;
     }
 
     @GetMapping("/jobPost/{keyword}")
     @Operation(summary = "[GET] 검색어로 채용공고 불러오기")
-    public List<JobPostResponse> searchJobPostByKeyword(@PathVariable String keyword) {
+    public List<JobPostListResponse> searchJobPostByKeyword(@PathVariable String keyword) {
         log.info("{}",keyword);
-        Mono<List<JobPostResponse>> responseMono=client.get().uri("/jobPost/{keyword}",keyword)
+        Mono<List<JobPostListResponse>> responseMono=client.get().uri("/jobPost/{keyword}",keyword)
                 .retrieve()
-                .bodyToFlux(JobPostResponse.class)
+                .bodyToFlux(JobPostListResponse.class)
                 .collectList();
-        List<JobPostResponse> result=responseMono.block();
+        List<JobPostListResponse> result=responseMono.block();
         return result;
     }
 
     @GetMapping("/edu/all")
     @Operation(summary = "[GET] 전체 국비교육 불러오기")
-    public List<EduResponse> searchAllEdu() {
-        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/all").retrieve()
-                .bodyToFlux(EduResponse.class)
+    public List<EduListResponse> searchAllEdu() {
+        Mono<List<EduListResponse>> responseMono=client.get().uri("/edu/all").retrieve()
+                .bodyToFlux(EduListResponse.class)
                 .collectList();
-        List<EduResponse> result=responseMono.block();
+        List<EduListResponse> result=responseMono.block();
         return result;
     }
 
 
     @GetMapping("/edu/{keyword}")
     @Operation(summary = "[GET] 검색어로 국비교육 불러오기")
-    public List<EduResponse> searchEduByKeyword(@PathVariable String keyword) {
-        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
+    public List<EduListResponse> searchEduByKeyword(@PathVariable String keyword) {
+        Mono<List<EduListResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
                 .retrieve()
-                .bodyToFlux(EduResponse.class)
+                .bodyToFlux(EduListResponse.class)
                 .collectList();
-        List<EduResponse> result=responseMono.block();
+        List<EduListResponse> result=responseMono.block();
         return result;
     }
 
