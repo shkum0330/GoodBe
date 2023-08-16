@@ -5,38 +5,38 @@
 <mapper namespace="com.goodbe.search.mapper.JobPostMapper">
 
 	<select id="selectJobData" resultType="JobPost">
-        select jobId as edu_id,
-               companyName as company_name,
-               wantedTitle as wanted_title,
-               companyUrl as company_url,
+        select job_id as jobId,
+               company_name as companyName,
+               wanted_title as wantedTitle,
+               company_url as companyUrl,
                degree,
                major,
                address,
-               workAddress as work_address,
+               work_address as workAddress,
                preference,
                certificate,
-               jobContent as job_content,
+               job_content as jobContent,
                sal,
-               employmentForm as employment_form,
-               endDate as end_date
+               employment_form as employmentForm,
+               end_date as endDate
         from job_post;
     </select>
 
     <select id="selectJobDataByKeyword" parameterType="java.util.List" resultType="JobPost">
-        select jobId as edu_id,
-               companyName as company_name,
-               wantedTitle as wanted_title,
-               companyUrl as company_url,
+        select job_id as jobId,
+               company_name as companyName,
+               wanted_title as wantedTitle,
+               company_url as companyUrl,
                degree,
                major,
                address,
-               workAddress as work_address,
+               work_address as workAddress,
                preference,
                certificate,
-               jobContent as job_content,
+               job_content as jobContent,
                sal,
-               employmentForm as employment_form,
-               endDate as end_date
+               employment_form as employmentForm,
+               end_date as endDate
         from job_post
         <where>
             <foreach item="item" index="index" collection="list">
@@ -47,7 +47,7 @@
                     or major like #{item}
                     or certificate like #{item}
                     or preference like #{item}
-                    or jobContent like #{item}
+                    or job_content like #{item}
                 </if>
                 <if test="index != 0">
                     or company_name like #{item}
@@ -56,7 +56,7 @@
                     or major like #{item}
                     or certificate like #{item}
                     or preference like #{item}
-                    or jobContent like #{item}
+                    or job_content like #{item}
                 </if>
             </foreach>
             ;

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Document(indexName = "jobpost")
 public class JobPost {
     @Id
-    private String jboId;
+    private String jobId;
     private String companyName;
     private String wantedTitle;
     private String companyUrl;

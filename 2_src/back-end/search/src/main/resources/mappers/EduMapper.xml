@@ -3,36 +3,36 @@
 <mapper namespace="com.goodbe.search.mapper.EduMapper">
 
 	<select id="selectEdu" resultType="Edu"> 
-		select eduId as edu_id,
+		select edu_id as eduId,
                title,
-               titleLink as title_link,
+               title_link as titleLink,
                company,
-               companyLink as company_link,
-               tel_no as telNO,
+               company_link as companyLink,
+               tel as telNO,
                address,
                content,
                period,
                onoff,
                expense,
-               realExpense as real_expense,
+               real_expense as realExpense,
                detail,
                man
 		from edu; 
 	</select>
 
 	<select id="selectEduDataByKeyword" parameterType="java.util.List" resultType="Edu">
-        select eduId as edu_id,
+		select edu_id as eduId,
                title,
-               titleLink as title_link,
+               title_link as titleLink,
                company,
-               companyLink as company_link,
-               tel_no as telNO,
+               company_link as companyLink,
+               tel as telNO,
                address,
                content,
                period,
                onoff,
                expense,
-               realExpense as real_expense,
+               real_expense as realExpense,
                detail,
                man
         from edu
