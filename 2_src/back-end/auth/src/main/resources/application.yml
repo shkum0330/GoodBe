@@ -13,7 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/auth?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Tjddnjs4778!
+    password: 7279
 
 
   h2:
@@ -22,21 +22,13 @@ spring:
       path: /h2-console
 
   jpa:
-<<<<<<< HEAD
-    database: H2
-=======
->>>>>>> master
     show-sql: true
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         format_sql: true
-<<<<<<< HEAD
-        ddl-auto: create
-=======
         ddl-auto: update
->>>>>>> master
     output:
       ansi:
         enabled: always

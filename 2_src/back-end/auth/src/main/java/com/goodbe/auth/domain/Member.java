@@ -21,14 +21,8 @@ import java.util.stream.Collectors;
 public class Member implements UserDetails {
 
     @Id
-<<<<<<< HEAD
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private Long memberId;
-=======
     @Column(updatable = false, unique = true, nullable = false)
     private String memberId;
->>>>>>> master
 
     private String username;
     private String password;
@@ -51,7 +45,6 @@ public class Member implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

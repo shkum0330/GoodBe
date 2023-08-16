@@ -1,13 +1,8 @@
 package com.goodbe.auth.service;
 
-<<<<<<< HEAD:2_src/back-end/auth/src/main/java/com/goodbe/auth/config/oauth/PrincipalOauthUserService.java
-import com.goodbe.auth.jwt.JwtTokenInfo;
-import com.goodbe.auth.service.MemberService;
-=======
 import com.goodbe.auth.controller.AuthController;
 import com.goodbe.auth.oauth2.provider.GoogleUserInfo;
 import com.goodbe.auth.oauth2.provider.OAuth2UserInfo;
->>>>>>> master:2_src/back-end/auth/src/main/java/com/goodbe/auth/service/PrincipalOauthUserService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,10 +14,6 @@ import com.goodbe.auth.oauth2.PrincipalDetails;
 import com.goodbe.auth.domain.Role;
 import com.goodbe.auth.domain.Member;
 import com.goodbe.auth.repository.MemberRepository;
-<<<<<<< HEAD:2_src/back-end/auth/src/main/java/com/goodbe/auth/config/oauth/PrincipalOauthUserService.java
-
-=======
->>>>>>> master:2_src/back-end/auth/src/main/java/com/goodbe/auth/service/PrincipalOauthUserService.java
 import java.time.LocalDateTime;
 
 
@@ -34,16 +25,6 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
 
     @Autowired
     private MemberRepository memberRepository;
-<<<<<<< HEAD:2_src/back-end/auth/src/main/java/com/goodbe/auth/config/oauth/PrincipalOauthUserService.java
-
-    private final MemberService memberService;
-
-    @Autowired
-    public PrincipalOauthUserService(MemberService memberService) {
-        this.memberService = memberService;
-    }
-=======
->>>>>>> master:2_src/back-end/auth/src/main/java/com/goodbe/auth/service/PrincipalOauthUserService.java
 
     private final MemberService memberService;
 
@@ -82,30 +63,11 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
         String email = oAuth2UserInfo.getEmail();
         Role role = Role.USER;
         Member memberEntity = memberRepository.findByUsername(username);
-<<<<<<< HEAD:2_src/back-end/auth/src/main/java/com/goodbe/auth/config/oauth/PrincipalOauthUserService.java
-        // 2. 이미 방문했던 회원인 경우
-        //  DB에 해당 이메일을 가진 유저가 있다면
-        //  Access Token, Refresh Token 발급해서 돌려주기
-        if(memberEntity != null){
-            System.out.println("이미 가입하셨습니다.");
-            JwtTokenInfo jwtTokenInfo = memberService.login(email,password);
-            System.out.println(jwtTokenInfo.getGrantType());
-            System.out.println(jwtTokenInfo.getAccessToken());
-            System.out.println(jwtTokenInfo.getRefreshToken());
-        }
-        // 1. 처음 방문인 경우
-        else{
-            // 여기서 회원가입폼으로 리다이렉션 해줘야 함.
-            // 회원가입폼 작성 완료되면 해당 정보 받아서 유저 객체 저장.
-            LocalDateTime createTime = LocalDateTime.now();
-            memberEntity = Member.builder()
-=======
         // 처음 방문한 회원의 경우
         if(memberEntity == null){
             LocalDateTime createTime = LocalDateTime.now();
             memberEntity = Member.builder()
                     .memberId(email)
->>>>>>> master:2_src/back-end/auth/src/main/java/com/goodbe/auth/service/PrincipalOauthUserService.java
                     .username(username)
                     .password(email)
                     .email(email)
@@ -117,10 +79,6 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
                     .build();
             memberRepository.save(memberEntity);
         }
-<<<<<<< HEAD:2_src/back-end/auth/src/main/java/com/goodbe/auth/config/oauth/PrincipalOauthUserService.java
-
-=======
->>>>>>> master:2_src/back-end/auth/src/main/java/com/goodbe/auth/service/PrincipalOauthUserService.java
         return new PrincipalDetails(memberEntity, oAuth2User.getAttributes());
     }
 }
