@@ -145,7 +145,7 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>
-        <Input type="date" value={formData.nickname} name="nickname" onChange={handleInputChange}/>
+        <Input type="date" value={formData.birth} name="birth" onChange={handleInputChange}/>
       </FormItem>
       {/* <FormItem>
         <Label>* 거주지역</Label>
