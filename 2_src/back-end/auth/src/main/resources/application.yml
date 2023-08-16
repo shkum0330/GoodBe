@@ -13,7 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/auth?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 7279
+    password: Tjddnjs4778!
 
 
   h2:
