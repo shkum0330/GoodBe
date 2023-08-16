@@ -1,12 +1,11 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
+import com.goodbe.business.domain.company.JobPost;
+import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
-import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
-import com.goodbe.business.web.dto.mypage.MemberInfoResponse;
-import com.goodbe.business.web.dto.mypage.MemberUpdateRequest;
-import com.goodbe.business.web.dto.mypage.MyPageResponse;
-import com.goodbe.business.web.dto.mypage.MyPostsResponse;
+import com.goodbe.business.domain.training.Edu;
+import com.goodbe.business.web.dto.mypage.*;
 import com.goodbe.business.web.service.MemberService;
 import com.goodbe.business.web.service.MyPageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +20,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,38 +64,63 @@ public class MyPageController {
     public MemberInfoResponse memberInfoUpdate(@RequestPart(value = "profileImage",required = false) MultipartFile profileImage,
                                                @RequestPart(value = "memberUpdateRequest") MemberUpdateRequest memberUpdateRequest,
                                                HttpServletRequest request) throws IOException {
-        /*
-        인증 로직...
-         */
-
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
         Member member=memberService.findById(1L); // 임시 회원, id는 jwt에서 따올거임
         memberService.update(1L,profileImage,memberUpdateRequest);
         return new MemberInfoResponse(member);
     }
 
+    //todo: 입장하기 버튼 누르면 상담하러 들어갈 수 있어야 하고, 끝나면 상담 내역을 삭제해야 함
     @GetMapping("/consulting")
     @Operation(summary = "[GET] 마이페이지 교육 상담 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
-    public MemberInfoResponse manageConsulting(HttpServletRequest request){ // JWT 갖고와야함
+    public List<MyConsultingResponse> myConsulting(HttpServletRequest request){ // JWT 갖고와야함
         /*
         인증 로직...
          */
-        Member member=memberService.findById(1L); // 임시 회원
-        return new MemberInfoResponse(member);
+        Member member=memberService.findById(1L); // 회원 정보를 가져온다.
+        List<Consulting> consultings=myPageService.myConsultings(1L);
+        List<MyConsultingResponse> result=new ArrayList<>();
+
+        for (Consulting c:consultings) {
+            result.add(new MyConsultingResponse(c));
+        }
+        return result;
     }
-    @GetMapping("/job-posting")
-    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
-    public MemberInfoResponse interestedJobPosting(HttpServletRequest request){ // JWT 갖고와야함
-        /*
-        인증 로직...
-         */
+
+
+    @GetMapping("/edu")
+    @Operation(summary = "[GET] 마이페이지 관심 교육 관리", description = "회원의 관심 교육들을 응답으로 보낸다.")
+    public List<MyEduResponse> interestedEdu(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
         Member member=memberService.findById(1L); // 임시 회원
-        return new MemberInfoResponse(member);
+        List<Edu> myEdus= myPageService.myEdus(member.getId());
+        return myEdus.stream().map(MyEduResponse::new).collect(Collectors.toList());
     }
+
+
+    @GetMapping("/job-post")
+    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "회원의 관심 채용공고들을 응답으로 보낸다.")
+    public List<MyJobPostResponse> interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
+        Member member=memberService.findById(1L); // 임시 회원
+        List<JobPost> myJobPosts=myPageService.myJobPosts(member.getId());
+        return myJobPosts.stream().map(MyJobPostResponse::new).collect(Collectors.toList());
+    }
+
     @GetMapping("/posts")
-    @Operation(summary = "[GET] 내가 쓴 글 목록", description = "")
+    @Operation(summary = "[GET] 내가 쓴 글 목록", description = "내가 쓴 글들을 응답으로 보낸다.")
     public List<MyPostsResponse> myPosts(){
         List<Post> posts=myPageService.myPosts(1L);
         return posts.stream().map(MyPostsResponse::new).collect(Collectors.toList());
     }
 
+    private Boolean authorization(HttpServletRequest request){
+        return true;
+    }
 }

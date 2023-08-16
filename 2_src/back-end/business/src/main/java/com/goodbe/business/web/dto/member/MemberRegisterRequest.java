@@ -4,6 +4,7 @@ import com.goodbe.business.domain.member.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDate;
 
 
 @Schema(description = "회원가입 요청 DTO")
@@ -15,6 +16,7 @@ public class MemberRegisterRequest {
     private String nickname; // 닉네임
     private Address address;
     private int age;
+    private LocalDate birth; // 생년월일
     private String sex;
     private String favoriteCompany;
     private String favoriteJob;

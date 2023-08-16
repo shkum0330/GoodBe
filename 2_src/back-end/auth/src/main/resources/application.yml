@@ -15,15 +15,17 @@ spring:
     secret: goodbesecretpassword123haejunecandysugarcrushpopnewjeansnarutovssasuke
 
   jpa:
-    database: H2
-    show-sql: true # Jpa ?? ? SQL? ?? ??
+    show-sql: true
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
-        format_sql: true # ?? ??? ?? ????? ??
-        ddl-auto: create
+        format_sql: true
+        ddl-auto: update
     output:
       ansi:
         enabled: always
+    database-platform: org.hibernate.dialect.H2Dialect
 
   security:
     oauth2:
