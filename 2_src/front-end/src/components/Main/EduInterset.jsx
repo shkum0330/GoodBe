@@ -15,13 +15,8 @@ margin-top : 5%;
     /* border: 1px solid #0c0d0d; */
     padding : auto;
     /* margin:auto; */
-<<<<<<< HEAD
     position: relative;
     
-=======
-
-`
->>>>>>> sehyun
 
 `
 const h4 = styled.div`
@@ -36,10 +31,7 @@ const Container2 = styled.div`
     background: #F7F7F7;
     /* border: 1px solid #0c0d0d; */
     margin: auto;
-<<<<<<< HEAD
     border-radius: 10px;
-=======
->>>>>>> sehyun
 `;
 
 

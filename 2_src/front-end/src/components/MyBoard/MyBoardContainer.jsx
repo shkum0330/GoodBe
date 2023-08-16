@@ -138,11 +138,7 @@ const MyBoardContainer = () => {
               <IconContainer>
                 <AiOutlineLike size={26} />
                 <LikeCount>{item.likes}개</LikeCount>
-<<<<<<< HEAD
                 <BiMessageDots size={26} style={{ marginTop: '5px' }} />
-=======
-                <BiMessageDots size={26} />
->>>>>>> sehyun
                 <CommentCount>{item.comments}개</CommentCount>
                 <AiOutlineEye size={26} style={{ marginTop: '5px' }}/>
                 <ViewCount>{item.hits}개</ViewCount>
