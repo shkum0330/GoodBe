@@ -42,16 +42,15 @@ public class SecurityConfig  {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/member/login").permitAll() // 모든 사용자에게 접근 허용
-                .antMatchers("/jwt/jwtlogin").permitAll()
                 .antMatchers("/member/test").hasRole("USER") // "USER" 역할을 가진 사용자에게만 접근 허용
                 .antMatchers("/user/**").authenticated() // 인증된 사용자에게만 접근 허용
                 .antMatchers("/manager/**").hasAuthority("MANAGER") // "MANAGER" 역할을 가진 사용자에게만 접근 허용
                 .antMatchers("/admin/**").hasAuthority("ADMIN") // "ADMIN" 역할을 가진 사용자에게만 접근 허용
                 .anyRequest().permitAll()
 
-                .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 // 자체 로그인
+                .and()
+                //.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 //.loginPage("/loginForm") //미인증자일경우 해당 uri를 호출
                 //.loginProcessingUrl("/login") //login 주소가 호출되면 시큐리티가 낚아 채서(post로 오는것) 대신 로그인 진행 -> 컨트롤러를 안만들어도 된다.

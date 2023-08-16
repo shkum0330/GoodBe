@@ -9,11 +9,12 @@ spring:
   jwt:
     secret: goodbesecretpassword123haejunecandysugarcrushpopnewjeansnarutovssasuke
 
-  datasource: # H2 DB ??
-    url: jdbc:h2:tcp://localhost/~/test
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 7279
+
 
   h2:
     console:
@@ -21,14 +22,13 @@ spring:
       path: /h2-console
 
   jpa:
-    database: H2
     show-sql: true
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         format_sql: true
-        ddl-auto: create
+        ddl-auto: update
     output:
       ansi:
         enabled: always

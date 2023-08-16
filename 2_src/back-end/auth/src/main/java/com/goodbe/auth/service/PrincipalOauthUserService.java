@@ -101,9 +101,8 @@ public class PrincipalOauthUserService extends DefaultOAuth2UserService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<TokenInfo> request = new HttpEntity<>(tokenInfo, headers);
             System.out.println(request.toString());
-            //ResponseEntity<String> response = restTemplate.postForEntity("localhost:8080/login/token", request, String.class);
-            //System.out.println("비즈니스 서버로부터의 응답: " + response.getBody());
-
+//            ResponseEntity<String> response = restTemplate.postForEntity("localhost:9999/login/token", request, String.class);
+//            System.out.println("비즈니스 서버로부터의 응답: " + response.getBody());
         }
         // 1. 처음 방문인 경우
         else{
