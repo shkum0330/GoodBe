@@ -16,6 +16,13 @@ public class ExceptionControllerAdvice {
         log.error("[exceptionHandle] ex", e);
         return new ErrorResult("BAD", e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ReservedConsultingException.class)
+    public ErrorResult reservationExHandle(ReservedConsultingException e) {
+        log.error("[exceptionHandle] ex", e);
+        return new ErrorResult("BAD", e.getMessage());
+    }
     @ExceptionHandler
     public ResponseEntity<ErrorResult> userExHandle(MemberException e) {
         log.error("[exceptionHandle] ex", e);

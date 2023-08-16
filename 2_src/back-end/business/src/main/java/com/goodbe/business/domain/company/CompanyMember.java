@@ -14,9 +14,9 @@ public class CompanyMember { // 기업회원 엔티티
     @Column(name="company_member_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "company_id")
+//    private Company company;
 
     @Column(nullable = false)
     private String email;
