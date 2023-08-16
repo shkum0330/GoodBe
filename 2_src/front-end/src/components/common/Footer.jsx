@@ -11,6 +11,8 @@ import { BiBox } from 'react-icons/bi';
 
 
 const Container = styled.div`
+  position: relative;
+  transform: translate(0%);
   margin-top : 300px;
   z-index: 0;
 `

@@ -20,6 +20,7 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding-top: 100px;
+  margin-top: -29px;
 `;
 
 
