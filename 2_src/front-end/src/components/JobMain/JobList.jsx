@@ -60,6 +60,7 @@ const JobList = () => {
   };
 
 return (
+  
   <div
     style={{
       fontFamily: 'Istok Web, sans-serif',

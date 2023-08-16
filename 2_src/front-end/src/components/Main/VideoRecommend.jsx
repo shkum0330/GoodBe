@@ -83,7 +83,7 @@ function VideoRecommend() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    const apiKey = 'YOUR_YOUTUBE_API_KEY'; // 여기에 본인의 YouTube API 키를 넣어주세요.
+    const apiKey = 'AIzaSyC2ZUra2a_fg_lpD3zFO8OoFaM7s1BZ-Ac'; // 여기에 본인의 YouTube API 키를 넣어주세요.
     const searchQuery = 'IT코딩 취업후기';
 
     axios
