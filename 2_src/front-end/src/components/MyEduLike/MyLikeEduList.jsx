@@ -1,9 +1,11 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import ssafy from '../../assets/MyEduLike/ssafy.svg';
 import groom from '../../assets/MyEduLike/groom.svg';
 import boostcamp from '../../assets/MyEduLike/boostcamp.svg';
 
+const API_BASE_URL = 'http://localhost:8080';
 
 const EduButton = styled.button`
   border-radius: 10px;
@@ -93,21 +95,26 @@ const LinkStyle = styled.a`
 `
  
 const MyLikeEduList = () => {
-  const dummyData = [
-    { id: 1, EduName: '구름', Edutitle: '풀스택 개발자 양성 과정 2기', image: ssafy, url: '#'},
-    { id: 2, EduName: 'SSAFY', Edutitle: '백엔드 웹 개발 트랙 8기', image: groom, url: '#'},
-    { id: 3, EduName: '항해99', Edutitle: '프론트엔드 웹 개발 트랙 8기', image: boostcamp, url: '#' },
-    { id: 4, EduName: '구름', Edutitle: 'AI 웹 개발 트랙 9기', image: ssafy, url: '#' },
-    { id: 5, EduName: 'SSAFY', Edutitle: '백엔드 웹 개발 트랙 8기', image: groom, url: '#' },
-    { id: 6, EduName: 'SSAFY', Edutitle: 'AI 웹 개발 트랙 10기', image: boostcamp, url: '#' },
-    { id: 7, EduName: '항해99', Edutitle: '프론트엔드 웹 개발 트랙 8기', image: ssafy, url: '#' },
-  ];
+  const [myEduLike, setmyEduLike] = useState([]); 
+    
+
+    useEffect(() => {
+      axios
+        .get(`${API_BASE_URL}/api/mypage/edu`)
+        .then(function (response) {
+          console.log(response.data);
+          setmyEduLike(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }, []); 
 
   return (
     <div>
       <EduButton>교육과정 둘러보기</EduButton>
       <Container>
-        {dummyData.map((item) => (
+        {myEduLike.map((item) => (
           <EduItemContainer key={item.id}>
             <EduImage src={item.image} />
             <Line />

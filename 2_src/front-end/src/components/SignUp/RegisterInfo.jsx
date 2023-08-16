@@ -8,19 +8,38 @@ const Container = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   width: 670px;
-  height: 1000px; /* 조절한 세로 폭 */
+  // max-height: 1000px;
   background: #FFFFFF;
   border: 1px solid #AACDFF;
   box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
   border-radius: 20px;
-  margin: 0px;
-  padding: 100px;
+  padding: 60px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-`;
+  margin-top : 150px;
+  margin-bottom: 150px;
 
+`;
+const Title = styled.p`
+  width: 450px;
+  height: 50px;
+  flex-shrink: 0;
+  background: #E7F4FD;
+  text-align: center;
+  color: #0097FF;
+  text-align: center;
+  font-family: Istok Web;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+  padding: 10px 20px;
+  margin-left : 55px;
+  margin-bottom: 30px;
+`
 const FormItem = styled.div`
   display: flex;
   flex-direction: column;
@@ -32,14 +51,15 @@ const Label = styled.label`
   color: grey; /* 변경된 항목명 색상 */
   margin-bottom: 5px;
   font-weight: bold; /* 항목명 bold체 지정 */
+  // margin-top : 30px;
 `;
 
 const Input = styled.input`
   height: 30px;
   padding: 5px;
   border: 1px solid #CFCFCF;
-  border-radius: 5px;
-  flex: 1; /* 입력창들의 크기를 동일하게 조절 */
+  border-radius: 10px;
+  flex: 1; 
 `;
 
 const Select = styled.select`
@@ -50,18 +70,8 @@ const Select = styled.select`
   flex: 1; /* 입력창들의 크기를 동일하게 조절 */
 `;
 
-const CheckBoxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const CheckBoxLabel = styled.label`
-  margin-left: 10px;
-`;
-
 const SignUpButton = styled.button`
-  width: 70px;
+  width: 100px;
   height: 30px;
   background-color: royalblue;
   color: white;
@@ -78,6 +88,7 @@ const Button = styled.button`
   border-radius: 8px;
   border: #0068FF solid 1px;
   box-shadow: #0068FF;
+  margin-left : 155px;
 `;
 
 const LogoImage = styled.img`
@@ -85,26 +96,27 @@ const LogoImage = styled.img`
   height: auto;
   display: block;
   margin: 0 auto;
+  margin-bottom : 20px;
 `;
 
-const LabelWrapper = styled.div`
+const InputNickname = styled.input`
+  width: 400px;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #CFCFCF;
+  border-radius: 10px;
+  flex: 1; 
+`
+const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const HorizontalCheckBoxContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const HorizontalCheckBoxLabel = styled.label`
-  margin-right: 10px;
 `;
 
 const SignUpForm = () => {
   return (
     <Container>
       <LogoImage alt="logo_01" src={logo} />
+      <Title>굿비에서 여러분의 미래를 그려보세요!</Title>
       <FormItem>
         <Label>* 이름</Label>
         <Input type="text" placeholder="이름을 입력해주세요" />
@@ -122,37 +134,21 @@ const SignUpForm = () => {
         <Input type="text" placeholder="거주지역을 입력해주세요" />
       </FormItem>
       <FormItem>
-        <Label>* 닉네임</Label>
-        <Input type="text" placeholder="닉네임을 입력해주세요" />
-        <SignUpButton>중복확인</SignUpButton>
+          <Label>* 닉네임</Label>
+        <InputWrapper>
+          <InputNickname type="text" placeholder="닉네임을 입력해주세요" />
+          <SignUpButton>중복확인</SignUpButton>
+        </InputWrapper>
       </FormItem>
       <FormItem>
         <Label>* 관심회사</Label>
-        <Select>
-          <option value="">선택하세요</option>
-          <option value="스타트업">스타트업</option>
-          <option value="대기업">대기업</option>
-        </Select>
+          <Input type="text" placeholder="관심회사를 입력해주세요" />
       </FormItem>
       <FormItem>
         <Label>* 관심직무</Label>
-        <Select>
-          <option value="">선택하세요</option>
-          <option value="백엔드">백엔드</option>
-          <option value="프론트엔드">프론트엔드</option>
-          <option value="임베디드">임베디드</option>
-          <option value="앱">앱</option>
-        </Select>
+          <Input type="text" placeholder="관심직무를 입력해주세요" />
       </FormItem>
-      <FormItem>
-        <Label>* 성별</Label>
-        <HorizontalCheckBoxContainer>
-          <input type="checkbox" id="male" />
-          <HorizontalCheckBoxLabel htmlFor="male">남성</HorizontalCheckBoxLabel>
-          <input type="checkbox" id="female" />
-          <HorizontalCheckBoxLabel htmlFor="female">여성</HorizontalCheckBoxLabel>
-        </HorizontalCheckBoxContainer>
-      </FormItem>
+  
       <Button>가입하기</Button>
     </Container>
   );

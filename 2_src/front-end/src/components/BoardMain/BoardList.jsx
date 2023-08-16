@@ -141,13 +141,13 @@ const Line = styled.hr`
     margin: 0 auto; 
     margin-top: 10px;
 `
-const WriteButton = styled.button`
+const WriteButton = styled.a`
     color : #FFF;
     border : none;
     border-radius: 5px;
     background-color : #A4C3FF;
     padding: 5px 13px;
-
+    text-decoration: none;
 `
 
 function TabContent(props) {
@@ -296,7 +296,7 @@ export default function BoardList() {
                 <TabItem className="nav-item" eventKey="4" onClick={() => { setOnOff(false); setClickedTab(4) }}>
                     <Tab className={4 === clickedTab ? 'selected' : 'not-selected'}>취뽀후기</Tab>
                 </TabItem>
-            <WriteButton>글쓰기</WriteButton>
+            <WriteButton href="/BoardWrite">글쓰기</WriteButton>
             </Nav>
         <Line />
 

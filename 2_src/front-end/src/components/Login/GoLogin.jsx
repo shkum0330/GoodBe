@@ -5,6 +5,7 @@ import Google from '../../assets/Login/Google.svg';
 import InstitutionSignUp from '../../pages/InstitutionSignUp';
 import { GrClose } from "react-icons/gr";
 
+
 const slideIn = keyframes`
   0% {
     opacity: 0;
@@ -145,11 +146,13 @@ const GoLogin = ({ closeModal }) => {
       <LogoImage alt="logo_01" src={logo} />
       <Title>굿비에서 여러분의 미래를 그려보세요!</Title>
       <Detail>구글 로그인 하러 가기</Detail>
+      <a href="/">
       <GoogleImg alt="Google" src={Google} />
+      </a>
 
 
       <InstitutionLogin href="다음페이지 주소 넣어주셈">혹시 기업회원이신가요?</InstitutionLogin>
-      <SignUp href="../SignUp">회원가입</SignUp>
+      <SignUp href="PersonalRegisterComponent">회원가입</SignUp>
 
 
     </Container>
