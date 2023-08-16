@@ -28,6 +28,7 @@ public class PostDetailResponse {
     private String content;
     private int hits;
     private int likeCount;
+    private int commentCount;
     private List<UploadFileResponse> files;
     private List<CommentsResponse> comments;
 
@@ -41,5 +42,6 @@ public class PostDetailResponse {
         this.likeCount = entity.getLikeCount();
         this.files=entity.getFiles().stream().map(UploadFileResponse::new).collect(Collectors.toList());
         this.comments=entity.getComments().stream().map(CommentsResponse::new).collect(Collectors.toList());
+        this.commentCount=comments.size();
     }
 }
