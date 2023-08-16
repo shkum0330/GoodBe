@@ -77,7 +77,7 @@ for page in range(1,1000):
 
         # 교육 아이콘
         try:
-            edu["title_icon"] = i.find("TITLE_ICON").text
+            edu["title_icon"] = i.find("titleIcon").text
         except:
             edu["title_icon"]= ""
         
@@ -95,58 +95,48 @@ for page in range(1,1000):
 
         # 교육 장소
         try:
-            edu["address"] = i.find("ADDRESS").text
+            edu["address"] = i.find("address").text
         except:
             edu["address"] = ""
 
         # 전화번호
         try:
-            edu["tel"] = i.find("TEL_NO").text
+            edu["tel"] = i.find("telNo").text
         except:
             edu["tel"]  = ""
 
         # 교육 기간
         try:
-            tra_start = i.find("TRA_END_DATE").text
+            tra_start = i.find("traStartDate").text
         except:
             tra_start  = ""
         try:
-            tra_end = i.find("TRA_START_DATE").text
+            tra_end = i.find("traEndDate").text
         except:
             tra_end  = ""
         edu["period"] = tra_start + "~" + tra_end
 
         # 온/오프
         try:
-            onoff = i.find("srchTraGbn").text
+            edu["onoff"] = i.find("trainTargetCd").text
         except:
-            onoff  = ""
-        if onoff == "M1001":
-            edu["onoff"] = '오프라인(일반과정)'
-        elif onoff == "M1005":
-            edu["onoff"] = '온라인(인터넷과정)'
-        elif onoff == "M1010":
-            edu["onoff"] = '온/오프 혼합과정'
-        elif onoff == "M1014":
-            edu["onoff"] = '스마트혼합훈련'
-        else:
-            edu["onoff"] = ''
-
+            edu["onoff"]  = ""
+            
         # 교육비
         try:
-            edu["expense"] = i.find("COURSE_MAN").text
+            edu["expense"] = i.find("courseMan").text
         except:
             edu["expense"]  = ""
 
         # 실제 교육비
         try:
-            edu["real_expense"] = i.find("REAL_MAN").text
+            edu["real_expense"] = i.find("realMan").text
         except:
             edu["real_expense"]  = ""
 
         # 교육 내용
         try:
-            edu["content"] = i.find("CONTENTS").text
+            edu["content"] = i.find("contents").text
         except:
             edu["content"]  = ""
 
@@ -155,7 +145,7 @@ for page in range(1,1000):
 
         # 정원
         try:
-            edu["man"] = i.find("YARD_MAN").text
+            edu["man"] = i.find("yardMan").text
         except:
             edu["man"]  = ""
 

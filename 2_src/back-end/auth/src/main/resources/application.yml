@@ -2,28 +2,17 @@ server:
   port: 8089
 
 spring:
-  #  jpa:
-  #    hibernate:
-  #      ddl-auto: create #create update none
-  #      naming:
-  #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  #    show-sql: true
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ssafy
+    url: jdbc:mariadb://i9a801.p.ssafy.io:3306/test
+    password: jinajjang1128!
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ANT_PATH_MATCHER
 
   jwt:
     secret: goodbesecretpassword123haejunecandysugarcrushpopnewjeansnarutovssasuke
-
-  datasource: # H2 DB ??
-    url: jdbc:h2:tcp://localhost/~/test
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  h2:
-    console:
-      enabled: true # H2 DB ??? ????? ?? (http://localhost:8080/h2-console)
 
   jpa:
     database: H2

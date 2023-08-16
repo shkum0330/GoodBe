@@ -38,6 +38,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version:"2.7.0"
 }
 
 tasks.named('test') {

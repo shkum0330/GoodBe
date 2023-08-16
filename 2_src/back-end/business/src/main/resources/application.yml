@@ -1,5 +1,4 @@
 spring:
-  spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     username: ssafy
@@ -37,6 +36,7 @@ server:
   ip:
     local: http://localhost
     remote: 172.26.3.26
+  port: 8081
 #  session:
 #    store-type: redis
 #logging:
