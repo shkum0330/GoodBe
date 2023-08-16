@@ -5,6 +5,8 @@ import com.goodbe.business.domain.board.Post;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Schema(description = "게시물 리스트 응답 DTO")
 @Data
 public class PostsResponse {
@@ -17,7 +19,9 @@ public class PostsResponse {
     private String boardType; // 게시판 종류
     private String title;
     private String content;
+    private int hits;
     private int likeCount;
+    private LocalDateTime createDate;
 
     public PostsResponse(Post entity) {
         this.id = entity.getId();
@@ -28,6 +32,8 @@ public class PostsResponse {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.likeCount = entity.getLikeCount();
+        this.hits=entity.getHits();
+        this.createDate=entity.getCreateDate();
     }
 
 }

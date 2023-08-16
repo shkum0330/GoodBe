@@ -21,7 +21,7 @@ public class JobPostListResponse {
         this.id = entity.getId();
         this.companyName = entity.getCompanyName();
         this.wantedTitle = entity.getWantedTitle();
-        this.degree = entity.getJobContent();
+        this.degree = entity.getDegree();
         this.address=entity.getAddress();
         this.sal = entity.getSal();
     }

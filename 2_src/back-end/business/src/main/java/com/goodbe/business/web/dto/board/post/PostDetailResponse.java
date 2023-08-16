@@ -26,6 +26,7 @@ public class PostDetailResponse {
     private String boardType; // 게시판 종류
     private String title;
     private String content;
+    private int hits;
     private int likeCount;
     private List<UploadFileResponse> files;
     private List<CommentsResponse> comments;
@@ -36,6 +37,7 @@ public class PostDetailResponse {
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
+        this.hits=entity.getHits();
         this.likeCount = entity.getLikeCount();
         this.files=entity.getFiles().stream().map(UploadFileResponse::new).collect(Collectors.toList());
         this.comments=entity.getComments().stream().map(CommentsResponse::new).collect(Collectors.toList());
