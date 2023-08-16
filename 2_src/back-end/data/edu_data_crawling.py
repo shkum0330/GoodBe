@@ -23,7 +23,6 @@ conn = pymysql.connect(host = "i9a801.p.ssafy.io",port=3306,
 edu_df = pd.DataFrame(columns=["id", # 고유번호 trprId
                                "title", # 교육 제목 TITLE
                                "title_link", # 교육 링크 TITLE_LINK
-                               "title_icon", # 교육 아이콘 TITLE_ICON
                                "company", # 교육기관 SUB_TITLE
                                "company_link", # 교육기관 링크 SUB_TITLE_LINK
                                "address", # 교육 장소 ADDRESS
@@ -74,12 +73,6 @@ for page in range(1,1000):
             edu["title_link"] = i.find("titleLink").text
         except:
             edu["title_link"]= ""
-
-        # 교육 아이콘
-        try:
-            edu["title_icon"] = i.find("titleIcon").text
-        except:
-            edu["title_icon"]= ""
         
         # 교육 기관
         try:
@@ -163,7 +156,6 @@ for i in range(len(edu_df)):
     id = edu_df.id.loc[i]
     title = edu_df.title.loc[i]
     title_link = edu_df.title_link.loc[i]
-    title_icon = edu_df.title_icon.loc[i]
     company = edu_df.company.loc[i]
     company_link = edu_df.company_link.loc[i]
     tel = edu_df.tel.loc[i]
@@ -177,7 +169,7 @@ for i in range(len(edu_df)):
     man = edu_df.man.loc[i]
 
 
-    sql2 = f"insert into edu values('{id}','{title}','{title_link}','{title_icon}','{company}','{company_link}','{address}','{tel}','{period}','{onoff}','{expense}','{real_expense}','{content}','{detail}','{man}')"
+    sql2 = f"insert into edu values('{id}','{title}','{title_link}','{company}','{company_link}','{address}','{tel}','{period}','{onoff}','{expense}','{real_expense}','{content}','{detail}','{man}')"
 
     try:
         curs.execute(sql2)

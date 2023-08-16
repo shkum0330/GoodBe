@@ -165,8 +165,6 @@ def get_job_data(url):
     job_data_list = [id, company_name, wanted_title, company_url, degree,major,
                      address, work_address, preference, career, certificate, job_content, 
                      sal, employment_form, end_date]
-    
-    print(company_name)
 
     return job_data_list
 
