@@ -4,6 +4,7 @@ import AdBanner from '../../assets/MyEduLike/AdBannerImg.svg';
 
 const Container = styled.div`
     margin : auto
+    // margin-bottom: -40px;
     width: 80%;
     height: auto; /* 변경: 픽셀 단위로 지정 */
     display: flex;

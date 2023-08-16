@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState } from 'react';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import SearchJob from '../components/JobMain/SearchJob';
@@ -8,14 +8,16 @@ import JobTab from '../components/JobMain/JobTab';
 
 
 const JobMain = () => {
+    const [searchKeyword, setSearchKeyword] = useState('');
+
     return (
         <div>
             <Navbar/>
             {/* <br/> */}
             {/* <br/> */}
-            <SearchJob/>
+            <SearchJob setSearchKeyword={setSearchKeyword}/>
             <JobTab />
-            <JobList />
+            <JobList searchKeyword={searchKeyword}/>
             {/* <br/>
             <br/>
             <br/>

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
 import {AiOutlineHeart} from 'react-icons/ai';
 import {AiFillHeart} from 'react-icons/ai';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const JobList = () => {
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
+
+const JobList = ({searchKeyword}) => {
   const [activeTab, setActiveTab] = useState('전체');
   const [currentPage, setCurrentPage] = useState(1);
+  const [JobList, setJobList] = useState([]); 
   const itemsPerPage = 5;
 
 
@@ -13,26 +17,35 @@ const JobList = () => {
     setCurrentPage(1); // 탭을 변경하면 첫 번째 페이지로 초기화
   };
 
-  const dummyData = [
-    { id: 1, title: 'Frontend Developer', company: 'ABC Company', location: 'Seoul', category: '대기업' },
-    { id: 2, title: 'Backend Developer', company: 'XYZ Company', location: 'Busan', category: '중견중소' },
-    { id: 3, title: 'Full-stack Developer', company: '123 Company', location: 'Incheon', category: '공기업공사' },
-    { id: 4, title: 'Mobile App Developer', company: 'DEF Company', location: 'Daejeon', category: '대기업' },
-    { id: 5, title: 'Data Scientist', company: 'GHI Company', location: 'Gwangju', category: '외국계' },
-    { id: 6, title: 'Backend Scientist', company: 'qwer Company', location: 'Seoul', category: '외국계' },
-    { id: 7, title: 'Frontend Developer', company: 'ABC Company', location: 'Seoul', category: '대기업' },
-    { id: 8, title: 'Backend Developer', company: 'XYZ Company', location: 'Busan', category: '중견중소' },
-    { id: 9, title: 'Full-stack Developer', company: '123 Company', location: 'Incheon', category: '공기업공사' },
-    { id: 10, title: 'Mobile App Developer', company: 'DEF Company', location: 'Daejeon', category: '대기업' },
-    { id: 11, title: 'Data Scientist', company: 'GHI Company', location: 'Gwangju', category: '외국계' },
-    { id: 12, title: 'Backend Scientist', company: 'qwer Company', location: 'Seoul', category: '외국계' },
-    // 더 많은 더미 데이터 추가 가능
-  ];
+  useEffect(() => {
+    if (searchKeyword) {
+      axios
+        .get(`${API_BASE_URL}/api/search/jobPost/${searchKeyword}`)
+        .then(function (response) {
+          console.log(response.data);
+          setJobList(response.data);
+        })
+        .catch(function (error) {
+          console.error('데이터 불러오기 오류:', error);
+        });
+
+    } else {
+      axios
+        .get(`${API_BASE_URL}/api/search/jobPost/all`)
+        .then(function (response) {
+          console.log(response.data);
+          setJobList(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+      }
+    }, [searchKeyword]); 
 
   // 현재 페이지에 해당하는 데이터 계산
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = dummyData
+  const currentItems = JobList
     .filter((job) => activeTab === '전체' || job.category === activeTab)
     .slice(indexOfFirstItem, indexOfLastItem);
 
@@ -43,13 +56,13 @@ const JobList = () => {
 
  // 전체 페이지 수 계산
  const totalPages = Math.ceil(
-  dummyData.filter((job) => activeTab === '전체' || job.category === activeTab).length / itemsPerPage
+  JobList.filter((job) => activeTab === '전체' || job.category === activeTab).length / itemsPerPage
 );
 
   const [favoriteJobs, setFavoriteJobs] = useState([]); 
 
   const handleFavoriteClick = (jobId) => {
-    const job = dummyData.find((job) => job.id === jobId);
+    const job = JobList.find((job) => job.id === jobId);
     if (favoriteJobs.some((favJob) => favJob.id === job.id)) {
       setFavoriteJobs(favoriteJobs.filter((favJob) => favJob.id !== job.id));
       alert('찜이 취소되었습니다');

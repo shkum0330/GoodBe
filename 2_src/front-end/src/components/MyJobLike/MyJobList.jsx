@@ -1,10 +1,13 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import hyundai from '../../assets/MyJobLike/hyundai.svg';
 import samsung from '../../assets/MyJobLike/samsung.svg';
 import sinhan from '../../assets/MyJobLike/sinhan.svg';
 import sk from '../../assets/MyJobLike/sk.svg';
 
+
+const API_BASE_URL = 'http://localhost:8080';
 
 const JobButton = styled.button`
     border-radius: 10px;
@@ -98,26 +101,31 @@ const LinkStyle = styled.a`
 `
  
 const MyLikeEduList = () => {
-  const dummyData = [
-    { id: 1, JobName: '삼성', Jobtitle: '풀스택 개발자 양성 과정 2기', image: samsung, alt: 'a', url: '#'},
-    { id: 2, JobName: '신한은행', Jobtitle: '백엔드 웹 개발 트랙 8기', image: sinhan, alt: 'a',url: '#'},
-    { id: 3, JobName: '현대자동차', Jobtitle: '프론트엔드 웹 개발 트랙 8기', image: hyundai, alt: 'a',url: '#' },
-    { id: 4, JobName: 'sk텔레콤', Jobtitle: 'AI 웹 개발 트랙 9기', image: sk, alt: 'a',url: '#' },
-    { id: 5, JobName: '신한은행', Jobtitle: '백엔드 웹 개발 트랙 8기', image: sinhan, alt: 'a',url: '#' },
-    { id: 6, JobName: '현대자동차', Jobtitle: 'AI 웹 개발 트랙 10기', image: hyundai, alt: 'a',url: '#' },
-    { id: 7, JobName: '삼성', Jobtitle: '프론트엔드 웹 개발 트랙 8기', image: samsung, alt: 'a',url: '#' },
-  ];
+  const [myJobLike, setmyJobLike] = useState([]); 
+    
+
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/mypage/job-post`)
+      .then(function (response) {
+        console.log(response.data);
+        setmyJobLike(response.data);
+      })
+      .catch(function (error) {
+        console.error('Error fetching data:', error);
+      });
+  }, []); 
 
   return (
     <div>
       <JobButton>채용공고 둘러보기</JobButton>
       <Container>
-        {dummyData.map((item) => (
+        {myJobLike.map((item) => (
           <JobItemContainer key={item.id}>
-            <JobImage src={item.image} />
+            {/* <JobImage src={item.image} /> */}
             <Line />
-            <JobName>{item.JobName}</JobName>
-            <JobDetail>{item.Jobtitle}</JobDetail>
+            <JobName>{item.companyName}</JobName>
+            <JobDetail>{item.wantedTitle}</JobDetail>
             <LinkStyle>이동하기></LinkStyle>
           </JobItemContainer>
         ))}

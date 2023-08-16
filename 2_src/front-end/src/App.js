@@ -37,8 +37,6 @@ import Loading from './components/Loading/Loading';
 export default function App() {
   return (
     
-
-
     <Routes>
       <Route path = "/" element={<Main/>} />
       <Route path = "/MyBoard" element={<MyBoard/>} />
