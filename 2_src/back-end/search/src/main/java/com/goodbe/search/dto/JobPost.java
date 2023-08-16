@@ -11,12 +11,18 @@ import lombok.Setter;
 @Document(indexName = "jobpost")
 public class JobPost {
     @Id
-    private String id;
-    private String companyId;
-    private String companyData;
+    private String jboId;
+    private String companyName;
+    private String wantedTitle;
     private String companyUrl;
-    private String jobContent;
-    private String endDate;
-    private String sal;
-    private String jobData;    
+    private String degree;
+    private String major;
+    private String address;
+    private String workAddress;    
+    private String preference;    
+    private String certificate;    
+    private String jobContent;    
+    private String sal;    
+    private String employmentForm;    
+    private String end_date;    
 }

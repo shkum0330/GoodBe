@@ -5,41 +5,58 @@
 <mapper namespace="com.goodbe.search.mapper.JobPostMapper">
 
 	<select id="selectJobData" resultType="JobPost">
-        select id as id, company_id as companyId, company_data companyData,
-                         company_url as companyUrl, job_content as jobContent,
-                         end_date as endDate, sal as sal, job_data  as jobData
+        select jobId as edu_id,
+               companyName as company_name,
+               wantedTitle as wanted_title,
+               companyUrl as company_url,
+               degree,
+               major,
+               address,
+               workAddress as work_address,
+               preference,
+               certificate,
+               jobContent as job_content,
+               sal,
+               employmentForm as employment_form,
+               endDate as end_date
         from job_post;
     </select>
-<!-- 
-    <select id="selectJobDataByKeyword" parameterType="List" resultType="JobPost">
-        select id as id, company_id as companyId, company_data companyData,
-                         company_url as companyUrl, job_content as jobContent,
-                         end_date as endDate, sal as sal, job_data  as jobData
-        from job_post
-        where company_id like #{keyword}
-            or company_data like #{keyword}
-            or job_content like #{keyword}
-            or job_data like #{keyword};
-    </select> -->
 
     <select id="selectJobDataByKeyword" parameterType="java.util.List" resultType="JobPost">
-        select id as id, company_id as companyId, company_data companyData,
-                         company_url as companyUrl, job_content as jobContent,
-                         end_date as endDate, sal as sal, job_data  as jobData
+        select jobId as edu_id,
+               companyName as company_name,
+               wantedTitle as wanted_title,
+               companyUrl as company_url,
+               degree,
+               major,
+               address,
+               workAddress as work_address,
+               preference,
+               certificate,
+               jobContent as job_content,
+               sal,
+               employmentForm as employment_form,
+               endDate as end_date
         from job_post
         <where>
             <foreach item="item" index="index" collection="list">
                 <if test="index == 0">
-                    company_id like #{item}
-                    or company_data like #{item}
-                    or job_content like #{item}
-                    or job_data like #{item}
+                    company_name like #{item}
+                    or wanted_title like #{item}
+                    or degree like #{item}
+                    or major like #{item}
+                    or certificate like #{item}
+                    or preference like #{item}
+                    or jobContent like #{item}
                 </if>
                 <if test="index != 0">
-                    or company_id like #{item}
-                    or company_data like #{item}
-                    or job_content like #{item}
-                    or job_data like #{item}
+                    or company_name like #{item}
+                    or wanted_title like #{item}
+                    or degree like #{item}
+                    or major like #{item}
+                    or certificate like #{item}
+                    or preference like #{item}
+                    or jobContent like #{item}
                 </if>
             </foreach>
             ;

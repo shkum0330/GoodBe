@@ -3,27 +3,51 @@
 <mapper namespace="com.goodbe.search.mapper.EduMapper">
 
 	<select id="selectEdu" resultType="Edu"> 
-		select trpr_id as trprId, title as title, title_link as
-			   titleLink, sub_tltle as subTltle, sub_title_link as sub_tltle, tel_no as telNo, 
-			   address as address, content as content 
+		select eduId as edu_id,
+               title,
+               titleLink as title_link,
+               company,
+               companyLink as company_link,
+               tel_no as telNO,
+               address,
+               content,
+               period,
+               onoff,
+               expense,
+               realExpense as real_expense,
+               detail,
+               man
 		from edu; 
 	</select>
 
 	<select id="selectEduDataByKeyword" parameterType="java.util.List" resultType="Edu">
-        select trpr_id as trprId, title as title, title_link as
-			   titleLink, sub_tltle as subTltle, sub_title_link as sub_tltle, tel_no as telNo, 
-			   address as address, content as content 
+        select eduId as edu_id,
+               title,
+               titleLink as title_link,
+               company,
+               companyLink as company_link,
+               tel_no as telNO,
+               address,
+               content,
+               period,
+               onoff,
+               expense,
+               realExpense as real_expense,
+               detail,
+               man
         from edu
         <where>
             <foreach item="item" index="index" collection="list">
                 <if test="index == 0">
                     title like #{item}
-                    or sub_tltle like #{item}
+                    or company like #{item}
+                    or detail like #{item}
                     or content like #{item}
                 </if>
                 <if test="index != 0">
                     or title like #{item}
-                    or sub_tltle like #{item}
+                    or company like #{item}
+                    or detail like #{item}
                     or content like #{item}
                 </if>
             </foreach>
