@@ -2,14 +2,17 @@ package com.goodbe.business.web.dto.mypage;
 
 import com.goodbe.business.domain.board.Post;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Schema(description = "마이페이지 - 내가 쓴 글 목록 응답 DTO")
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MyPostsResponse {
     private Long postId; // 클릭하면 게시글로 들어가기 위해 필요함
     private String boardType; // 게시판 종류

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> ad470cd225821ba3f27e77c8f81e62e2291dea5f
 .header{
     color: #000;
 font-family: Istok Web;
@@ -8,6 +11,47 @@ font-style: normal;
 font-weight: 700;
 line-height: normal;
 text-transform: capitalize;
+<<<<<<< HEAD
+}
+
+.blueline{
+    background: rgba(32, 0, 231, 0.96);
+    width: 1371.044px;
+height: 2px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.hiddenbox{
+    width: 110px;
+    height: 20px;
+}
+
+.regist-btn{
+    width: 200px;
+    height: 40px;
+    background-color: #425CE7;
+    border-radius: 5px;
+
+    color: white;
+    text-align: center;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+
+}
+
+.cancel-btn{
+    color: #030303;
+    text-align: center;
+=======
 margin-top: 80px;
 }
 .blueline{
@@ -74,12 +118,25 @@ text-transform: capitalize;
 
     color: #FDFDFD;
     text-align: center;
+>>>>>>> ad470cd225821ba3f27e77c8f81e62e2291dea5f
     font-family: Istok Web;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     text-transform: capitalize;
+<<<<<<< HEAD
+    background-color: white;
+
+ 
+    border: 1px solid #676767;
+    border-radius: 5px;
+    text-decoration: none;
+
+    fill: #FFF;
+stroke-width: 1px;
+stroke: #676767;
+=======
     text-decoration: none;
 
     padding: 3px 30px 3px 30px;
@@ -98,4 +155,5 @@ text-transform: capitalize;
     width: 150px;
     height: 200px;
     /* background-color: #425CE7; */
+>>>>>>> ad470cd225821ba3f27e77c8f81e62e2291dea5f
 }

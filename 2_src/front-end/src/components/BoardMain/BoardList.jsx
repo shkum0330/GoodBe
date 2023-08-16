@@ -2,17 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
-import './board.css';
 import data from './articles.json';
-import  './index.css';
+
 
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
-
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
 `
 
 const TabList=styled.div`
@@ -48,7 +47,6 @@ const TabItem = styled.li`
 
   &.selected {
     color: #4AA9FF;
-
   }
 
   &.not-selected {
@@ -58,24 +56,24 @@ const TabItem = styled.li`
 `;
 
 const ArticleList = styled.table`
-margin:10px 10px 0 10px;
+margin:10px 10px 10px 10px;
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
   frame:void;
+  align-items: center;
+  
 //   border: 1px solid black;
 
   
 `
 const Article = styled.tr`
-  width: 48%;
+  width: 40%;
   height: 200px;
-  padding: 10px;
-
-//   border: 1px solid #919191;
-//   margin:5px;
-//   border-radius: 10px;
-
+  padding: 20px;
+  border: 1px solid #919191;
+  margin:10px;
+  border-radius: 10px;
   display:flex;
   flex-direction: row;
 
@@ -91,17 +89,6 @@ font-weight: 700;
 line-height: normal;
 text-transform: capitalize;
 `
-
-const ActiveTabChanged={
-color: "#4AA9FF",
-borderColor: none none #4AA9FF none;
-`
-
-const UnactiveTabChanged = styled.activeTab`
-color: #4AA9FF;
-border-color: none none #4AA9FF none;
-`
-
 
 const Content = styled.div`
 color: #696868;
@@ -143,11 +130,9 @@ const Nav=styled.ul`
 `
 
 function TabContent(props) {
-
     useEffect(() => {
         props.setOnOff(true);
     })
-
     if (props.clickedTab === 0) {
         return (<TabContentTitle className="mt-5">
             <ArticleList>
@@ -206,6 +191,7 @@ function TabContent(props) {
             </ArticleList>
         </TabContentTitle>)
     }
+    
     else if (props.clickedTab === 3) {
         return (<TabContentTitle className="mt-5">
             <ArticleList>
@@ -244,48 +230,22 @@ function TabContent(props) {
     }
 };
 
-export default function () {
+export default function BoardList() {
 
     let [clickedTab, setClickedTab] = useState(0);
     let [onOff, setOnOff] = useState(false);
 
-    let [selected, setSelected]= useState(0);
     
 
     return (
-        <div>
-            <TabList>
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(0)}} 
-                className={0 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    전체 
-                </Tab>
 
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(1)}} 
-                className={1 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    취업준비
-                </Tab>
+        <div style={{
+            display : 'flex',
+            alignItems : 'center',
+            flexDirection : 'column'
+            
 
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(2)}} 
-                className={2 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    국비교육
-                </Tab>
-
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(3)}} 
-                className={3 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    학습공유
-                </Tab>
-
-                <Tab 
-                onClick={()=>{setOnOff(false); setSelected(4)}} 
-                className={4 === selected? ActiveTabChanged: UnactiveTabChanged} >
-                    취뽀후기
-                </Tab>
-            </TabList>
-
+        }}  >
             <Nav class="nav nav-underline" variant="tabs" defaultActiveKey="0">
                 <TabItem class="nav-item" eventKey="0" onClick={() => { setOnOff(false); setClickedTab(0) }}>
                     <a aria-current="page" href="#" className={0 === clickedTab ? 'selected' : 'not-selected'}>전체</a>

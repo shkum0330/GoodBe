@@ -1,6 +1,6 @@
 package com.goodbe.auth.service;
 
-import com.goodbe.auth.jwt.JwtTokenInfo;
+import com.goodbe.auth.jwt.TokenInfo;
 import com.goodbe.auth.jwt.JwtTokenProvider;
 import com.goodbe.auth.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,7 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
+<<<<<<< HEAD
     public JwtTokenInfo login(String email, String password) {
         // 1. Login Email/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
@@ -39,5 +40,17 @@ public class MemberService {
         JwtTokenInfo jwtTokenInfo = jwtTokenProvider.generateToken(authentication);
 
         return jwtTokenInfo;
+=======
+    public TokenInfo login(String email, String password) {
+        // 1. Login Email/PW 를 기반으로 Authentication 객체 생성
+        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+        return tokenInfo;
+>>>>>>> master
     }
 }

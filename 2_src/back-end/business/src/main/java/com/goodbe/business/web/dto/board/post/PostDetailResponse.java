@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
+
 @Schema(description = "개별 게시물 응답 DTO")
 @Data
 public class PostDetailResponse {
@@ -26,7 +28,9 @@ public class PostDetailResponse {
     private String boardType; // 게시판 종류
     private String title;
     private String content;
+    private int hits;
     private int likeCount;
+    private int commentCount;
     private List<UploadFileResponse> files;
     private List<CommentsResponse> comments;
 
@@ -36,8 +40,10 @@ public class PostDetailResponse {
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
+        this.hits=entity.getHits();
         this.likeCount = entity.getLikeCount();
-        this.files=entity.getFiles().stream().map(f -> new UploadFileResponse(f)).collect(Collectors.toList());
-        this.comments=entity.getComments().stream().map(c -> new CommentsResponse(c)).collect(Collectors.toList());
+        this.files=entity.getFiles().stream().map(UploadFileResponse::new).collect(toList());
+        this.comments=entity.getComments().stream().map(CommentsResponse::new).collect(toList());
+        this.commentCount=comments.size();
     }
 }
