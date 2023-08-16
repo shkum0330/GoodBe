@@ -15,14 +15,9 @@ const BoardContainer = styled.div`
     background: #FFF;
     margin-left: 380px;
     margin-top: 30px;
-<<<<<<< HEAD
     width: 900px;
     margin-bottom: 30px;
     padding-bottom : -20px;
-=======
-    width: 600px;
-    margin-bottom: 30px;
->>>>>>> sehyun
 
 `
 const BoardType = styled.p`

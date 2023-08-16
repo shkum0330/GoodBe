@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
-
+const API_BASE_URL = 'http://localhost:8080';
 const ArticleBox = styled.div`
     // 전체박스
     display: flex;
@@ -309,6 +310,26 @@ const BtnOutlineGray = styled.a`
 
 
 export default function BoardDetailContent() {
+    const [data, setBoardData] = useState([]); 
+    
+
+    useEffect(() => {
+      axios
+        .get(`${API_BASE_URL}/api/board/`)
+        
+
+
+
+        .then(function (response) {
+          console.log(response.data);
+          setBoardData(response.data);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }, []); 
+
+
     return (
         <>
             <ArticleBox>

@@ -4,7 +4,10 @@ import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
 import data from './articles.json';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+const NextQuarry ='';
+const API_BASE_URL = 'http://localhost:8080';
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
@@ -159,7 +162,26 @@ const CustomLink = styled(Link)`
   padding: 0; /* Remove padding to ensure link covers the whole space */
 `;
 
+
+
+
 function TabContent(props) {
+    const [data, setBoardData] = useState([]); 
+    
+
+    useEffect(() => {
+      axios
+        .get(`${API_BASE_URL}/api/board/`)
+        .then(function (response) {
+          console.log(response.data);
+          setBoardData(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }, []); 
+
+
     useEffect(() => {
         props.setOnOff(true);
     })
