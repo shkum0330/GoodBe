@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
-import data from './articles.json';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const NextQuarry ='';
+
 const API_BASE_URL = 'http://localhost:8080';
 let TabContentTitle = styled.div`
   font-size: 30px;
@@ -195,8 +194,9 @@ function TabContent(props) {
             <ArticleList>
 
                 {data.map((item) => (
-                        <CustomLink key={item.id} to="/api/board/${item.id}">
-                        <Article key={item.id}>
+                    <CustomLink key={item.id} to={"/BoardDetail?id=" + `${item.id}`  }>                       
+                    
+                     <Article key={item.id}>
                       <Left>
 
                           <Title>{item.title}</Title>
@@ -222,7 +222,7 @@ function TabContent(props) {
 
                 {data.map((item) =>
                     item.boardType === '취업준비' ? (
-                        <CustomLink key={item.id} to="/api/board/${item.id}">
+                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
 
 
                         <Article key={item.id}>
@@ -247,9 +247,11 @@ function TabContent(props) {
                 <TabContentTitle className="mt-5">
             <ArticleList>
 
-                {data.map((item) =>
-                    item.type === "국비교육" ? (
-                        <CustomLink key={item.id} to="/api/board/${item.id}">
+            {data.map((item) =>
+                    item.boardType === '국비교육' ? (
+                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+
+
                         <Article key={item.id}>
                         <Left>
 
@@ -274,9 +276,11 @@ function TabContent(props) {
             <TabContentTitle className="mt-5">
             <ArticleList>
 
-                {data.map((item) =>
-                    item.type === "학습공유" ? (
-                        <CustomLink key={item.id} to="/api/board/${item.id}">
+            {data.map((item) =>
+                    item.boardType === '학습공유' ? (
+                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+
+
                         <Article key={item.id}>
                         <Left>
 
@@ -299,16 +303,18 @@ function TabContent(props) {
             <div style={{width : '80%', display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
             <TabContentTitle className="mt-5">
             <ArticleList>
-                {data.map((item) =>
-                    item.type === "취뽀후기" ? (
-                        <CustomLink key={item.id} to="/api/board/${item.id}">
+            {data.map((item) =>
+                    item.boardType === '취뽀후기' ? (
+                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+
+
                         <Article key={item.id}>
                         <Left>
 
                             <Title>{item.title}</Title>
 
                             <Content>{item.content}</Content>
-                            <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount}</AboutArticle>
+                            <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
                         </Left>
                         <Img src={item.img} />
                     </Article>
