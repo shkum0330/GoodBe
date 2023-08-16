@@ -9,7 +9,7 @@ spring:
     password: jinajjang1128!
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 file:
   dir:
     local: /goodbe/S09P12A801/2_src/back-end/files

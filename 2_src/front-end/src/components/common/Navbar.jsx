@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import goodbelogo from '../../assets/navbar/goodbelogo.svg';
@@ -50,6 +50,14 @@ export default function CustomNavbar() {
   }
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 토큰 존재 여부에 따라 로그인 상태 업데이트
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    setIsLoggedIn(!!(accessToken && refreshToken));
+  }, []);
 
   const openModal = () => {
     setModalOpen(true);
@@ -57,6 +65,14 @@ export default function CustomNavbar() {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    // 로컬 스토리지의 토큰 삭제
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    // 로그인 상태 업데이트
+    setIsLoggedIn(false);
   };
 
   return (
@@ -78,7 +94,15 @@ export default function CustomNavbar() {
         </Nav>
 
         <div style={navbarIconStyle}>
-          <button onClick={openModal} style={{ border: 'none', borderRadius: '10px' }}>로그인</button>
+          {isLoggedIn ? (
+            <button onClick={handleLogout} style={{ border: 'none', borderRadius: '10px' }}>
+              로그아웃
+            </button>
+          ) : (
+            <button onClick={openModal} style={{ border: 'none', borderRadius: '10px' }}>
+              로그인
+            </button>
+          )}
         </div>
 
         <NavbarLink href="/MyPageHome">

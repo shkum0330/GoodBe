@@ -1,9 +1,12 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import Google from '../../assets/Login/Google.svg';
 import InstitutionSignUp from '../../pages/InstitutionSignUp';
 import { GrClose } from "react-icons/gr";
+import { useNavigate } from 'react-router-dom';
+
 
 
 const slideIn = keyframes`
@@ -136,6 +139,28 @@ const BackgroundOverlay = styled.div`
 
 const GoLogin = ({ closeModal }) => {
 
+
+  const handleGoogleClick = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const accessToken = urlSearchParams.get('accessToken');
+    const refreshToken = urlSearchParams.get('refreshToken');
+
+    if (accessToken && refreshToken) {
+      console.log('Access token:', accessToken);
+      console.log('Refresh token:', refreshToken);
+      alert('로그인 성공!');
+
+      // 받아온 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    } else {
+      console.log('Tokens not found in local storage.');
+    }
+
+    window.location.href =
+      'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
+  };
+
   return (
     <>
     <BackgroundOverlay modalOpen={true} onClick={closeModal} />
@@ -146,13 +171,13 @@ const GoLogin = ({ closeModal }) => {
       <LogoImage alt="logo_01" src={logo} />
       <Title>굿비에서 여러분의 미래를 그려보세요!</Title>
       <Detail>구글 로그인 하러 가기</Detail>
-      <a href="/">
-      <GoogleImg alt="Google" src={Google} />
-      </a>
+  
+      <GoogleImg alt="Google" src={Google} onClick={handleGoogleClick}/>
+ 
 
 
       <InstitutionLogin href="다음페이지 주소 넣어주셈">혹시 기업회원이신가요?</InstitutionLogin>
-      <SignUp href="PersonalRegisterComponent">회원가입</SignUp>
+      {/* <SignUp href="PersonalRegisterComponent">회원가입</SignUp> */}
 
 
     </Container>

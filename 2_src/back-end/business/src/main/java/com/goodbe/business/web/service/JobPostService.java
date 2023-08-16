@@ -24,6 +24,10 @@ public class JobPostService {
         return jobPostRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public JobPost jobPostDetail(String jobPostId){
+        return jobPostRepository.findById(jobPostId).orElseThrow(()->new IllegalArgumentException("존재하지 않는 채용공고입니다."));
+    }
     @Transactional
     public void likeJobPost(Member member, String jobPostId){
         JobPost jobPost=jobPostRepository.findById(jobPostId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채용고고입니다."));

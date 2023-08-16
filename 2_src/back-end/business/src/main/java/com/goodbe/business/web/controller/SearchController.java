@@ -1,6 +1,6 @@
 package com.goodbe.business.web.controller;
 
-import com.goodbe.business.web.dto.search.EduResponse;
+import com.goodbe.business.web.dto.edu.EduListResponse;
 import com.goodbe.business.web.dto.jobpost.JobPostListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,23 +55,23 @@ public class SearchController {
 
     @GetMapping("/edu/all")
     @Operation(summary = "[GET] 전체 국비교육 불러오기")
-    public List<EduResponse> searchAllEdu() {
-        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/all").retrieve()
-                .bodyToFlux(EduResponse.class)
+    public List<EduListResponse> searchAllEdu() {
+        Mono<List<EduListResponse>> responseMono=client.get().uri("/edu/all").retrieve()
+                .bodyToFlux(EduListResponse.class)
                 .collectList();
-        List<EduResponse> result=responseMono.block();
+        List<EduListResponse> result=responseMono.block();
         return result;
     }
 
 
     @GetMapping("/edu/{keyword}")
     @Operation(summary = "[GET] 검색어로 국비교육 불러오기")
-    public List<EduResponse> searchEduByKeyword(@PathVariable String keyword) {
-        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
+    public List<EduListResponse> searchEduByKeyword(@PathVariable String keyword) {
+        Mono<List<EduListResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
                 .retrieve()
-                .bodyToFlux(EduResponse.class)
+                .bodyToFlux(EduListResponse.class)
                 .collectList();
-        List<EduResponse> result=responseMono.block();
+        List<EduListResponse> result=responseMono.block();
         return result;
     }
 

@@ -12,8 +12,9 @@ public class JobPostListResponse {
     private String id;
     private String companyName;
     private String wantedTitle;
-    private String degree;
+    private String degree;// 학력
     private String address;
+    private String career;
     private String sal;
 
     @Builder
@@ -21,8 +22,9 @@ public class JobPostListResponse {
         this.id = entity.getId();
         this.companyName = entity.getCompanyName();
         this.wantedTitle = entity.getWantedTitle();
-        this.degree = entity.getJobContent();
+        this.degree = entity.getDegree();
         this.address=entity.getAddress();
+        this.career=entity.getCareer();
         this.sal = entity.getSal();
     }
 }

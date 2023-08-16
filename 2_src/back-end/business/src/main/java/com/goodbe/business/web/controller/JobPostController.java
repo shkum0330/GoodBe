@@ -3,6 +3,7 @@ package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.web.dto.jobpost.JobPostDetailResponse;
 import com.goodbe.business.web.dto.jobpost.JobPostListResponse;
 import com.goodbe.business.web.service.JobPostService;
 import com.goodbe.business.web.service.MemberService;
@@ -39,10 +40,10 @@ public class JobPostController {
 //        return posts.stream().map(PostsResponse::new).collect(toList());
 //    }
     @GetMapping("")
-    @Operation(summary = "[GET] 채용공고 리스트", description = "초기 진입시 공고id로 정렬")
-    public List<JobPostListResponse> jobPostList(@PageableDefault(sort = "id", size = 3, direction = Sort.Direction.DESC) Pageable pageable){
-        Page<JobPost> posts=jobPostService.jobPostList(pageable);
-        return posts.stream().map(JobPostListResponse::new).collect(toList());
+        @Operation(summary = "[GET] 채용공고 리스트", description = "초기 진입시 공고id로 정렬")
+        public List<JobPostListResponse> jobPostList(@PageableDefault(sort = "id", size = 3, direction = Sort.Direction.DESC) Pageable pageable){
+            Page<JobPost> posts=jobPostService.jobPostList(pageable);
+            return posts.stream().map(JobPostListResponse::new).collect(toList());
     }
 
     @GetMapping("/sort-by-end-date")
@@ -57,6 +58,11 @@ public class JobPostController {
 //        Page<JobPost> posts=jobPostService.jobPostList(pageable);
 //        return posts.stream().map(JobPostHomeResponse::new).collect(toList());
 //    }
+    @GetMapping("/{jobPostId}")
+    @Operation(summary = "[GET] 채용공고 상세보기")
+    public JobPostDetailResponse jobPostList(@PathVariable String jobPostId){
+        return new JobPostDetailResponse(jobPostService.jobPostDetail(jobPostId));
+    }
 
     @GetMapping("/like/{jobPostId}")
     @Operation(summary = "[GET] 관심 채용공고 등록", description = "Pathvariable로 jobPostId를 넘기면 해당 교육을 관심목록에 등록한다.")
