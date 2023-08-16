@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';
 import data from './articles.json';
-
+import { Link } from 'react-router-dom';
 
 let TabContentTitle = styled.div`
   font-size: 30px;
@@ -11,7 +11,8 @@ let TabContentTitle = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-
+    width : 100%;
+    height: auto;
 `
 
 const TabItem = styled.li`
@@ -149,6 +150,14 @@ const WriteButton = styled.a`
     padding: 5px 13px;
     text-decoration: none;
 `
+const CustomLink = styled(Link)`
+  display: block; /* Make the link take the full width of the container */
+  text-decoration: none; 
+  color: #4AA9FF;
+  width: 100%; /* Ensure the link spans the whole container width */
+  height: 100%; /* Ensure the link spans the whole container height */
+  padding: 0; /* Remove padding to ensure link covers the whole space */
+`;
 
 function TabContent(props) {
     useEffect(() => {
@@ -157,23 +166,25 @@ function TabContent(props) {
     if (props.clickedTab === 0) {
         
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+            <div style={{width : '80%', display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
        
 
         <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) => (
-                    <Article key={item.id}>
-                        <Left>
+                        <CustomLink key={item.id} to="/api/board/${item.id}">
+                        <Article key={item.id}>
+                      <Left>
 
-                            <Title>{item.title}</Title>
+                          <Title>{item.title}</Title>
 
-                            <Content>{item.content}</Content>
-                            <AboutArticle>{item.writerId} 조회수 {item.viewCnt} 댓글수 {item.commentCnt}</AboutArticle>
-                        </Left>
-                        <Img src={item.img} />
-                    </Article>
+                          <Content>{item.content}</Content>
+                          <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
+                      </Left>
+                      <Img src={item.img} />
+                  </Article>
+                   </CustomLink>
                 ))}
             </ArticleList>
 
@@ -183,21 +194,26 @@ function TabContent(props) {
         </div>)
     } else if (props.clickedTab === 1) {
         return (
-        <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+        <div style={{width : '80%', display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
         <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) =>
-                    item.type === 1 ? (
+                    item.boardType === '취업준비' ? (
+                        <CustomLink key={item.id} to="/api/board/${item.id}">
+
 
                         <Article key={item.id}>
-                            <Left>
-                                <Title>{item.title}</Title>
-                                <Content>{item.content}</Content>
-                                <AboutArticle>{item.writerId} 조회수 {item.viewCnt} 댓글수 {item.commentCnt}</AboutArticle>
-                            </Left>
-                            <Img src={item.img} />
-                        </Article>
+                        <Left>
+
+                            <Title>{item.title}</Title>
+
+                            <Content>{item.content}</Content>
+                            <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
+                        </Left>
+                        <Img src={item.img} />
+                    </Article>
+                    </CustomLink>
                     ) : null
                 )}
             </ArticleList>
@@ -205,20 +221,24 @@ function TabContent(props) {
         </div>)
     } else if (props.clickedTab === 2) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+            <div style={{width : '80%', display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
                 <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) =>
-                    item.type === 2 ? (
+                    item.type === "국비교육" ? (
+                        <CustomLink key={item.id} to="/api/board/${item.id}">
                         <Article key={item.id}>
-                            <Left>
-                                <Title>{item.title}</Title>
-                                <Content>{item.content}</Content>
-                                <AboutArticle>{item.writerId} 조회수 {item.viewCnt} 댓글수 {item.commentCnt}</AboutArticle>
-                            </Left>
-                            <Img src={item.img} />
-                        </Article>
+                        <Left>
+
+                            <Title>{item.title}</Title>
+
+                            <Content>{item.content}</Content>
+                            <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
+                        </Left>
+                        <Img src={item.img} />
+                    </Article>
+                    </CustomLink>
                     ) : null
                 )}
             </ArticleList>
@@ -228,20 +248,24 @@ function TabContent(props) {
     
     else if (props.clickedTab === 3) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+            <div style={{width : '80%', display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
             <TabContentTitle className="mt-5">
             <ArticleList>
 
                 {data.map((item) =>
-                    item.type === 3 ? (
+                    item.type === "학습공유" ? (
+                        <CustomLink key={item.id} to="/api/board/${item.id}">
                         <Article key={item.id}>
-                            <Left>
-                                <Title>{item.title}</Title>
-                                <Content>{item.content}</Content>
-                                <AboutArticle>{item.writerId} 조회수 {item.viewCnt} 댓글수 {item.commentCnt}</AboutArticle>
-                            </Left>
-                            <Img src={item.img} />
-                        </Article>
+                        <Left>
+
+                            <Title>{item.title}</Title>
+
+                            <Content>{item.content}</Content>
+                            <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
+                        </Left>
+                        <Img src={item.img} />
+                    </Article>
+                    </CustomLink>
                     ) : null
                 )}
             </ArticleList>
@@ -250,19 +274,23 @@ function TabContent(props) {
     } else if (props.clickedTab === 4) {
 
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
+            <div style={{width : '80%', display: 'flex', justifyContent: 'center', marginLeft: '150px'}}>
             <TabContentTitle className="mt-5">
             <ArticleList>
                 {data.map((item) =>
-                    item.type === 4 ? (
+                    item.type === "취뽀후기" ? (
+                        <CustomLink key={item.id} to="/api/board/${item.id}">
                         <Article key={item.id}>
-                            <Left>
-                                <Title>{item.title}</Title>
-                                <Content>{item.content}</Content>
-                                <AboutArticle>{item.writerId} 조회수 {item.viewCnt} 댓글수 {item.commentCnt}</AboutArticle>
-                            </Left>
-                            <Img src={item.img} />
-                        </Article>
+                        <Left>
+
+                            <Title>{item.title}</Title>
+
+                            <Content>{item.content}</Content>
+                            <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount}</AboutArticle>
+                        </Left>
+                        <Img src={item.img} />
+                    </Article>
+                    </CustomLink>
                     ) : null
                 )}
             </ArticleList>
