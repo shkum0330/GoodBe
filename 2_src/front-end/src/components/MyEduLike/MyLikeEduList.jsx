@@ -116,10 +116,10 @@ const MyLikeEduList = () => {
       <Container>
         {myEduLike.map((item) => (
           <EduItemContainer key={item.id}>
-            <EduImage src={item.image} />
+            {/* <EduImage src={item.image} /> */}
             <Line />
-            <EduName>{item.EduName}</EduName>
-            <EduDetail>{item.Edutitle}</EduDetail>
+            <EduName>{item.title}</EduName>
+            <EduDetail>{item.company}</EduDetail>
             <LinkStyle>이동하기></LinkStyle>
           </EduItemContainer>
         ))}

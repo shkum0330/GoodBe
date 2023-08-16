@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState } from 'react';
 import Navbar from '../components/common/Navbar';
 import EduSearchHeader from '../components/EduList/EduSearchHeader';
 import EduListTitle from '../components/EduList/EduListTitle';
@@ -8,12 +8,14 @@ import Footer from '../components/common/Footer';
 
 
 const EduList = () => {
+    const [searchKeyword, setSearchKeyword] = useState('');
+
     return (
         <div>
             <Navbar/>
-            <EduSearchHeader/>
+            <EduSearchHeader setSearchKeyword={setSearchKeyword}/>
             <EduListTitle />
-            <EduListContent/>
+            <EduListContent searchKeyword={searchKeyword}/>
             <Footer/>
         </div>
     );

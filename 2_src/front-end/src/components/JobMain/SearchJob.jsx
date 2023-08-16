@@ -54,13 +54,17 @@ const Box = styled.div`
 
 `
 
-const SearchJob = () => {
+const SearchJob = ({setSearchKeyword}) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchChange = (event) => {
       setSearchTerm(event.target.value);
   };
-  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      setSearchKeyword(searchTerm); // Enter 키가 눌리면 검색어를 App 컴포넌트에서 업데이트
+    }
+  };
 
   return (
     
@@ -74,6 +78,7 @@ const SearchJob = () => {
             placeholder="취업을 희망하는 회사나 직무를 입력하세요"
             value={searchTerm}
             onChange={handleSearchChange}
+            onKeyPress={handleKeyPress} 
         />
       </Box>
     </SearchContainer>

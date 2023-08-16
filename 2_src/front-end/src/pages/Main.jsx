@@ -27,25 +27,11 @@ export default function Main() {
         
         <EnterpriseIntroduction/>
         <EduInterest/>
-
       
         <VideoRecommend/>
         <AdBannerSolo/>
-        <ChatListSample/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+        {/* <ChatListSample/> */}
+       
         <Footer/>
     </div>
   )
