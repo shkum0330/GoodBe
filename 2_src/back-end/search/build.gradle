@@ -47,3 +47,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar{
+	archivesBaseName = 'search'
+	archiveFileName = 'search-1.0.0-SNAPSHOT.jar'
+	archiveVersion = "0.0.0"
+}

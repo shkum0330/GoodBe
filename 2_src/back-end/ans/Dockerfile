@@ -14,8 +14,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-WORKDIR /analysis
+WORKDIR /usr/src/app/analysis
 
-CMD ["python3", "manage.py", "runserver", "0:8000"]
+CMD ["python3", "manage.py", "runserver","--noreload", "0:8000"]
 
 EXPOSE 8000

@@ -24,7 +24,7 @@ def get_all_job_post():
         data_list = []
 
         for i in range(len(parsed_data)):
-            text = parsed_data[i]["companyId"] + parsed_data[i]["companyData"] + parsed_data[i]["jobContent"] + parsed_data[i]["jobData"]
+            text = parsed_data[i]["companyName"] + parsed_data[i]["wantedTitle"] + parsed_data[i]["degree"] + parsed_data[i]["certificate"] + parsed_data[i]["jobContent"]
             data_list.append(text)
         return data_list
     else:
@@ -51,7 +51,7 @@ def get_job_post_by_keyword(keyword):
         data_list = []
 
         for i in range(len(parsed_data)):
-            text = parsed_data[i]["companyId"] + parsed_data[i]["companyData"] + parsed_data[i]["jobContent"] + parsed_data[i]["jobData"]
+            text = parsed_data[i]["companyName"] + parsed_data[i]["wantedTitle"] + parsed_data[i]["degree"] + parsed_data[i]["certificate"] + parsed_data[i]["jobContent"]
             data_list.append(text)
         return data_list
     else:
