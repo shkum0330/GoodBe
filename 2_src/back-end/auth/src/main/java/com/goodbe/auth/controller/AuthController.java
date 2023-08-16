@@ -1,109 +1,27 @@
 package com.goodbe.auth.controller;
 
+import com.goodbe.auth.jwt.TokenInfo;
 import com.goodbe.auth.service.PrincipalOauthUserService;
 import com.goodbe.auth.service.MemberService;
+import com.nimbusds.oauth2.sdk.TokenResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import com.goodbe.auth.oauth2.PrincipalDetails;
-import com.goodbe.auth.domain.Role;
-import com.goodbe.auth.domain.Member;
-import com.goodbe.auth.repository.MemberRepository;
 
-
-import java.time.LocalDateTime;
-
-
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final MemberService memberService;
-    private final PrincipalOauthUserService principalOauthUserService;
-
-    @ResponseBody
-    @GetMapping("/test/login")
-    public String testLogin(
-            Authentication authentication,
-            @AuthenticationPrincipal PrincipalDetails userDetails) { //세션 정보 받아오기 (DI 의존성 주입)
-        //방법 1
-        System.out.println("/test/login =============================");
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("authentication:" + principalDetails.getMember());
-        //방법 2
-        System.out.println("userDetails:" + userDetails.getMember());
-        return "세션 정보 확인";
+    @GetMapping("/login/google")
+    public String googleLogin(
+    ){
+        return "redirect:/oauth2/authorization/google";
     }
-    @ResponseBody
-    @GetMapping("/test/oauth/login")
-    public String testOAuthLogin(
-            Authentication authentication,
-            @AuthenticationPrincipal OAuth2User oauth
-    ) { //세션 정보 받아오기 (DI 의존성 주입)
-
-        //방법 1
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        System.out.println("authentication: " + oAuth2User.getAttributes());
-        //방법 2
-        System.out.println("OAuth2User:" + oauth.getAttributes());
-        return "OAuth 세션 정보 확인";
-    }
-
-
-    @GetMapping("/")
-    public String index() {
-        return "socialLogin success";
-    }
-
-    @ResponseBody
-    @GetMapping("/user")
-    public String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        System.out.println("GetMapping(/user) ==========================");
-        System.out.println("principalDetails: " + principalDetails );
-        return "user";
-    }
-
-    @ResponseBody
-    @GetMapping("/admin")
-    public String admin(){
-        return "admin";
-    }
-
-    @ResponseBody
-    @GetMapping("/manager")
-    public String manager(){
-        return "manager";
-    }
-
-
-    @PostMapping("/join")
-    public String join(@ModelAttribute Member member){
-        member.setRole(Role.USER);
-        //user.setRole("USER");
-        member.setCreateDate(LocalDateTime.now());
-
-        String rawPassword = member.getPassword();
-        String encPassword = passwordEncoder.encode(rawPassword);
-
-        member.setPassword(encPassword);
-        memberRepository.save(member);
-
-        return "redirect:/loginForm";
-    }
-
-    @GetMapping("/loginForm")
-    public String loginForm(){
-        return "loginForm";
-    }
-
-    @GetMapping("/joinForm")
-    public String joinForm(){
-        return "joinForm";
-    }
-
 }

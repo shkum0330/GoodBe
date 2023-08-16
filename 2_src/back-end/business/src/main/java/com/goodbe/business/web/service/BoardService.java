@@ -151,6 +151,7 @@ public class BoardService {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글을 찾을 수 없습니다. ID: " + postId));
 //        log.info("post member = {}",post.getMember().getNickname());
 //        Optional<Member> member=memberRepository.findById(post.getMember().getId());
+        post.viewPost(); // 조회수 1 증가
         return post;
     }
 

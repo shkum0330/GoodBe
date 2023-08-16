@@ -60,6 +60,10 @@ public class EduService {
         memberEduRepository.delete(memberEdu);
     }
 
+    public Edu eduDetail(String eduId){
+        return eduRepository.findById(eduId).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 교육입니다."));
+    }
+
     public boolean isLike(Long memberId, String eduId) throws Exception {
         log.info("{}, {}",memberId,eduId);
         // 이미 관심목록에 추가했으면 삭제한다.

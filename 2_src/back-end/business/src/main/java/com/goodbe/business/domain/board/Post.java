@@ -1,6 +1,5 @@
 package com.goodbe.business.domain.board;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.goodbe.business.domain.BaseTimeEntity;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.file.UploadFile;
@@ -87,7 +86,7 @@ public class Post extends BaseTimeEntity {
         this.files = files;
         this.attachFile = attachFile;
     }
-    public void hit(){
+    public void viewPost(){
         this.hits++;
     }
     public void like(){

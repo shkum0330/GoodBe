@@ -1,4 +1,4 @@
-package com.goodbe.business.web.dto.search;
+package com.goodbe.business.web.dto.edu;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -6,7 +6,7 @@ import lombok.*;
 @Schema(description = "국비교육 응답 DTO")
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EduResponse {
+public class EduListResponse {
     private String eduId;
     private String title;
     private String titleLink;
