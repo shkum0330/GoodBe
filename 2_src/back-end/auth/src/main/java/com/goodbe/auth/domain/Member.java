@@ -25,31 +25,26 @@ public class Member implements UserDetails {
     private String memberId;
 
     private String username;
-    private String name; // 실명
-    private String nickname; // 닉네임
     private String password;
     private String email;
+    private Boolean isSignUp;
 
     @Enumerated(EnumType.STRING)
     private Role role; //ADMIN, MANAGER, USER
 
+    // oAuth2 관련
     private String provider; //어떤 OAuth인지(google, naver 등)
     private String provideId; // 해당 OAuth 의 key(id)
     private LocalDateTime createDate; // 가입 일자
 
-    // 회원가입폼에서 입력받는 필드
-    private String birthdate; // 생년월일 ex) 1996.02.24
-    private String residence; // 거주 지역
-    private String interestCompany; // 관심 회사
-    private String interestJob; // 관심 직무
-    private String sex; // 성별 M/F
-    private String profileImage; // 프로필 이미지 업로드 url
-    private boolean isWithdrawn; // 회원탈퇴여부
+    // JWT
+    private String grantType;  // 인증타입. Bearer인 경우 JWT 혹은 OAuth에 대한 토큰을 사용한다는 뜻
+    private String accessToken;
+    private String refreshToken;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
