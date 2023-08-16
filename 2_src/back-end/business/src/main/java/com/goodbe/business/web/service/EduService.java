@@ -51,7 +51,7 @@ public class EduService {
     public void likeEdu(Member member,String eduId){
         Edu edu=eduRepository.findById(eduId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 교육입니다."));
         MemberEdu memberEdu=MemberEdu.builder().memberId(member).eduId(edu).build();
-        log.info("memberEdu 정보 = {}, {}",memberEdu.getMemberId().getName(),memberEdu.getEduId().getSubTitle());
+        log.info("memberEdu 정보 = {}, {}",memberEdu.getMemberId().getName(),memberEdu.getEduId().getCompany());
         memberEduRepository.save(memberEdu);
     }
     @Transactional

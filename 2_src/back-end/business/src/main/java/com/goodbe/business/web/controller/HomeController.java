@@ -1,9 +1,6 @@
 package com.goodbe.business.web.controller;
 
-import com.goodbe.business.domain.training.Edu;
 import com.goodbe.business.web.dto.HomeResponse;
-import com.goodbe.business.web.dto.TrainingDto;
-import com.goodbe.business.web.dto.jobpost.JobPostHomeResponse;
 import com.goodbe.business.web.dto.search.EduResponse;
 import com.goodbe.business.web.service.EduService;
 import com.goodbe.business.web.service.MemberService;
@@ -14,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,7 +19,6 @@ import reactor.core.publisher.Mono;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -51,17 +46,9 @@ public class HomeController {
         List<HomeResponse> result=new ArrayList<>();
         for (int i=0;i<3;i++){ // 3개만 출력
             if(edus.get(i)==null) break;
-            result.add(new HomeResponse(edus.get(i).getTitle(),edus.get(i).getSubTltle()));
+            result.add(new HomeResponse(edus.get(i).getTitle(),edus.get(i).getCompany()));
         }
         return result;
     }
 
-    //메인페이지 호출
-    @Operation(summary = "[GET] index 페이지", description = "TODO: 필요한 정보들 출력")
-    @GetMapping("/")
-    public List<TrainingDto> home() {
-        log.info("home controller");
-        List<Edu> edus = eduService.findRandomEdus();
-        return edus.stream().map(TrainingDto::new).collect(Collectors.toList());
-    }
 }

@@ -1,7 +1,6 @@
 package com.goodbe.business.domain.training;
 
 import com.goodbe.business.domain.member.Consulting;
-import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.member.MemberEdu;
 import lombok.*;
 
@@ -9,66 +8,85 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.LAZY;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Edu { // 국비교육 엔티티
     @Id
-    @Column(name="trpr_id")
+    @Column(name="edu_id")
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id")
-    private School school;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "school_id")
+//    private School school;
 
     @OneToMany(mappedBy = "edu", cascade = CascadeType.ALL)
-    private List<Consulting> consulting;
+    private List<Consulting> consultings=new ArrayList<>();
 
     @OneToMany(mappedBy = "eduId", cascade = CascadeType.REMOVE)
     private List<MemberEdu> memberEdus=new ArrayList<>(); // 관심 교육
 
-    @OneToMany(mappedBy = "edu")
-    private List<EduReview> eduReviews =new ArrayList<>();
+//    @OneToMany(mappedBy = "edu")
+//    private List<EduReview> eduReviews =new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column
     private String title; // 교육명
 
     @Column
     private String titleLink;
 
     @Column
-    private String subTitle; // 교육명
+    private String company;
 
     @Column
-    private String subTitleLink;
-
-    @Column
-    private String telNo;
+    private String companyLink;
 
     @Column
     private String address;
 
     @Column
+    private String tel;
+
+    @Column
+    private String period;
+
+    @Column
+    private String onoff;
+
+    @Column
+    private String expense;
+
+    @Column
+    private String realExpense;
+
+    @Column
     private String content;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private TrainingType trainingType; // 대면 여부
+    private String detail;
 
     @Column
-    private String time; // 주 n일
+    private String man; // 정원
 
     @Builder
-    public Edu(String id, String title, String titleLink, String subTitle, String subTitleLink, String telNo, String address, String content) {
+    public Edu(String id, List<Consulting> consultings, List<MemberEdu> memberEdus, String title,
+               String titleLink, String company, String companyLink, String address, String tel, String period,
+               String onoff, String expense, String realExpense, String content, String detail, String man) {
         this.id = id;
+        this.consultings = consultings;
+        this.memberEdus = memberEdus;
         this.title = title;
         this.titleLink = titleLink;
-        this.subTitle = subTitle;
-        this.subTitleLink = subTitleLink;
-        this.telNo = telNo;
+        this.company = company;
+        this.companyLink = companyLink;
         this.address = address;
+        this.tel = tel;
+        this.period = period;
+        this.onoff = onoff;
+        this.expense = expense;
+        this.realExpense = realExpense;
         this.content = content;
+        this.detail = detail;
+        this.man = man;
     }
 }

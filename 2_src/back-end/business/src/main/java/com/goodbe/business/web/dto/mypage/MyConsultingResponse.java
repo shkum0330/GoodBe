@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 public class MyConsultingResponse {
     private Long id; // 상담id
     private String title; // 교육명
-    private String subTitle; // 교육기관
+    private String company; // 교육기관
     private String reserveTime;
 
     @Builder
     public MyConsultingResponse(Consulting entity) {
         this.id=entity.getId();
         this.title = entity.getEdu().getTitle();
-        this.subTitle = entity.getEdu().getSubTitle();
+        this.company = entity.getEdu().getCompany();
         this.reserveTime=entity.getReserveTime().toString().replace("T"," ");
     }
 }

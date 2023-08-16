@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MyEduResponse {
     private String id;
-    private String subTitle;
+    private String company;
     private String title;
 
     @Builder
     public MyEduResponse(Edu entity) {
         this.id = entity.getId();
-        this.subTitle = entity.getSubTitle();
+        this.company = entity.getCompany();
         this.title = entity.getTitle();
     }
 }

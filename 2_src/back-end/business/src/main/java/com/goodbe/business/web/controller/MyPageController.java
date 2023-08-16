@@ -1,6 +1,7 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
+import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.training.Edu;
@@ -101,15 +102,16 @@ public class MyPageController {
     }
 
 
-//    @GetMapping("/job-post")
-//    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "회원의 관심 채용공고들을 응답으로 보낸다.")
-//    public MemberInfoResponse interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
-//        if(!authorization(request)){
-//            throw new AccessDeniedException("로그인하세요.");
-//        }
-//        Member member=memberService.findById(1L); // 임시 회원
-//        return new MemberInfoResponse(member);
-//    }
+    @GetMapping("/job-post")
+    @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "회원의 관심 채용공고들을 응답으로 보낸다.")
+    public List<MyJobPostResponse> interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+        if(!authorization(request)){
+            throw new AccessDeniedException("로그인하세요.");
+        }
+        Member member=memberService.findById(1L); // 임시 회원
+        List<JobPost> myJobPosts=myPageService.myJobPosts(member.getId());
+        return myJobPosts.stream().map(MyJobPostResponse::new).collect(Collectors.toList());
+    }
 
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "내가 쓴 글들을 응답으로 보낸다.")
