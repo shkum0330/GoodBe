@@ -1,7 +1,7 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.web.dto.search.EduResponse;
-import com.goodbe.business.web.dto.jobpost.JobPostHomeResponse;
+import com.goodbe.business.web.dto.jobpost.JobPostListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -33,23 +33,23 @@ public class SearchController {
 
     @GetMapping("/jobPost/all")
     @Operation(summary = "[GET] 전체 채용공고 불러오기")
-    public List<JobPostHomeResponse> searchAllJobPost() {
-        Mono<List<JobPostHomeResponse>> responseMono=client.get().uri("/jobPost/all").retrieve()
-                .bodyToFlux(JobPostHomeResponse.class)
+    public List<JobPostListResponse> searchAllJobPost() {
+        Mono<List<JobPostListResponse>> responseMono=client.get().uri("/jobPost/all").retrieve()
+                .bodyToFlux(JobPostListResponse.class)
                 .collectList();
-        List<JobPostHomeResponse> result=responseMono.block();
+        List<JobPostListResponse> result=responseMono.block();
         return result;
     }
 
     @GetMapping("/jobPost/{keyword}")
     @Operation(summary = "[GET] 검색어로 채용공고 불러오기")
-    public List<JobPostHomeResponse> searchJobPostByKeyword(@PathVariable String keyword) {
+    public List<JobPostListResponse> searchJobPostByKeyword(@PathVariable String keyword) {
         log.info("{}",keyword);
-        Mono<List<JobPostHomeResponse>> responseMono=client.get().uri("/jobPost/{keyword}",keyword)
+        Mono<List<JobPostListResponse>> responseMono=client.get().uri("/jobPost/{keyword}",keyword)
                 .retrieve()
-                .bodyToFlux(JobPostHomeResponse.class)
+                .bodyToFlux(JobPostListResponse.class)
                 .collectList();
-        List<JobPostHomeResponse> result=responseMono.block();
+        List<JobPostListResponse> result=responseMono.block();
         return result;
     }
 

@@ -37,8 +37,8 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Consulting> consultings=new ArrayList<>(); // 상담
 
-    @OneToMany(mappedBy = "member")
-    private List<EduReview> eduReviews =new ArrayList<>(); // 교육 후기
+//    @OneToMany(mappedBy = "member")
+//    private List<EduReview> eduReviews =new ArrayList<>(); // 교육 후기
 
     @OneToMany(mappedBy = "member")
     private List<Post> posts=new ArrayList<>();
@@ -105,6 +105,7 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     }
 
 
+
     public void update(MemberUpdateRequest request) {
         this.profileImage = request.getProfileImage();
         this.name = request.getName();
@@ -115,4 +116,5 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
         this.favoriteCompany = request.getFavoriteCompany();
         this.favoriteJob = request.getFavoriteJob();
     }
+
 }

@@ -1,8 +1,10 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.board.Post;
+import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.domain.training.Edu;
 import com.goodbe.business.web.dto.mypage.*;
 import com.goodbe.business.web.service.MemberService;
 import com.goodbe.business.web.service.MyPageService;
@@ -90,23 +92,25 @@ public class MyPageController {
 
     @GetMapping("/edu")
     @Operation(summary = "[GET] 마이페이지 관심 교육 관리", description = "회원의 관심 교육들을 응답으로 보낸다.")
-    public MemberInfoResponse interestedEdu(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+    public List<MyEduResponse> interestedEdu(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
         if(!authorization(request)){
             throw new AccessDeniedException("로그인하세요.");
         }
         Member member=memberService.findById(1L); // 임시 회원
-        return new MemberInfoResponse(member);
+        List<Edu> myEdus= myPageService.myEdus(member.getId());
+        return myEdus.stream().map(MyEduResponse::new).collect(Collectors.toList());
     }
 
 
     @GetMapping("/job-post")
     @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "회원의 관심 채용공고들을 응답으로 보낸다.")
-    public MemberInfoResponse interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
+    public List<MyJobPostResponse> interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
         if(!authorization(request)){
             throw new AccessDeniedException("로그인하세요.");
         }
         Member member=memberService.findById(1L); // 임시 회원
-        return new MemberInfoResponse(member);
+        List<JobPost> myJobPosts=myPageService.myJobPosts(member.getId());
+        return myJobPosts.stream().map(MyJobPostResponse::new).collect(Collectors.toList());
     }
 
     @GetMapping("/posts")

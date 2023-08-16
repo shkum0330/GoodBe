@@ -187,16 +187,69 @@ const MyPageInformationHeader = () => {
         const fetchUserInfo = async () => {
             try {
                 const response = await axios.get(
+<<<<<<< HEAD
                 `${API_BASE_URL}/api/mypage/memberinfo`
+=======
+                    'http://localhost:8080/api/mypage/memberinfo'
+>>>>>>> sehyun
                 );
                 setUserInfo(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
+<<<<<<< HEAD
 
         fetchUserInfo();
     }, []);
+
+    const handleSaveChanges = async () => {
+        try {
+            const memberUpdateData = {
+                name: userInfo.name,
+                nickname: userInfo.nickname,
+                birth: userInfo.birth,
+                address: {
+                    city: userInfo.address.city,
+                    street: userInfo.address.street,
+                    zipcode: userInfo.address.zipcode
+                },
+                gender: userInfo.gender,
+                favoriteCompany: userInfo.favoriteCompany,
+                favoriteJob: userInfo.favoriteJob
+            };
+
+            const formData = new FormData();
+            formData.append('memberUpdateRequest', new Blob([JSON.stringify(memberUpdateData)], {
+                type: "application/json"
+            }));
+
+            try {
+                const response = await axios.post(
+                    'http://localhost:8080/api/mypage/memberinfo/update',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data' 
+                        }
+                    }
+                );
+
+                console.log('User information updated:', response.data);
+                alert('정상적으로 수정되었습니다!')
+                // setUserInfo(response.data);
+            } catch (error) {
+                console.error("수정 실패:", error);
+                alert("수정 실패");
+            }
+        } catch (error) {
+            console.error("오류:", error);
+        }
+    };
+=======
+>>>>>>> sehyun
+
+
 
     const handleSaveChanges = async () => {
         try {

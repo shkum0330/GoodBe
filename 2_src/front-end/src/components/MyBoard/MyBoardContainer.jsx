@@ -15,9 +15,14 @@ const BoardContainer = styled.div`
     background: #FFF;
     margin-left: 380px;
     margin-top: 30px;
+<<<<<<< HEAD
     width: 900px;
     margin-bottom: 30px;
     padding-bottom : -20px;
+=======
+    width: 600px;
+    margin-bottom: 30px;
+>>>>>>> sehyun
 
 `
 const BoardType = styled.p`
@@ -133,7 +138,11 @@ const MyBoardContainer = () => {
               <IconContainer>
                 <AiOutlineLike size={26} />
                 <LikeCount>{item.likes}개</LikeCount>
+<<<<<<< HEAD
                 <BiMessageDots size={26} style={{ marginTop: '5px' }} />
+=======
+                <BiMessageDots size={26} />
+>>>>>>> sehyun
                 <CommentCount>{item.comments}개</CommentCount>
                 <AiOutlineEye size={26} style={{ marginTop: '5px' }}/>
                 <ViewCount>{item.hits}개</ViewCount>

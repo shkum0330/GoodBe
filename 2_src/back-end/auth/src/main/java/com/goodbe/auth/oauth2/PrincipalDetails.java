@@ -1,12 +1,10 @@
-package com.goodbe.auth.config.auth;
+package com.goodbe.auth.oauth2;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.util.StringUtils;
-import com.goodbe.auth.domain.Role;
-import com.goodbe.auth.domain.User;
+import com.goodbe.auth.domain.Member;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,18 +19,18 @@ import java.util.Map;
 @Data
 public class PrincipalDetails implements UserDetails , OAuth2User {
 
-    private User user;
+    private Member member;
     private Map<String, Object> attributes;
 
 
     //일반 로그인 생성자
-    public PrincipalDetails(User user) {
-        this.user = user;
+    public PrincipalDetails(Member member) {
+        this.member = member;
     }
 
     //OAuth 로그인 생성자
-    public PrincipalDetails(User user, Map<String, Object> attributes ) {
-        this.user = user;
+    public PrincipalDetails(Member member, Map<String, Object> attributes ) {
+        this.member = member;
         this.attributes = attributes;
     }
 
@@ -57,7 +55,7 @@ public class PrincipalDetails implements UserDetails , OAuth2User {
             @Override
             public String getAuthority() {
 
-                return String.valueOf(user.getRole());
+                return String.valueOf(member.getRole());
             }
         });
         return collection;
@@ -65,12 +63,12 @@ public class PrincipalDetails implements UserDetails , OAuth2User {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return member.getUsername();
     }
 
     @Override

@@ -7,22 +7,22 @@ import lombok.*;
 @Schema(description = "채용공고 목록 응답 DTO")
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class JobPostHomeResponse {
+public class JobPostListResponse {
 
     private String id;
     private String companyName;
-    private String companyData;
-    private String jobContent;
+    private String wantedTitle;
+    private String degree;
+    private String address;
     private String sal;
-    private String jobData;
 
     @Builder
-    public JobPostHomeResponse(JobPost entity) {
+    public JobPostListResponse(JobPost entity) {
         this.id = entity.getId();
         this.companyName = entity.getCompanyName();
-        this.companyData = entity.getCompanyData();
-        this.jobContent = entity.getJobContent();
+        this.wantedTitle = entity.getWantedTitle();
+        this.degree = entity.getJobContent();
+        this.address=entity.getAddress();
         this.sal = entity.getSal();
-        this.jobData = entity.getJobData();
     }
 }

@@ -6,6 +6,7 @@ import com.goodbe.business.domain.file.UploadFile;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
 import com.goodbe.business.web.dto.mypage.MemberUpdateRequest;
+import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.web.repository.MemberRepository;
 import com.goodbe.business.web.repository.UploadFileRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,6 +31,7 @@ public class MemberService { // 테스트용이므로 배포 버전에선 삭제
     private final FileStore fileStore;
 
     public Member findById(Long memberId){
+
         return memberRepository.findById(memberId).orElseThrow(()->new NoSuchElementException("해당 회원이 없습니다. id="+memberId));
     }
 

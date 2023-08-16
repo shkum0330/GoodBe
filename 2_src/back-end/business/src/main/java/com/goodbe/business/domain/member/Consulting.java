@@ -27,7 +27,7 @@ public class Consulting {
     private Member member; // 교육
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "trpr_id")
+    @JoinColumn(name = "edu_id")
     private Edu edu; // 교육
 
     @Column(nullable = false)
