@@ -27,7 +27,7 @@ public class Member implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private Boolean isSignUp;
+    private Boolean isSignUp; // 회원가입 폼 작성여부
 
     @Enumerated(EnumType.STRING)
     private Role role; //ADMIN, MANAGER, USER
@@ -38,8 +38,6 @@ public class Member implements UserDetails {
     private LocalDateTime createDate; // 가입 일자
 
     // JWT
-    private String grantType;  // 인증타입. Bearer인 경우 JWT 혹은 OAuth에 대한 토큰을 사용한다는 뜻
-    private String accessToken;
     private String refreshToken;
 
     @ElementCollection(fetch = FetchType.EAGER)
