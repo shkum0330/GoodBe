@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
+
 @Schema(description = "개별 게시물 응답 DTO")
 @Data
 public class PostDetailResponse {
@@ -40,8 +42,8 @@ public class PostDetailResponse {
         this.content = entity.getContent();
         this.hits=entity.getHits();
         this.likeCount = entity.getLikeCount();
-        this.files=entity.getFiles().stream().map(UploadFileResponse::new).collect(Collectors.toList());
-        this.comments=entity.getComments().stream().map(CommentsResponse::new).collect(Collectors.toList());
+        this.files=entity.getFiles().stream().map(UploadFileResponse::new).collect(toList());
+        this.comments=entity.getComments().stream().map(CommentsResponse::new).collect(toList());
         this.commentCount=comments.size();
     }
 }
