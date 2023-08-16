@@ -1,7 +1,7 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.web.dto.HomeResponse;
-import com.goodbe.business.web.dto.search.EduResponse;
+import com.goodbe.business.web.dto.edu.EduListResponse;
 import com.goodbe.business.web.service.EduService;
 import com.goodbe.business.web.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,11 +38,11 @@ public class HomeController {
     @Operation(summary = "[GET] 검색어로 국비교육 불러오기")
     public List<HomeResponse> searchEduByKeyword(HttpServletRequest request) {
         String keyword=memberService.findById(1L).getFavoriteJob();
-        Mono<List<EduResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
+        Mono<List<EduListResponse>> responseMono=client.get().uri("/edu/{keyword}",keyword)
                 .retrieve()
-                .bodyToFlux(EduResponse.class)
+                .bodyToFlux(EduListResponse.class)
                 .collectList();
-        List<EduResponse> edus=responseMono.block();
+        List<EduListResponse> edus=responseMono.block();
         List<HomeResponse> result=new ArrayList<>();
         for (int i=0;i<3;i++){ // 3개만 출력
             if(edus.get(i)==null) break;

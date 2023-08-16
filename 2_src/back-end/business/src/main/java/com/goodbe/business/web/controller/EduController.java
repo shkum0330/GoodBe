@@ -1,6 +1,7 @@
 package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.web.dto.edu.EduDetailResponse;
 import com.goodbe.business.web.dto.edu.ReserveConsultingRequest;
 import com.goodbe.business.web.service.EduService;
 import com.goodbe.business.web.service.MemberService;
@@ -57,6 +58,12 @@ public class EduController {
         Member member=memberService.findById(1L); // 임시 회원
         eduService.reserveConsulting(member,eduId,reserveConsultingRequest.getReserveTime());
         return "예약 완료";
+    }
+
+    @GetMapping("/view/{eduId}")
+    @Operation(summary = "[GET] 교육 상세보기 페이지")
+    public EduDetailResponse eduDetail(@PathVariable String eduId){
+        return new EduDetailResponse(eduService.eduDetail(eduId));
     }
 
     private Boolean authorization(HttpServletRequest request){
