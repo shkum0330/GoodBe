@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081';
 
 const Container = styled.div`
   position: absolute;
@@ -183,15 +183,15 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 관심회사</Label>
-          <Input type="text" placeholder="관심회사를 입력해주세요" value={formData.favorite_company} name="favoriteCompany" onChange={handleInputChange}/>
+          <Input type="text" placeholder="관심회사를 입력해주세요" value={formData.favorite_company} name="favorite_company" onChange={handleInputChange}/>
       </FormItem>
       <FormItem>
         <Label>* 관심직무</Label>
-          <Input type="text" placeholder="관심직무를 입력해주세요" value={formData.favorite_job} name="favoriteJob" onChange={handleInputChange}/>
+          <Input type="text" placeholder="관심직무를 입력해주세요" value={formData.favorite_job} name="favorite_job" onChange={handleInputChange}/>
       </FormItem>
       <FormItem>
         <Label>* 주소</Label>
-          <Input type="text" placeholder="주소를 입력해주세요" value={formData.address} name="favoriteJob" onChange={handleInputChange}/>
+          <Input type="text" placeholder="주소를 입력해주세요" value={formData.address} name="address" onChange={handleInputChange}/>
       </FormItem>
   
       <Button onClick={handleSignUp}>가입하기</Button>
