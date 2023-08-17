@@ -38,6 +38,7 @@ public class MemberController {
                 .toEntity(MemberRegisterRequest.class)
                 .block();
     }
+
     @GetMapping ("/login/google")
     public void login(HttpServletResponse response){
         // todo: 자체 로그인 구현..?
