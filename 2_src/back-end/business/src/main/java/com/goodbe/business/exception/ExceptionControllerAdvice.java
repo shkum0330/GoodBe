@@ -13,33 +13,34 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalExHandle(IllegalArgumentException e) {
-        log.error("[exceptionHandle] ex", e);
         return new ErrorResult("BAD", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
     public ErrorResult accessDeniedExHandle(AccessDeniedException e) {
-        log.error("[exceptionHandle] ex", e);
         return new ErrorResult("FORBIDDEN", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AlreadyExistedMemberException.class)
+    public ErrorResult alreadyExistedMemberExHandle(AlreadyExistedMemberException e) {
+        return new ErrorResult("BAD", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ReservedConsultingException.class)
     public ErrorResult reservationExHandle(ReservedConsultingException e) {
-        log.error("[exceptionHandle] ex", e);
         return new ErrorResult("BAD", e.getMessage());
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResult> userExHandle(MemberException e) {
-        log.error("[exceptionHandle] ex", e);
         ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
         return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
     }
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
     public ErrorResult exHandle(Exception e) {
-        log.error("[exceptionHandle] ex", e);
         return new ErrorResult("EX", "내부 오류");
     }
 }

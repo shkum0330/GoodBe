@@ -21,7 +21,7 @@ public class MemberInfoResponse {
     private String name;
     private String nickname;
     private LocalDate birth;
-    private Address address;
+    private String address;
     private String gender;
     private String favoriteCompany;
     private String favoriteJob;
@@ -35,7 +35,6 @@ public class MemberInfoResponse {
         this.nickname = entity.getNickname();
         this.birth = entity.getBirth();
         this.address = entity.getAddress();
-        this.gender = entity.getGender();
         this.favoriteCompany = entity.getFavoriteCompany();
         this.favoriteJob = entity.getFavoriteJob();
     }

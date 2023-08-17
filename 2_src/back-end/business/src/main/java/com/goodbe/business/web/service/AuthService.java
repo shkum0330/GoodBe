@@ -24,6 +24,12 @@ public class AuthService {
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
 
+    public String getEmail(HttpServletRequest request){
+        return client.get().uri("/jwt/decoding")
+                .header("Authorization",request.getHeader("Authorization"))
+                .retrieve()
+                .bodyToMono(String.class).block();
+    }
     public Member authorization(HttpServletRequest request){
         String token=request.getHeader("Authorization");
         String email=client.get().uri("/jwt/decoding")

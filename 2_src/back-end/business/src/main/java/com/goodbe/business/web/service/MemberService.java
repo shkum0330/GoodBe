@@ -5,6 +5,7 @@ import com.goodbe.business.domain.file.FileStore;
 import com.goodbe.business.domain.file.UploadFile;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.web.dto.board.post.PostUpdateRequest;
+import com.goodbe.business.web.dto.member.MemberRegisterRequest;
 import com.goodbe.business.web.dto.mypage.MemberUpdateRequest;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.web.repository.MemberRepository;
@@ -30,6 +31,10 @@ public class MemberService { // 테스트용이므로 배포 버전에선 삭제
     private final UploadFileRepository uploadFileRepository;
     private final FileStore fileStore;
 
+
+    public void register(MemberRegisterRequest request){
+        memberRepository.save(request.toEntity());
+    }
     public Member findById(Long memberId){
         return memberRepository.findById(memberId).orElseThrow(()->new NoSuchElementException("해당 회원이 없습니다. id="+memberId));
     }
