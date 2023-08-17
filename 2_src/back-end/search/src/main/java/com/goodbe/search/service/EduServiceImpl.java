@@ -37,7 +37,7 @@ public class EduServiceImpl implements EduService {
     }
 
     @Override
-    public List<Edu> getEduById(String id) {
+    public Edu getEduById(String id) {
         return eduMapper.selectEduDataById(id);
     }
     

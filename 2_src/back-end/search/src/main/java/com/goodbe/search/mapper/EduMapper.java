@@ -13,5 +13,5 @@ public interface EduMapper {
 
     public List<Edu> selectEduDataByKeyword(List<String> wordList);
 
-    public List<Edu> selectEduDataById(String id);
+    public Edu selectEduDataById(String id);
 }

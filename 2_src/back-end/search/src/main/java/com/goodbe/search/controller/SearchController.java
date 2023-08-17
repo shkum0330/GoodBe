@@ -40,7 +40,7 @@ public class SearchController {
 
 	@ApiOperation(value = "아이디로 채용공고 검색", response = List.class)
 	@GetMapping("/jobpost/id/{id}")
-	public List<JobPost> searchJobPostById(@PathVariable String id) {
+	public JobPost searchJobPostById(@PathVariable String id) {
 		System.out.println(id);
 		return jobPostService.getJobPostById(id);
 	}
@@ -63,7 +63,7 @@ public class SearchController {
 
 	@ApiOperation(value = "아이디로 국비교육 검색", response = List.class)
 	@GetMapping("/edu/id/{id}")
-	public List<Edu> searchEduById(@PathVariable String id) {
+	public Edu searchEduById(@PathVariable String id) {
 		System.out.println(id);
 		return eduService.getEduById(id);
 	}

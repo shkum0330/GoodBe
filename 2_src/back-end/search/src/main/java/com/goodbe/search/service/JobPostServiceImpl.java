@@ -36,7 +36,7 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
-    public List<JobPost> getJobPostById(String id) {
+    public JobPost getJobPostById(String id) {
         return jobPostMapper.selectJobDataById(id);
     }
     

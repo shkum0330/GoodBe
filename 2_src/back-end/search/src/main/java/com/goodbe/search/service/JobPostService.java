@@ -12,5 +12,5 @@ public interface JobPostService {
     public List<JobPost> getJobPostByKeyword(String keyword);
 
     // 아이디로 채용공고 데이터 반환
-    public List<JobPost> getJobPostById(String id);
+    public JobPost getJobPostById(String id);
 }

@@ -13,5 +13,5 @@ public interface JobPostMapper {
 
     public List<JobPost> selectJobDataByKeyword(List<String> wordList);
 
-    public List<JobPost> selectJobDataById(String id);
+    public JobPost selectJobDataById(String id);
 }
