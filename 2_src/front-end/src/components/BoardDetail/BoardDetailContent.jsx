@@ -13,8 +13,10 @@ const ArticleBox = styled.div`
     align-items: center;
     border: 1px solid black;
     border-radius: 10px;
-    width: 98%;
-    padding-top: 50px; 
+    width: 80%;
+    padding-top: 35px; 
+    margin-left: 150px;
+    margin-top : 50px;
 `
 //Header
 const Header = styled.div`
@@ -30,16 +32,16 @@ const Header = styled.div`
 `
 const BoardType = styled.a`
             //게시판 정보
-            text-decoration-line: none;
-            color: #000;
-font-family: Istok Web;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-text-transform: capitalize;
-text-align: start;
-margin: 0 0 5px 10px;
+    text-decoration-line: none;
+    color: #000;
+    font-family: Istok Web;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    text-align: start;
+    margin: 0 0 5px 10px;
 `
 const Title = styled.div`
             //게시글 제목
@@ -78,14 +80,14 @@ const TempDiv1=styled.div`
     height: 100%;
 `
 const ProfileImg1 = styled.img`
-                //프로필 이미지
-                width: 70px;
-                height: 70px;
-                border-radius: 100px;
+    //프로필 이미지
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
 `
 
 const WriteInfo = styled.div`
-                //작성정보
+    //작성정보
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -93,11 +95,11 @@ const WriteInfo = styled.div`
     padding: 10px 0 0 10px;
 
     color: #757575;
-font-family: Inter;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 
     
 `
@@ -140,7 +142,7 @@ const Line = styled.hr`
   /* 가로선 스타일 */
   border: none;
   height: 2px;
-  background-color: #B8B8B8;
+  background-color: #2000E7F5;
   margin: 1px 0; 
 `;
 
@@ -274,20 +276,20 @@ const TempDiv=styled.div`
 `
 const BtnBlue = styled.a`
         //파란 버튼
-        border-radius: 10px;
-        background: #425CE7;
+    border-radius: 10px;
+    background: #425CE7;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding : 10px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    height: 50px;
 
-        color: #FFF;
-font-family: Inter;
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-padding : 10px;
-
-text-align: center;
-text-decoration-line: none;
-vertical-align: middle;
 `
 const BtnOutlineGray = styled.a`
         //회색 테두리 버튼 
@@ -304,6 +306,15 @@ const BtnOutlineGray = styled.a`
         margin-left: 10px; 
         text-decoration-line: none;
 `
+const CommentIcon = styled(FontAwesomeIcon)`
+  margin-right: 8px; 
+`;
+const LikeIcon = styled(FontAwesomeIcon)`
+  margin-right: 8px; 
+`;
+const CountIcon = styled(FontAwesomeIcon)`
+  margin-right: 8px; 
+`;
 
 function getId(location) {
     var searchString = location.search;
@@ -338,7 +349,7 @@ const BoardDetailContent = ({ match }) => {
             <ArticleBox>
                 {/* 게시글 헤더 */}
                 <Header>
-                    <BoardType href="../BoardMain" >게시판 - 취업준비</BoardType>
+                    <BoardType href="../BoardMain" > > 취업준비</BoardType>
                     <Title > {boardData.title}  </Title>
                     <ArticleDetails>
 
@@ -352,18 +363,18 @@ const BoardDetailContent = ({ match }) => {
                         <Cnts>
                             <Cnt>
                                 {/* 조회수 아이콘과 글씨 */}
-                                <FontAwesomeIcon icon={faEye} />
+                                <CountIcon icon={faEye} />
                                 <div> 10</div>
 
                             </Cnt>
                             <Cnt>
                                 {/* 댓글수 아이콘과 글씨 */}
-                                <FontAwesomeIcon icon={faComment} />
+                                <CommentIcon icon={faComment} />
                                 <div> 10</div>
                             </Cnt>
                             <Cnt>
                                 {/* 좋아요수 아이콘과 글씨 */}
-                                <FontAwesomeIcon icon={faThumbsUp} />
+                                <LikeIcon icon={faThumbsUp} />
                                 <div> 10</div>
                             </Cnt>
                         </Cnts>
@@ -380,12 +391,12 @@ const BoardDetailContent = ({ match }) => {
                         
                         <Cnt>
                                 {/* 댓글수 아이콘과 글씨 */}
-                                <FontAwesomeIcon icon={faComment} /> 
+                                <CommentIcon icon={faComment} /> 
                                 <div>댓글수 10</div>
                             </Cnt>
                             <Cnt>
                                 {/* 좋아요수 아이콘과 글씨 */}
-                                <FontAwesomeIcon icon={faThumbsUp} />
+                                <LikeIcon icon={faThumbsUp} />
                                 <div>좋아요 10</div>
                             </Cnt>
                     </Cnts>
