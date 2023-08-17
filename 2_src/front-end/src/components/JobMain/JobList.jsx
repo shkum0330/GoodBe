@@ -20,7 +20,7 @@ const StyledButton = styled(Link)`
 
 
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 
 // 페이지네이션 버튼 생성을 위한 함수
@@ -125,24 +125,16 @@ const handleInputChange = (e) => {
   const [JobList, setJobList] = useState([]); 
   const itemsPerPage = 20;
 
-  const handleInputSubmit = () => {
-    // Convert the input value to a number
-    const newPage = parseInt(inputPage);
-
-    // Validate the newPage value
-    if (!isNaN(newPage) && newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      setInputPage(''); // Clear the input box
-    }
-  };
+ 
  
   useEffect(() => {
     if (searchKeyword) {
       axios
-        .get(`${API_BASE_URL}/api/search/jobPost/${searchKeyword}`)
+        .get(`${API_BASE_URL}/search/jobpost/${searchKeyword}`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
+          console.log(JobList);
         })
         .catch(function (error) {
           console.error('데이터 불러오기 오류:', error);
@@ -150,16 +142,17 @@ const handleInputChange = (e) => {
 
     } else {
       axios
-        .get(`${API_BASE_URL}/api/search/jobPost/all`)
+        .get(`${API_BASE_URL}/search/jobpost/all`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
+          console.log(JobList);
         })
         .catch(function (error) {
           console.error('Error fetching data:', error);
         });
       }
-    }, [searchKeyword]); 
+    }, []); 
 
   // 현재 페이지에 해당하는 데이터 계산
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -195,6 +188,8 @@ return (
   
   <div
     style={{
+      paddingBottom : '30px',
+          paddingTop : '30px',
       fontFamily: 'Istok Web, sans-serif',
       width: '75%',
       border: '1px solid #ccc',
@@ -221,7 +216,8 @@ return (
           justifyContent: 'space-between',
         }}
       >
-        <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
+        <p style={{ paddingBottom : '50px',
+          paddingTop : '50px',marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
         <div style={{ flex: 1, textAlign: 'center' }}>
           <h5 style={{ marginBottom: '5px' }}>{job.wantedTitle}</h5>
           <p style={{ marginBottom: '5px' }}>위치: {job.address}</p>
