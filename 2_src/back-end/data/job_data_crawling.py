@@ -201,10 +201,10 @@ for i in range(len(job_df)):
     employment_form = job_df.employment_form.loc[i]
     end_date = job_df.end_date.loc[i]
 
-    sql2 = f"insert into job_post values('{id}','{company_name}','{wanted_title}','{company_url}','{degree}','{major}','{address}','{work_address}','{preference}','{career}','{certificate}','{job_content}','{sal}','{employment_form}','{end_date}')"
+    sql = f"insert into job_post(job_id,company_name,wanted_title,company_url,degree,major,address,work_address,preference,career,certificate,job_content,sal,employment_form,end_date) values('{id}','{company_name}','{wanted_title}','{company_url}','{degree}','{major}','{address}','{work_address}','{preference}','{career}','{certificate}','{job_content}','{sal}','{employment_form}','{end_date}')"
 
     try:
-        curs.execute(sql2)
+        curs.execute(sql)
     except:
         pass
 

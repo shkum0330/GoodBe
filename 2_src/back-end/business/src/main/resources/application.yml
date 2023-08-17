@@ -1,20 +1,13 @@
 spring:
-  profiles:
-    default: dev
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    username: ssafy
     url: jdbc:mariadb://i9a801.p.ssafy.io:3306/test
+    username: ssafy
     password: jinajjang1128!
   jpa:
     hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-        default_batch_fetch_size: 1000
+      ddl-auto: none
   #    open-in-view: false
   servlet:
     multipart:
@@ -32,7 +25,7 @@ spring:
 
 file:
   dir:
-    local: /Users/sehyun/study/file/
+    local: /goodbe/S09P12A801/2_src/back-end/files
 
 server:
   ip:

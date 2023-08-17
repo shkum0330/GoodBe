@@ -169,7 +169,7 @@ for i in range(len(edu_df)):
     man = edu_df.man.loc[i]
 
 
-    sql2 = f"insert into edu values('{id}','{title}','{title_link}','{company}','{company_link}','{address}','{tel}','{period}','{onoff}','{expense}','{real_expense}','{content}','{detail}','{man}')"
+    sql2 = f"insert into edu (edu_id,title,title_link,company,company_link,address,tel,period,onoff,expense,real_expense,content,detail,man)  values('{id}','{title}','{title_link}','{company}','{company_link}','{address}','{tel}','{period}','{onoff}','{expense}','{real_expense}','{content}','{detail}','{man}')"
 
     try:
         curs.execute(sql2)
