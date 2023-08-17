@@ -5,13 +5,8 @@ import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-<<<<<<< HEAD
-const NextQuarry ='';
-const API_BASE_URL = 'http://localhost:8081';
-=======
 
 const API_BASE_URL = 'http://localhost:8080';
->>>>>>> eb249cb2656cc11a613db3d6895fd06adba839d5
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
