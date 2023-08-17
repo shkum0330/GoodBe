@@ -38,9 +38,9 @@ public class SecurityConfig  {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/google").permitAll()
-                .antMatchers("/jwt/decoding").permitAll()
-                .antMatchers("/signup").permitAll()
+                .antMatchers("/auth/login/google").permitAll()
+                .antMatchers("/auth/jwt/decoding").permitAll()
+                .antMatchers("/auth/signup").permitAll()
                 .antMatchers("/user/**").authenticated() // 인증된 사용자에게만 접근 허용
                 .antMatchers("/manager/**").hasAuthority("MANAGER") // "MANAGER" 역할을 가진 사용자에게만 접근 허용
                 .antMatchers("/admin/**").hasAuthority("ADMIN") // "ADMIN" 역할을 가진 사용자에게만 접근 허용

@@ -16,11 +16,13 @@ const GoToLogin = styled.a`
     display: flex;
 `
 const Container = styled.div`
-    margin-left: 250px;
+    margin-left: 300px; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    width: 1300px;
 `
 
 const RecommendHeader = styled.p`
@@ -45,7 +47,7 @@ const NaverBackend = styled.p`
 `
 
 const NaverBackendBox = styled.div`
-    width: 1000px;
+    width: 1100px;
     flex-shrink: 0;
     border-radius: 15px;
     background: #FFD1D1;
@@ -153,7 +155,7 @@ const RowContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 1000px;
+    width: 1100px;
     margin-bottom: 20px;
 `;
 

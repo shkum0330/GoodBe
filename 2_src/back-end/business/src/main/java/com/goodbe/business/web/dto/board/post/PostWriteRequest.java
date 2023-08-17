@@ -30,11 +30,9 @@ public class PostWriteRequest {
     private UploadFile attachFile;
     @Builder
     public PostWriteRequest(Post entity) {
-        this.nickname=entity.getMember().getNickname();
         this.boardType = entity.getBoardType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.likeCount=0;
     }
 
     public Post toEntity(){

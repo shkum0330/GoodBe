@@ -1,8 +1,11 @@
 package com.goodbe.business.web.controller;
 
+import com.goodbe.business.exception.AlreadyExistedMemberException;
 import com.goodbe.business.web.dto.member.MemberLoginRequest;
 import com.goodbe.business.web.dto.member.MemberRegisterRequest;
+import com.goodbe.business.web.service.AuthService;
 import com.goodbe.business.web.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -21,15 +24,15 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class MemberController {
     private final MemberService memberService;
-    private final WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8089") // 요청을 인증 서버로 보냄
-            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
-            .build();
-    @GetMapping("/test")
-    public String test(){
-        return client.get().uri("/login/google").retrieve().bodyToMono(String.class).block();
+    private final AuthService authService;
+
+    @GetMapping("/register")
+    @Operation(summary = "[GET] 회원가입 페이지", description = "이메일 반환하면 readOnly로")
+    public String register(HttpServletRequest request){
+        return authService.getEmail(request);
     }
     @PostMapping("/register")
+<<<<<<< HEAD
     public ResponseEntity<MemberRegisterRequest> register(@RequestBody MemberRegisterRequest memberRegisterRequest){
         log.info("business memberdto={}",memberRegisterRequest);
         return client.post().uri(uriBuilder -> uriBuilder.path("/register").build())
@@ -38,6 +41,7 @@ public class MemberController {
                 .toEntity(MemberRegisterRequest.class)
                 .block();
     }
+
     @GetMapping ("/login/google")
     public void login(HttpServletResponse response){
         // todo: 자체 로그인 구현..?
@@ -51,7 +55,17 @@ public class MemberController {
 //        String token=result.block();
 //        return token;
         client.get().uri("/oauth2/authorization/google").retrieve().bodyToMono(String.class).block();
+=======
+    public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
+                                                          HttpServletRequest request){
+//        if(authService.authorization(request) != null){ // findByEmail을 했는데 회원이 있으면 가입시키지 않는다.
+//            throw new AlreadyExistedMemberException("이미 가입된 이메일입니다.");
+//        }
+        memberService.register(memberRegisterRequest);
+        return "회원가입 성공";
+>>>>>>> cb3ba7f4d6b02ed54d05273b4449e2e31c7083f1
     }
+
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest request){

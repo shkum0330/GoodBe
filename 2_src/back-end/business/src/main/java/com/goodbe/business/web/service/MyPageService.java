@@ -26,7 +26,7 @@ public class MyPageService {
     private final EduRepository eduRepository;
     private final MemberEduRepository memberEduRepository;
     private final MemberJobPostRepository memberJobPostRepository;
-
+    private final AuthService authService;
     public List<Post> myPosts(Long memberId){
         return boardRepository.findByMemberId(memberId);
     }

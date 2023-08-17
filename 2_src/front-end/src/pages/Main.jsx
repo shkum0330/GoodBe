@@ -21,8 +21,8 @@ export default function Main() {
         <Advertise/>
         <SearchMain/>
         <EduExampleRecommend/>
-        <EduTop6/>
-        <EduNear/>
+        {/* <EduTop6/>
+        <EduNear/> */}
 
         
         <EnterpriseIntroduction/>
