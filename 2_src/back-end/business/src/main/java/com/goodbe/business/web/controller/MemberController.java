@@ -34,9 +34,9 @@ public class MemberController {
     @PostMapping("/register")
     public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
                                                           HttpServletRequest request){
-//        if(authService.authorization(request) != null){ // findByEmail을 했는데 회원이 있으면 가입시키지 않는다.
-//            throw new AlreadyExistedMemberException("이미 가입된 이메일입니다.");
-//        }
+        if(authService.authorization(request) != null){ // findByEmail을 했는데 회원이 있으면 가입시키지 않는다.
+            throw new AlreadyExistedMemberException("이미 가입된 이메일입니다.");
+        }
         memberService.register(memberRegisterRequest);
         return "회원가입 성공";
     }
