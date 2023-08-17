@@ -73,5 +73,5 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "nodemon": "^3.0.1"
   },
-  "proxy":"https://i9a801.p.ssafy.io"
+  "proxy": "https://i9a801.p.ssafy.io"
 }
