@@ -16,7 +16,7 @@ const GoToLogin = styled.a`
     display: flex;
 `
 const Container = styled.div`
-    margin-left: 300px; /* Center horizontally */
+    margin-left: 220px; /* Center horizontally */
     margin-right: auto; /* Center horizontally */
     margin-top: 40px;
     display: flex;

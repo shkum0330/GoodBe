@@ -100,9 +100,11 @@ const TitleInform = styled.h3`
   line-height: 47px;
   color: #070707;
   justify-content: space-evenly;
+  margin-left: 40px;
+  margin-bottom: -10px;
 `;
 const Title = styled.h3`
-margin-left: 10%;
+  margin-left: 10%;
   font-style: normal;
   font-weight: bold;
   font-size: 2rem;
