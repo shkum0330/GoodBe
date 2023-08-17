@@ -10,7 +10,6 @@ import RecommendEdu from '../components/Recommend/RecommendEdu';
 
 const EduList = () => {
 
-
     return (
         <div>
             <Navbar/>
