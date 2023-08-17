@@ -50,7 +50,7 @@ wsServer.on("connection", (socket) => {
 
 //web socket 서버 연결
 const handleListen = () => console.log(`Listening on http://localhost:8091/rtc`);
-httpServer.listen(8091, handleListen);
+httpServer.listen(8091,'0.0.0.0', handleListen);
 
 
 
