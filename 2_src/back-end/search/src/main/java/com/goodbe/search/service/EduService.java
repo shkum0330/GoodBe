@@ -10,4 +10,6 @@ public interface EduService {
     
     // 검색어를 입력받아 국비교육 데이터 반환
     public List<Edu> getEduByKeyword(String keyword);
+
+    public List<Edu> getEduById(String id);
 }

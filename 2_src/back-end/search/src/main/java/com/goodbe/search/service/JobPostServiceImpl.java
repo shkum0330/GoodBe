@@ -34,5 +34,10 @@ public class JobPostServiceImpl implements JobPostService {
         }
         return jobPostMapper.selectJobDataByKeyword(wordList);
     }
+
+    @Override
+    public List<JobPost> getJobPostById(String id) {
+        return jobPostMapper.selectJobDataById(id);
+    }
     
 }

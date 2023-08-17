@@ -35,5 +35,10 @@ public class EduServiceImpl implements EduService {
         }
         return eduMapper.selectEduDataByKeyword(wordList);
     }
+
+    @Override
+    public List<Edu> getEduById(String id) {
+        return eduMapper.selectEduDataById(id);
+    }
     
 }

@@ -62,4 +62,24 @@
             ;
         </where>
     </select>
+
+    <select id="selectJobDataById" parameterType="String" resultType="JobPost">
+        select job_id as jobId,
+               company_name as companyName,
+               wanted_title as wantedTitle,
+               company_url as companyUrl,
+               degree,
+               major,
+               address,
+               work_address as workAddress,
+               preference,
+               certificate,
+               job_content as jobContent,
+               sal,
+               employment_form as employmentForm,
+               end_date as endDate
+        from job_post
+        where job_id like #{jobId}
+        ;
+    </select>
 </mapper>

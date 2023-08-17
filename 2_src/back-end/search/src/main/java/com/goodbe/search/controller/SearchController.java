@@ -24,17 +24,29 @@ public class SearchController {
 	private final JobPostService jobPostService;
 	private final EduService eduService;
 
+	// 채용공고
+
 	@ApiOperation(value = "전체 채용공고 불러오기", response = List.class)
-	@GetMapping("/jobPost/all")
+	@GetMapping("/jobpost/all")
 	public List<JobPost> searchAllJobPost() {
 		return jobPostService.getAllJobPost();
 	}
 
 	@ApiOperation(value = "검색어로 채용공고 불러오기", response = List.class)
-	@GetMapping("/jobPost/{keyword}")
+	@GetMapping("/jobpost/{keyword}")
 	public List<JobPost> searchJobPostByKeyword(@PathVariable String keyword) {
 		return jobPostService.getJobPostByKeyword(keyword);
 	}
+
+	@ApiOperation(value = "아이디로 채용공고 검색", response = List.class)
+	@GetMapping("/jobpost/id/{id}")
+	public List<JobPost> searchJobPostById(@PathVariable String id) {
+		System.out.println(id);
+		return jobPostService.getJobPostById(id);
+	}
+
+
+	// 국비교육
 
 	@ApiOperation(value = "전체 국비교육 불러오기", response = List.class)
 	@GetMapping("/edu/all")
@@ -42,10 +54,17 @@ public class SearchController {
 		return eduService.getAllEdu();
 	}
 
-	@ApiOperation(value = "전체 국비교육 불러오기", response = List.class)
+	@ApiOperation(value = "키워드로 국비교육 검색", response = List.class)
 	@GetMapping("/edu/{keyword}")
 	public List<Edu> searchEduByKeyword(@PathVariable String keyword) {
 		System.out.println(keyword);
 		return eduService.getEduByKeyword(keyword);
+	}
+
+	@ApiOperation(value = "아이디로 국비교육 검색", response = List.class)
+	@GetMapping("/edu/id/{id}")
+	public List<Edu> searchEduById(@PathVariable String id) {
+		System.out.println(id);
+		return eduService.getEduById(id);
 	}
 }

@@ -54,4 +54,23 @@
             ;
         </where>
     </select>
+
+    <select id="selectEduDataById" parameterType="String" resultType="Edu">
+		select edu_id as eduId,
+               title,
+               title_link as titleLink,
+               company,
+               company_link as companyLink,
+               tel as telNO,
+               address,
+               content,
+               period,
+               onoff,
+               expense,
+               real_expense as realExpense,
+               detail,
+               man
+        from edu
+        where edu_id like #{id}
+    </select>
 </mapper>
