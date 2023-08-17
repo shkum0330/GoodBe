@@ -2,6 +2,23 @@ import {AiOutlineHeart} from 'react-icons/ai';
 import {AiFillHeart} from 'react-icons/ai';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+
+const StyledButton = styled(Link)`
+  background-color: #a4c3ff;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  width: 100%;
+  text-decoration: none; /* Add this line to make it look like a link */
+`;
+
+
 
 const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
 
@@ -91,12 +108,33 @@ const renderPageNumbers = (currentPage, totalPages, setCurrentPage) => {
 
 
 const JobList = ({searchKeyword}) => {
+
+
+  
+const [inputPage, setInputPage] = useState('');
+
+// Function to handle input change
+const handleInputChange = (e) => {
+  setInputPage(e.target.value);
+};
+
+
+
   const [activeTab, setActiveTab] = useState('전체');
   const [currentPage, setCurrentPage] = useState(1);
   const [JobList, setJobList] = useState([]); 
   const itemsPerPage = 20;
 
+  const handleInputSubmit = () => {
+    // Convert the input value to a number
+    const newPage = parseInt(inputPage);
 
+    // Validate the newPage value
+    if (!isNaN(newPage) && newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      setInputPage(''); // Clear the input box
+    }
+  };
  
   useEffect(() => {
     if (searchKeyword) {
@@ -174,6 +212,8 @@ return (
       <div
         key={job.id}
         style={{
+          paddingBottom : '30px',
+          paddingTop : '30px',
           borderBottom: '1px solid #ccc',
           padding: '10px',
           display: 'flex',
@@ -184,13 +224,10 @@ return (
         <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
         <div style={{ flex: 1, textAlign: 'center' }}>
           <h5 style={{ marginBottom: '5px' }}>{job.wantedTitle}</h5>
-          <p style={{ marginBottom: '3px' }}>위치: {job.address}</p>
-  
+          <p style={{ marginBottom: '5px' }}>위치: {job.address}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button style={{ backgroundColor: '#A4C3FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer', marginBottom: '5px', width : '100%'}}>상세보기</button>
-          <button style={{ backgroundColor: '#EBD2FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer' }}>채팅방 입장</button>
-          
+        <StyledButton to={`/JobDetail?id=${job.id}`}>상세보기</StyledButton>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
                <div

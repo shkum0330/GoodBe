@@ -180,7 +180,7 @@ const MyConsultingReservation = () => {
                 <ConsultItemContainer key={item.id}>
                     {/* <ConsultImg src={item.image} /> */}
                     <EduDetailsContainer>
-                        <LinkStyle>교육과정 상세 확인하기 ></LinkStyle>
+                        <LinkStyle>교육과정 상세 확인하기 > </LinkStyle>
                         <EduTite>{item.title}</EduTite>
                         <EduInstitution>{item.subTitle}</EduInstitution>
                     <DateBox>
