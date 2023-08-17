@@ -57,16 +57,9 @@ public class BoardService {
     public Page<Post> postList(Pageable pageable){
         return boardRepository.findAll(pageable);
     }
-    public Boolean writePost(HttpServletRequest request){
-        // todo: 인증 서버로 토큰을 보내 검증
-        String token=resolveToken(request);
-
-        return true;
-    }
 
     // 게시글 작성
-    public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request) throws IOException {
-        Member member=memberRepository.findById(1L).get(); // ⭑⭑⭑임시로 설정한 유저이기 때문에 나중에 삭제해야 함⭑⭑⭑
+    public Long writePost(List<MultipartFile> imageFiles, MultipartFile singleAttachFile, PostWriteRequest request,Member member) throws IOException {
         request.setMember(member);
         request.setNickname(member.getNickname());
 

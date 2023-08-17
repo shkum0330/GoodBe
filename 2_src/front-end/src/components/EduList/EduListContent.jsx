@@ -2,9 +2,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
-
-
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
+import { useParams } from 'react-router-dom';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const EduInstitution = styled.p`
     color: #919191;
@@ -77,6 +76,23 @@ const ReserveButton = styled.button`
     margin-right: 20px;
     margin-top : 50px;
 `;
+
+const EduDetailButton = styled.button`
+    background-color: #8899D6;
+    color: white;
+    font-family: Istok Web;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-top : 50px;
+`;
 const HeartEmoji = styled(BsFillHeartFill)`
     margin-left: 20px;
     font-size: 30px;
@@ -85,34 +101,35 @@ const HeartEmoji = styled(BsFillHeartFill)`
 `;
 
 
-const EduList = ({searchKeyword}) => {
-    const [EduList, setEduList] = useState([]); 
+const EduList = () => {
+  const [eduList, setEduList] = useState([]);
+  const { searchKeyword } = useParams(); // URL 파라미터 가져오기
 
-
-    useEffect(() => {
+  useEffect(() => {
       if (searchKeyword) {
-        axios
-          .get(`${API_BASE_URL}/api/search/edu/${searchKeyword}`)
-          .then(function (response) {
-            console.log(response.data);
-            setEduList(response.data);
-          })
-          .catch(function (error) {
-            console.error('데이터 불러오기 오류:', error);
-          });
 
+        console.log("입력된 검색어 ",searchKeyword);
+          axios
+              .get(`${API_BASE_URL}/analysis/${searchKeyword}`)
+              .then(function (response) {
+                  console.log(response.data);
+                  setEduList(response.data);
+              })
+              .catch(function (error) {
+                  console.error('데이터 불러오기 오류:', error);
+              });
       } else {
-        axios
-          .get(`${API_BASE_URL}/api/search/edu/all`)
-          .then(function (response) {
-            console.log(response.data);
-            setEduList(response.data);
-          })
-          .catch(function (error) {
-            console.error('Error fetching data:', error);
-          });
-        }
-      }, [searchKeyword]); 
+          axios
+              .get(`${API_BASE_URL}/search/edu/all`)
+              .then(function (response) {
+                  console.log(response.data);
+                  setEduList(response.data);
+              })
+              .catch(function (error) {
+                  console.error('Error fetching data:', error);
+              });
+      }
+  }, [searchKeyword]);
 
       
 
@@ -169,9 +186,16 @@ const EduList = ({searchKeyword}) => {
         height: '100%'
     };
 
+     // 상세보기로 이동
+  const handleEduDetailClick = (eduId) => {
+    // Redirect to EduDetail page with the provided eduId
+    window.location.href = `/edudetail?eduId=${eduId}`;
+  };
+
+
       return (
         <div style={container}>
-          {EduList.map((item) => (
+          {eduList.map((item) => (
             <div key={item.id} style={itemStyle}>
               <div style={lineStyle}>
                 <EduInstitution>{item.company}</EduInstitution>
@@ -192,6 +216,7 @@ const EduList = ({searchKeyword}) => {
                 </div>
                 <div style={buttonContainerStyle}>
                   <ReserveButton>상담예약</ReserveButton>
+                  <EduDetailButton onClick={() => handleEduDetailClick(item.eduId)}>상세보기</EduDetailButton>
                   <HeartEmoji  />
 
                 </div>

@@ -9,6 +9,7 @@ const Container1 = styled.div`
   height: auto;
   margin-top : 10px;
   margin-left : 15%;
+  text-decoration: none; 
   /* border: 1px solid black; */
 `
 const VideoCard = styled.div`
@@ -17,12 +18,15 @@ const VideoCard = styled.div`
   box-sizing: border-box;
   cursor: pointer;
   background-color: #fffffff8;
+  text-decoration: none; 
   &:hover {
+    text-decoration: none; 
     /* background-color: #ffffffed; */
   }
 
   img {
     width: 100%;
+    text-decoration: none; 
   }
 
   h3 {
@@ -48,6 +52,7 @@ const VideoRecommendWrapper = styled.div`
   justify-content: center;
   align-items: center; /* 중앙 정렬 */
   margin-top: 20px;
+  text-decoration: none; 
   /* border : 1px solid black; */
   @media (max-width: 768px) {
     flex-direction: column;
@@ -57,7 +62,7 @@ const VideoRecommendWrapper = styled.div`
 
 const LeftVideoCard = styled(VideoCard)`
   width: 55%;
-
+  text-decoration: none; 
   @media (max-width: 768px) {
     width: 100%;
     margin-bottom: 20px;
@@ -66,7 +71,7 @@ const LeftVideoCard = styled(VideoCard)`
 
 const RightVideoCard = styled(VideoCard)`
   width: 55%; /* 오른쪽 썸네일 크기를 늘림 */
-
+  text-decoration: none; 
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -83,7 +88,7 @@ function VideoRecommend() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    const apiKey = 'YOUR_YOUTUBE_API_KEY'; // 여기에 본인의 YouTube API 키를 넣어주세요.
+    const apiKey = 'AIzaSyC2ZUra2a_fg_lpD3zFO8OoFaM7s1BZ-Ac'; // 여기에 본인의 YouTube API 키를 넣어주세요.
     const searchQuery = 'IT코딩 취업후기';
 
     axios

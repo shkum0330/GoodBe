@@ -49,10 +49,6 @@ public class BoardController {
     private final AuthService authService;
     private final MemberService memberService;
 
-    WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8082") // 요청을 인증 서버로 보냄
-            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
-            .build();
 
     @GetMapping("")
     @Operation(summary = "[GET] 게시판 페이지", description = "페이징 처리하여 게시글 목록을 띄움")
@@ -71,31 +67,68 @@ public class BoardController {
     @GetMapping("/write")
     @Operation(summary = "[GET] 게시글 작성 페이지", description = "게시글 작성 페이지 이동")
     public String writePost(HttpServletRequest request){
-        if(boardService.writePost(request)) return "게시글 작성 페이지 이동";
-        else throw new AccessDeniedException("권한이 없습니다.");
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        return "게시글 작성 페이지 이동";
     }
     @PostMapping("/write")
     @Operation(summary = "[POST] 게시글 작성", description = "게시글 작성")
     public Long writePost(@RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
             @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
             @RequestPart(value = "postWriteRequest") PostWriteRequest postWriteRequest,HttpServletRequest request) throws IOException {
-        // Member member=authService.authorization(request);
-        // if(member==null) throw new AccessDeniedException("로그인하세요");
-        // log.info("닉네임 = {}",member.getNickname());
-        return boardService.writePost(imageFiles,singleAttachFile,postWriteRequest);
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        log.info("닉네임 = {}",member.getNickname());
+        return boardService.writePost(imageFiles,singleAttachFile,postWriteRequest,member);
+    }
+    @PostMapping("/{postId}/update")
+    @Operation(summary = "[POST] 게시글 수정", description = "게시글 수정")
+    public Long updatePost(@PathVariable Long postId,
+                           @RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
+                           @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
+                           @RequestPart(value = "postUpdateRequest") PostUpdateRequest postUpdateRequest,HttpServletRequest request) throws IOException {
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        return boardService.updatePost(postId,imageFiles,singleAttachFile,postUpdateRequest);
+    }
+    @DeleteMapping("/{postId}/delete")
+    @Operation(summary = "[DELETE] 게시글 삭제", description = "게시글 삭제")
+    public void deletePost(@PathVariable Long postId,HttpServletRequest request) {
+        //todo: 권한 체크
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        boardService.deletePost(postId);
+    }
+
+    @GetMapping("/{postId}/update")
+    @Operation(summary = "[GET] 게시글 조회", description = "조회수 1 증가")
+    public Post updatePost(@PathVariable Long postId,HttpServletRequest request){
+        return boardService.postDetail(postId);
     }
 
     @PostMapping("/{postId}/comment")
     @Operation(summary = "[POST] 댓글 작성", description = "댓글 작성")
-    public void writeComment(@PathVariable Long postId, @RequestBody CommentWriteRequest request) {
-        boardService.writeComment(postId,request);
+    public void writeComment(@PathVariable Long postId, @RequestBody CommentWriteRequest commentWriteRequest,HttpServletRequest request) {
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        boardService.writeComment(postId,commentWriteRequest);
     }
 
     @PostMapping("/{postId}/comment/{commentId}")
     @Operation(summary = "[POST] 댓글 수정", description = "댓글 수정")
-    public void updateComment(@PathVariable Long postId,@PathVariable Long commentId, @RequestBody CommentUpdateRequest request) {
-        boardService.updateComment(postId,commentId,request);
+    public void updateComment(@PathVariable Long postId,@PathVariable Long commentId, @RequestBody CommentUpdateRequest commentUpdateRequest,
+                              HttpServletRequest request) {
+        boardService.updateComment(postId,commentId,commentUpdateRequest);
     }
+
+    @DeleteMapping("/{postId}/comment/{commentId}")
+    @Operation(summary = "[DELETE] 댓글 삭제", description = "댓글 삭제")
+    public void deleteComment(@PathVariable Long commentId,HttpServletRequest request){
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        boardService.deleteComment(commentId);
+    }
+
     @GetMapping("/images/{filename}")
     @Operation(summary = "[GET] 이미지 조회", description = "<img> 태그로 이미지를 조회")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
@@ -109,58 +142,22 @@ public class BoardController {
         return boardService.downloadAttach(postId);
     }
 
-    @GetMapping("/{postId}/update")
-    @Operation(summary = "[GET] 게시글 수정", description = "게시글 수정 페이지 이동")
-    public Post updatePost(@PathVariable Long postId, HttpHeaders headers){
-        return boardService.postDetail(postId);
-    }
-
-    @PostMapping("/{postId}/update")
-    @Operation(summary = "[POST] 게시글 수정", description = "게시글 수정")
-    public Long updatePost(@PathVariable Long postId,
-                           @RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
-                          @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
-                          @RequestPart(value = "postUpdateRequest") PostUpdateRequest request) throws IOException {
-
-        return boardService.updatePost(postId,imageFiles,singleAttachFile,request);
-    }
-    @DeleteMapping("/{postId}/delete")
-    @Operation(summary = "[DELETE] 게시글 삭제", description = "게시글 삭제")
-    public void deletePost(@PathVariable Long postId) {
-        //todo: 권한 체크
-        boardService.deletePost(postId);
-    }
-
-    @DeleteMapping("/{postId}/comment/{commentId}")
-    @Operation(summary = "[DELETE] 댓글 삭제", description = "댓글 삭제")
-    public void deleteComment(@PathVariable Long commentId){
-        boardService.deleteComment(commentId);
-    }
-
-
-
     @GetMapping("{postId}/like")
     @Operation(summary = "댓글 좋아요 GET", description = "로그인해야만 좋아요 가능. 1번 요청하면 좋아요(true), 2번 요청하면 취소(false)")
     public boolean likePost(@PathVariable Long postId, HttpServletRequest request) throws Exception {
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
 
-        if(!boardService.isLike(1L,postId)){
+        if(!boardService.isLike(member.getId(), postId)){
             log.info("좋아요");
-            boardService.likePost(1L,postId);
+            boardService.likePost(member.getId(),postId);
             return true;
         }
         else {
             log.info("좋아요 취소");
-            boardService.unlikePost(1L,postId);
+            boardService.unlikePost(member.getId(),postId);
             return false;
         }
     }
-    // 필요할 일이 있지 않을까?
-//    private String getUserId(HttpServletRequest request){
-//        String token=jwtTokenProvider.resolveToken(request,"Access");
-//        if(!jwtTokenProvider.validateToken(token)){
-//            throw new RuntimeException("유효하지 않은 토큰입니다.");
-//        }
-//        String userId= jwtTokenProvider.getUserId(token);
-//        return userId;
-//    }
+
 }
