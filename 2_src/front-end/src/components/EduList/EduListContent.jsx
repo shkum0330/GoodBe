@@ -102,7 +102,7 @@ const HeartEmoji = styled(BsFillHeartFill)`
 `;
 
 
-const EduList = ({searchKeyword}) => {
+const EduList = ({ searchKeyword }) => {
     const [EduList, setEduList] = useState([]); 
 
 

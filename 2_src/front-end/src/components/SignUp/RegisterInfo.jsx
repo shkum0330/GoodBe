@@ -127,6 +127,8 @@ const SignUpForm = () => {
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
       sessionStorage.setItem('email', email);
+
+    
     } else {
       console.log('Tokens not found in local storage.');
     }
@@ -156,22 +158,24 @@ const SignUpForm = () => {
   
     const handleSignUp = () => {
       const accessToken = sessionStorage.getItem('accessToken') || '';
-      axios
-        .post(`${API_BASE_URL}/api/member/register`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
-        },
-        })
-        .then((response) => {
-          console.log('회원가입 성공:', response.data);
-          alert('회원가입 성공!')
-        })
-        .catch((error) => {
-          console.error('회원가입 실패:', error);
-           alert('회원가입 실패: ' + error.message);
-          console.log(formData)
-        });
+      const url = `https://i9a801.p.ssafy.io/auth/signup?accessToken=${accessToken}`;
+
+   
+    
+    axios
+      .put(url)
+      .then(response => {
+        console.log('PUT 요청이 성공적으로 처리되었습니다.');
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('PUT 요청 실패:', error);
+      });
+
     };
+
+
+
     useEffect(() => {
       handleGoogleClick();
     }, []);
