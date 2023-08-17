@@ -4,7 +4,7 @@ import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
 
 
-const API_BASE_URL = 'https://i9a801.p.ssafy.io';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const EduInstitution = styled.p`
     color: #919191;

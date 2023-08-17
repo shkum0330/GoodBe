@@ -19,8 +19,8 @@ const StyledButton = styled(Link)`
 `;
 
 
-// API 서버의 기본 URL
-const API_BASE_URL = 'https://i9a801.p.ssafy.io';
+
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 
 // 페이지네이션 버튼 생성을 위한 함수
@@ -129,17 +129,8 @@ const JobList = ({ searchKeyword }) => {
   const [JobList, setJobList] = useState([]);
   const itemsPerPage = 20;
 
-  const handleInputSubmit = () => {
-    // Convert the input value to a number
-    const newPage = parseInt(inputPage);
-
-    // Validate the newPage value
-    if (!isNaN(newPage) && newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      setInputPage(''); // Clear the input box
-    }
-  };
-
+ 
+ 
   useEffect(() => {
     if (searchKeyword) {
       axios
@@ -147,6 +138,7 @@ const JobList = ({ searchKeyword }) => {
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
+          console.log(JobList);
         })
         .catch(function (error) {
           console.error('데이터 불러오기 오류:', error);
@@ -158,13 +150,13 @@ const JobList = ({ searchKeyword }) => {
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
-          // console.log("교육리스트 ",JobList);
+          console.log(JobList);
         })
         .catch(function (error) {
           console.error('Error fetching data:', error);
         });
-    }
-  }, [searchKeyword]);
+      }
+    }, []); 
 
   // 현재 페이지에 해당하는 데이터 계산
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -196,87 +188,67 @@ const JobList = ({ searchKeyword }) => {
     }
   };
 
-  // JobList 컴포넌트 내부에 handleJobDetailClick 함수 추가
-const handleJobDetailClick = (eduId) => {
-  // eduId를 가지고 API 요청을 보내고 edu 정보를 받아옵니다.
-  axios
-    .get(`${API_BASE_URL}/api/edu/view/${eduId}`)
-    .then(function (response) {
-      console.log(response.data);
-      // edu 정보를 가지고 eduDetail 페이지로 이동합니다.
-      window.location.href = `/eduDetail/${eduId}`;
-    })
-    .catch(function (error) {
-      console.error('데이터 불러오기 오류:', error);
-    });
-};
-
-
-  return (
-
-    <div
-      style={{
-        fontFamily: 'Istok Web, sans-serif',
-        width: '75%',
-        border: '1px solid #ccc',
-        borderRadius: '10px',
-        padding: '20px',
-        backgroundColor: 'white',
-        margin: '0 auto',
-        marginTop: '50px',
-      }}
-    >
+return (
+  
+  <div
+    style={{
+      paddingBottom : '30px',
+          paddingTop : '30px',
+      fontFamily: 'Istok Web, sans-serif',
+      width: '75%',
+      border: '1px solid #ccc',
+      borderRadius: '10px',
+      padding: '20px',
+      backgroundColor: 'white',
+      margin: '0 auto',
+      marginTop: '50px',
+    }}
+  >
 
       {/* 아티클 리스트 렌더링 */}
       <div style={{ padding: '10px', marginBottom: '10px' }}>
-        {/* 현재 페이지의 아티클 항목을 매핑하여 렌더링 */}
-        {currentItems.map((job, index) => (
-          <div
-            key={job.id}
-            style={{
-              paddingBottom: '30px',
-              paddingTop: '30px',
-              borderBottom: '1px solid #ccc',
-              padding: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            {/* 회사 이름 출력 */}
-            <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
-            {/* 채용 제목 및 위치 출력 */}
-            <div style={{ flex: 1, textAlign: 'center' }}>
-              <h5 style={{ marginBottom: '5px' }}>{job.wantedTitle}</h5>
-              <p style={{ marginBottom: '5px' }}>위치: {job.address}</p>
-            </div>
-            {/* 상세보기 버튼 및 좋아요 버튼 출력 */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              {/* 상세보기 버튼 */}
-              <StyledButton onClick={() => handleJobDetailClick(job.eduId)}>상세보기</StyledButton>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                {/* 찜 버튼 */}
-                {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
-                  <div
-                    onClick={() => handleFavoriteClick(job.id)}
-                    style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
-                  >
-                    <AiFillHeart style={{ fontSize: '27px' }} />
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => handleFavoriteClick(job.id)}
-                    style={{ cursor: 'pointer', marginTop: '5px' }}
-                  >
-                    <AiOutlineHeart style={{ fontSize: '27px' }} />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
+    {currentItems.map((job, index) => (
+      <div
+        key={job.id}
+        style={{
+          paddingBottom : '30px',
+          paddingTop : '30px',
+          borderBottom: '1px solid #ccc',
+          padding: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <p style={{ paddingBottom : '50px',
+          paddingTop : '50px',marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
+        <div style={{ flex: 1, textAlign: 'center' }}>
+          <h5 style={{ marginBottom: '5px' }}>{job.wantedTitle}</h5>
+          <p style={{ marginBottom: '5px' }}>위치: {job.address}</p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <StyledButton to={`/JobDetail?id=${job.jobId}`}>상세보기</StyledButton>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
+               <div
+               onClick={() => handleFavoriteClick(job.id)}
+               style={{ cursor: 'pointer', color: 'red', marginTop: '5px' }}
+             >
+               <AiFillHeart style={{ fontSize: '27px' }} />
+             </div>
+           ) : (
+             <div
+               onClick={() => handleFavoriteClick(job.id)}
+               style={{ cursor: 'pointer', marginTop: '5px' }}
+             >
+               <AiOutlineHeart style={{ fontSize: '27px' }} />
+             </div>
+          )}
+        </div>
+        </div>
       </div>
-
+    ))}
+  </div>
 
       {/* 페이지네이션 버튼 */}
       {renderPageNumbers(currentPage, totalPages, setCurrentPage)}
