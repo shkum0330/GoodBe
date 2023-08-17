@@ -31,11 +31,21 @@ public class MemberController {
     @GetMapping("/register")
     @Operation(summary = "[GET] 회원가입 페이지", description = "이메일 반환하면 readOnly로")
     public String register(HttpServletRequest request){
+<<<<<<< HEAD
+        String email = authService.getEmail(request);
+        System.out.println(email);
+        return email;
+    }
+
+=======
         return authService.getEmail(request);
     }
     @PostMapping("/register")
     public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
                                                           HttpServletRequest request){
+        if(authService.authorization(request) != null){ // findByEmail을 했는데 회원이 있으면 가입시키지 않는다.
+            throw new AlreadyExistedMemberException("이미 가입된 이메일입니다.");
+        }
         if(authService.authorization(request) != null){ // findByEmail을 했는데 회원이 있으면 가입시키지 않는다.
             throw new AlreadyExistedMemberException("이미 가입된 이메일입니다.");
         }
