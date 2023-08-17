@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const SearchContainer = styled.div`
     display: flex;
@@ -24,8 +25,9 @@ const SearchInput = styled.input`
     }
 `;
 
-const SearchMain = ({setSearchKeyword}) => {
+const SearchMain = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate(); // useHistory 초기화
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -33,7 +35,8 @@ const SearchMain = ({setSearchKeyword}) => {
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            setSearchKeyword(searchTerm);
+            // 검색어를 edulist 페이지로 전달하면서 페이지 이동
+            navigate(`/RecommendEdu?searchKeyword=${searchTerm}`);
         }
     };
 
@@ -45,7 +48,7 @@ const SearchMain = ({setSearchKeyword}) => {
                 placeholder="회사와 직무를 입력해서 국비교육을 검색해보세요"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                onKeyPress={handleKeyPress} // 이 부분을 추가합니다.
+                onKeyPress={handleKeyPress}
             />
         </SearchContainer>
     );

@@ -103,37 +103,12 @@ const HeartEmoji = styled(BsFillHeartFill)`
 `;
 
 
-const EduList = ({ searchKeyword }) => {
+const RecommendEdu = () => {
     const [eduList, setEduList] = useState([]);
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const Keyword = query.get('searchKeyword');
     
-
-
-    useEffect(() => {
-      if (searchKeyword) {
-          axios
-              .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
-              .then(function (response) {
-                  console.log(response.data);
-                  setEduList(response.data);
-              })
-              .catch(function (error) {
-                  console.error('데이터 불러오기 오류dididii:', error);
-              });
-      } else {
-          axios
-              .get(`${API_BASE_URL}/search/edu/all`)
-              .then(function (response) {
-                  console.log(response.data);
-                  // setEduList(response.data);
-              })
-              .catch(function (error) {
-                  console.error('Error fetching data:', error);
-              });
-      }
-  }, [searchKeyword]); 
 
     useEffect(() => {
       const query = new URLSearchParams(location.search);
@@ -264,4 +239,4 @@ const EduList = ({ searchKeyword }) => {
     );
 };
 
-export default EduList;
+export default RecommendEdu;

@@ -158,7 +158,22 @@ const SignUpForm = () => {
   
     const handleSignUp = () => {
       const accessToken = sessionStorage.getItem('accessToken') || '';
-      const url = `https://i9a801.p.ssafy.io/auth/signup?accessToken=${accessToken}`;
+    //   axios
+    //     .post(`${API_BASE_URL}/api/member/register`, formData, {
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+    //     },
+    //     })
+    //     .then((response) => {
+    //       console.log('회원가입 성공:', response.data);
+    //       alert('회원가입 성공!')
+
+    //             회원가입 성공 후 PUT 요청
+    //  실제 access 토큰 값으로 대체
+    
+    //  const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnb29nbGVfMTA4MjY5OTUyMzUwOTI2Mjg5MjAxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2OTIzNjIxMDB9.y9IEKru04aG7rE6uSY6kH7MOabGJQ0zn4_7ZTQ6qmMY'; // 실제 access 토큰 값으로 대체
+
+     const url = `https://i9a801.p.ssafy.io/auth/signup?accessToken=${accessToken}`;
 
    
     
