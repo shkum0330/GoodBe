@@ -29,32 +29,10 @@ public class MemberController {
     @GetMapping("/register")
     @Operation(summary = "[GET] 회원가입 페이지", description = "이메일 반환하면 readOnly로")
     public String register(HttpServletRequest request){
-        return authService.getEmail(request);
+        String email = authService.getEmail(request);
+        System.out.println(email);
+        return email;
     }
-    @PostMapping("/register")
-
-    public ResponseEntity<MemberRegisterRequest> register(@RequestBody MemberRegisterRequest memberRegisterRequest){
-        log.info("business memberdto={}",memberRegisterRequest);
-        return client.post().uri(uriBuilder -> uriBuilder.path("/register").build())
-                .bodyValue(memberRegisterRequest)
-                .retrieve()
-                .toEntity(MemberRegisterRequest.class)
-                .block();
-    }
-
-    @GetMapping ("/login/google")
-    public void login(HttpServletResponse response){
-        // todo: 자체 로그인 구현..?
-//        return client.post().uri(uriBuilder -> uriBuilder.path("/member/login").build())
-//                .bodyValue(memberLoginRequest)
-//                .retrieve()
-//                .toEntity(String.class)
-//                .block();
-//        Mono<String> result=client.post().uri("/oauth2/authorization/google")
-//                .retrieve().bodyToMono(String.class); // JWT를 반환한다.
-//        String token=result.block();
-//        return token;
-        client.get().uri("/oauth2/authorization/google").retrieve().bodyToMono(String.class).block();
 
     public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
                                                           HttpServletRequest request){
