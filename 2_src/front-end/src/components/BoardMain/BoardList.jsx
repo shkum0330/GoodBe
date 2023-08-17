@@ -39,27 +39,23 @@ const TabItem = styled.li`
 `;
 
 
-const ArticleList = styled.table`
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  frame:void;
-  align-items: center;
+const ArticleList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // Two columns per row
+  gap: 20px; // Gap between articles
+  margin: auto;
+  width : 80%;
+`;
+
+const Article = styled.div`
   width: 100%;
-  margin-bottom : 100px;
-  
-`
-const Article = styled.tr`
-  width: 40%;
-  height: 200px;
   padding: 20px;
   border-top: 1px solid #919191;
-  margin : 30px;
-  margin-bottom : 1px;
-  display:flex;
+  display: flex;
   flex-direction: row;
+  background-color: #ffffff;
+`;
 
-`
 
 const Title = styled.h2`
 height: 20%;
@@ -169,7 +165,7 @@ function TabContent(props) {
     
 
     useEffect(() => {
-      axios
+        axios
         .get(`${API_BASE_URL}/api/board/`)
         .then(function (response) {
           console.log(response.data);
@@ -222,7 +218,7 @@ function TabContent(props) {
 
                 {data.map((item) =>
                     item.boardType === '취업준비' ? (
-                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+                        <CustomLink key={item.id} to={"/BoardDetail?id=" + `${item.id}`  }>     
 
 
                         <Article key={item.id}>
@@ -249,7 +245,7 @@ function TabContent(props) {
 
             {data.map((item) =>
                     item.boardType === '국비교육' ? (
-                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+                        <CustomLink key={item.id} to={"/BoardDetail?id=" + `${item.id}`  }>     
 
 
                         <Article key={item.id}>
@@ -278,7 +274,7 @@ function TabContent(props) {
 
             {data.map((item) =>
                     item.boardType === '학습공유' ? (
-                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+                        <CustomLink key={item.id} to={"/BoardDetail?id=" + `${item.id}`  }>     
 
 
                         <Article key={item.id}>
@@ -305,7 +301,7 @@ function TabContent(props) {
             <ArticleList>
             {data.map((item) =>
                     item.boardType === '취뽀후기' ? (
-                        <CustomLink key={item.id} to={`/api/board/${item.id}`}>
+                        <CustomLink key={item.id} to={"/BoardDetail?id=" + `${item.id}`  }>     
 
 
                         <Article key={item.id}>
