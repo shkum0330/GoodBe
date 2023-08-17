@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @ApiOperation(value = "JWT AccessToken 복호화", notes = "엑세스토큰 받아서 사용자 이메일 리턴")
-    @PostMapping("/jwt/decoding")
+    @GetMapping("/jwt/decoding")
     public String getEmailByJwt(HttpServletRequest request) {
         String accessToken = request.getHeader("Authorization");
         Claims claims = jwtTokenProvider.parseClaims(accessToken);
