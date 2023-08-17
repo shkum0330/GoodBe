@@ -5,7 +5,7 @@ import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081/';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 const ArticleBox = styled.div`
     // 전체박스
     display: flex;
@@ -316,28 +316,29 @@ const CountIcon = styled(FontAwesomeIcon)`
   margin-right: 8px; 
 `;
 
-function getId(location) {
-    var searchString = location.search;
+
+  
+const BoardDetailContent = () => {
+    var searchString =  useLocation().search;
     const params = new URLSearchParams(searchString);
-    const keyword = params.get('id');
-    return keyword
-}
-  
-const BoardDetailContent = ({ match }) => {
-  const location = useLocation();
-  const keyword = getId(location);
+
+  const keyword = params.get('id');
+
+
   const [boardData, setBoardData] = useState(null);
-  
+
   useEffect(() => {
     axios.get(`${API_BASE_URL}/api/board/${keyword}`)
       .then(function (response) {
+        console.log(keyword);
         console.log(response.data);
         setBoardData(response.data);
       })
       .catch(function (error) {
+        console.log(keyword);
         console.error(error);
       });
-  }, [keyword]);
+  }, []);
 
 
   if (!boardData) {

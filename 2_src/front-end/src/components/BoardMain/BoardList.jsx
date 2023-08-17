@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
@@ -160,20 +160,19 @@ const CustomLink = styled(Link)`
 
 
 function TabContent(props) {
-    const [data, setBoardData] = useState([]); 
-    
-
+    const [data, setBoardData] = useState([]);
     useEffect(() => {
         axios
-        .get(`${API_BASE_URL}/api/board/`)
+        .get(`${API_BASE_URL}` + `/api/board/`)
         .then(function (response) {
-          console.log(response.data);
           setBoardData(response.data);
+          console.log(data);
         })
         .catch(function (error) {
-          console.error('Error fetching data:', error);
+            console.log(data);
+          console.error(error);
         });
-    }, []); 
+    }, []);
 
 
     useEffect(() => {
