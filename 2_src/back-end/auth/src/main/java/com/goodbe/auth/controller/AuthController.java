@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.jsonwebtoken.Claims;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -34,7 +35,8 @@ public class AuthController {
 
     @ApiOperation(value = "JWT AccessToken 복호화", notes = "엑세스토큰 받아서 사용자 이메일 리턴")
     @GetMapping("/jwt/decoding")
-    public String getEmailByJwt(String accessToken) {
+    public String getEmailByJwt(HttpServletRequest request) {
+        String accessToken = request.getHeader("Authorization");
         Claims claims = jwtTokenProvider.parseClaims(accessToken);
         String userName = claims.getSubject();
         Member memberEntity = memberRepository.findByUsername(userName);
@@ -53,6 +55,4 @@ public class AuthController {
         memberRepository.save(memberEntity);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
-
 }

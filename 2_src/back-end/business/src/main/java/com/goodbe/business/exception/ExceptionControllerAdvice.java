@@ -17,6 +17,13 @@ public class ExceptionControllerAdvice {
         return new ErrorResult("BAD", e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ErrorResult accessDeniedExHandle(AccessDeniedException e) {
+        log.error("[exceptionHandle] ex", e);
+        return new ErrorResult("FORBIDDEN", e.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ReservedConsultingException.class)
     public ErrorResult reservationExHandle(ReservedConsultingException e) {

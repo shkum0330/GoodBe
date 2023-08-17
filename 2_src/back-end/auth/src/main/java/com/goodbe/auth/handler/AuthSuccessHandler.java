@@ -60,6 +60,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
                     .build().toUriString();
         }
         log.info("accessToken: {}", tokenInfo.getAccessToken());
+        log.info("redirectUrl: {}", redirectUrl);
         response.sendRedirect(redirectUrl);
     }
 }
