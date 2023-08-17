@@ -77,6 +77,23 @@ const ReserveButton = styled.button`
     margin-right: 20px;
     margin-top : 50px;
 `;
+
+const EduDetailButton = styled.button`
+    background-color: #8899D6;
+    color: white;
+    font-family: Istok Web;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-top : 50px;
+`;
 const HeartEmoji = styled(BsFillHeartFill)`
     margin-left: 20px;
     font-size: 30px;
@@ -103,7 +120,7 @@ const EduList = ({searchKeyword}) => {
 
       } else {
         axios
-          .get(`${API_BASE_URL}/api/search/edu/all`)
+          .get(`${API_BASE_URL}/search/edu/all`)
           .then(function (response) {
             console.log(response.data);
             setEduList(response.data);
@@ -169,6 +186,13 @@ const EduList = ({searchKeyword}) => {
         height: '100%'
     };
 
+     // 상세보기로 이동
+  const handleEduDetailClick = (eduId) => {
+    // Redirect to EduDetail page with the provided eduId
+    window.location.href = `/edudetail?eduId=${eduId}`;
+  };
+
+
       return (
         <div style={container}>
           {EduList.map((item) => (
@@ -192,6 +216,7 @@ const EduList = ({searchKeyword}) => {
                 </div>
                 <div style={buttonContainerStyle}>
                   <ReserveButton>상담예약</ReserveButton>
+                  <EduDetailButton onClick={() => handleEduDetailClick(item.eduId)}>상세보기</EduDetailButton>
                   <HeartEmoji  />
 
                 </div>
