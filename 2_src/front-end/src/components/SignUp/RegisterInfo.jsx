@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 const Container = styled.div`
   position: absolute;
@@ -130,20 +130,20 @@ const SignUpForm = () => {
     } else {
       console.log('Tokens not found in local storage.');
     }
-
-    window.location.href =
-      // 'http://i9a801.p.ssafy.io:8089/auth/login/google'; // 구글 로그인 페이지로 이동
-      'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
-      
-  };
     
+    
+  };
+  
+  const storedEmail = sessionStorage.getItem('email');
   const [formData, setFormData] = useState({
     name: '',
     birth: '',
     nickname: '',
     favorite_company: '',
     favorite_job: '',
-    address: ''
+    address: '',
+    email:storedEmail,
+
   });
 
     const handleInputChange = (event) => {
@@ -176,7 +176,6 @@ const SignUpForm = () => {
       handleGoogleClick();
     }, []);
 
-    const storedEmail = sessionStorage.getItem('email');
   return (
     <Container>
       <LogoImage alt="logo_01" src={logo}/>
@@ -187,7 +186,7 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 이메일</Label>
-        <Input type="text" placeholder="이메일을 입력해주세요" value={storedEmail} name="myemail" readOnly/>
+        <Input type="text" placeholder="이메일을 입력해주세요" value={formData.email} name="myemail" readOnly/>
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>

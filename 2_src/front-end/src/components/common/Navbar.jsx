@@ -43,7 +43,7 @@ const MessageIcon = styled(BiMessageDetail)`
 `;
 
 export default function CustomNavbar() {
-
+  
   const navbarIconStyle = {
     marginRight: '6px', 
   
