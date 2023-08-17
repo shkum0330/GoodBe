@@ -35,6 +35,10 @@ public class MemberService { // 테스트용이므로 배포 버전에선 삭제
         return memberRepository.findById(memberId).orElseThrow(()->new NoSuchElementException("해당 회원이 없습니다. id="+memberId));
     }
 
+    public Member findByEmail(String email){
+        return memberRepository.findByEmail(email);
+    }
+
     public void update(Long memberId, MultipartFile profileImage, MemberUpdateRequest request) throws IOException {
         Member member = memberRepository.findById(memberId).orElseThrow(()-> new NoSuchElementException("해당 회원이 없습니다. id="+memberId));
 
