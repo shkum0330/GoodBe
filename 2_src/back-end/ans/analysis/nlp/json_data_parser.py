@@ -8,7 +8,7 @@ def get_all_job_post():
     전체 채용 공고를 가져오는 함수
     각 공고의 모든 정보를 한 문장으로 반환
     '''
-    url = "https://i9a801.p.ssafy.io/search/jobPost/all"
+    url = "https://i9a801.p.ssafy.io/search/jobpost/all"
     req = requests.get(url)
     if req.status_code == 200:
         # JSON 데이터를 문자열로 가져옴
@@ -35,7 +35,7 @@ def get_job_post_by_keyword(keyword):
     키워드에 따른 채용공고를 가져오는 함수
     각 공고의 모든 정보를 한 문장으로 반환
     '''
-    url = f"https://i9a801.p.ssafy.io/search/jobPost/{keyword}"
+    url = f"https://i9a801.p.ssafy.io/search/jobpost/{keyword}"
     req = requests.get(url)
     if req.status_code == 200:
         # JSON 데이터를 문자열로 가져옴
@@ -59,7 +59,7 @@ def get_job_post_by_keyword(keyword):
     
 def get_edu_by_keyword(word_list):
     '''
-    키워드에 따른 채용공고를 가져오는 함수
+    키워드에 따른 국비교육을 가져오는 함수
     각 공고의 모든 정보를 한 문장으로 반환
     '''
     url = f"https://i9a801.p.ssafy.io/search/edu/{word_list}"
