@@ -50,6 +50,6 @@ tasks.named('test') {
 
 bootJar{
 	archivesBaseName = 'search'
-	archiveFileName = 'search-1.0.2-SNAPSHOT.jar'
-	archiveVersion = "1.0.4"
+	archiveFileName = 'search-1.0.5-SNAPSHOT.jar'
+	archiveVersion = "1.0.5"
 }
