@@ -27,7 +27,8 @@ const MyPageHomeHeader = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        minHeight: '90vh'
+        minHeight: '90vh',
+        marginTop: '30px'
     };
     const imgStyle = {
         width: '100px',

@@ -10,23 +10,30 @@ const Tab = styled.a`
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
-    
+    margin: 0 20px;
+    text-decoration: none; /* Remove default underline */
+
+    &:hover,
+    &:active {
+        color: blue; /* Change text color to blue on hover and active */
+        text-decoration: underline; /* Add underline on hover and active */
+    }
 `
 
+const TabContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+`;
+
 const EduTab = () => {
-    const linkStyle = {
-        display: 'inline-block',
-        marginRight: '50px', 
-        textDecoration: 'none', 
-        color: 'black', 
-    };
     return (
-        
-        <div>
-            <Tab href="#" style={linkStyle}>기본정보</Tab>
-            <Tab href="#" style={linkStyle}>커리큘럼</Tab>
-            <Tab href="#" style={{color: 'black', textDecoration: 'none'}}>국비교육 후기</Tab>
-        </div>
+        <TabContainer>
+            <Tab href="#">기본정보</Tab>
+            <Tab href="#">커리큘럼</Tab>
+            <Tab href="#">국비교육 후기</Tab>
+        </TabContainer>
     );
 };
 

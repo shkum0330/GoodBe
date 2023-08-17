@@ -11,9 +11,18 @@ const JobDetail = () => {
     return (
         <div>
             <Navbar/>
+            <br/>
+            <br/>
             <JobHeader/>
+            <br/>
+            <br/>
             <JobDetailContent/>
+            <br/>
+            <br/>
+            
+            <br/>
             <EduRecommendRelated/>
+
             <Footer/>
         </div>
     );
