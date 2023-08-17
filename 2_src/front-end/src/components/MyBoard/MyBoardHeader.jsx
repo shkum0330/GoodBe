@@ -11,6 +11,7 @@ const MyBoardHeader = styled.p`
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    margin-top : 30px;
     
 `
 const MyBoardDetail = styled.p`
@@ -27,11 +28,11 @@ const MyBoardImg = styled.img`
     width: 400px;
     height: 200px;
     flex-shrink: 0;
-    margin-left: 350px;
+    margin-left: 300px;
 `
 const GoodBeBoardContainer = styled.div`
     align-items: center;
-    margin-left: 350px;
+    margin-left: 300px;
     margin-top: -170px;
     padding: 20px;
 `;

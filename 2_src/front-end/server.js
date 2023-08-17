@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+require("dotenv").config();
+=======
 const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require('cors');
@@ -29,3 +32,4 @@ const indexRouter = require('./router'); //라우터 모듈을 가져옴
 app.use('/', indexRouter);
 
 
+>>>>>>> cb3ba7f4d6b02ed54d05273b4449e2e31c7083f1

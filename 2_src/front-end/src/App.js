@@ -32,11 +32,11 @@ import  SignUp   from './pages/SignUp';
 import  TeamInfo   from './pages/TeamInfo';
 import  UserWithdraw   from './pages/UserWithdraw';
 import  BoardDetail   from './pages/BoardDetail';
-
+import Loading from './components/Loading/Loading';
 
 export default function App() {
   return (
-
+    
     <Routes>
       <Route path = "/" element={<Main/>} />
       <Route path = "/MyBoard" element={<MyBoard/>} />

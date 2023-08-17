@@ -11,6 +11,7 @@ const MyTeamHeader = styled.p`
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    margin-top : 30px;
     
 `
 const MyTeamDetail = styled.p`
@@ -22,15 +23,16 @@ const MyTeamDetail = styled.p`
     font-weight: 400;
     line-height: normal;
     text-transform: capitalize;
+    margin-bottom: 40px;
 `
 
 const Teamimg = styled.img`
     width: 900px;
     height: 900px;
     flex-shrink: 0;
-    margin-left : 310px;
+    margin-left : 330px;
     display: block;
-    display: block; /* This removes any extra spacing around the image */
+    display: block; 
     margin: 0 auto;
 `
 
@@ -38,7 +40,7 @@ const MyPageTeamHeader = () => {
     return (
         <div>
 
-            <MyTeamHeader>팀 소개</MyTeamHeader>
+            <MyTeamHeader>팀 정보</MyTeamHeader>
             <MyTeamDetail>GoodBe를 개발한 개발자들을 소개합니다</MyTeamDetail>
             <Teamimg src={TeamInfo} alt="TeamInfo" />
         </div>

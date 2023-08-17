@@ -1,6 +1,10 @@
-import React from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
+import React, { useEffect, useState } from 'react';
+
+
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
 
 const EduInstitution = styled.p`
     color: #919191;
@@ -81,18 +85,42 @@ const HeartEmoji = styled(BsFillHeartFill)`
 `;
 
 
-const EduList = () => {
-    const dummyData = [
-        { id: 1, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
-        { id: 2, EduInstitution :'내일배움캠프', Edutitle: '백엔드 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
-        { id: 3, EduInstitution :'내일배움캠프', Edutitle: '프론트엔드 웹 개발 트랙 8기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14'},
-        { id: 4, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 9기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
-        { id: 5, EduInstitution :'내일배움캠프', Edutitle: 'AI 웹 개발 트랙 10기', EduAbout:'백엔드', fee: '무료', onoff: '온라인', Duration: '2023/08/07 ~ 2023/01/14' },
-      ];
+const EduList = ({searchKeyword}) => {
+    const [EduList, setEduList] = useState([]); 
+
+
+    useEffect(() => {
+      if (searchKeyword) {
+        axios
+          .get(`${API_BASE_URL}/api/search/edu/${searchKeyword}`)
+          .then(function (response) {
+            console.log(response.data);
+            setEduList(response.data);
+          })
+          .catch(function (error) {
+            console.error('데이터 불러오기 오류:', error);
+          });
+
+      } else {
+        axios
+          .get(`${API_BASE_URL}/api/search/edu/all`)
+          .then(function (response) {
+            console.log(response.data);
+            setEduList(response.data);
+          })
+          .catch(function (error) {
+            console.error('Error fetching data:', error);
+          });
+        }
+      }, [searchKeyword]); 
+
+      
+
       const container = {
         width: '60%',
         margin: '0 auto',
         justifyContent: 'center',
+        marginTop: '50px',
     
       };
       const lineStyle = {
@@ -143,16 +171,16 @@ const EduList = () => {
 
       return (
         <div style={container}>
-          {dummyData.map((item) => (
+          {EduList.map((item) => (
             <div key={item.id} style={itemStyle}>
               <div style={lineStyle}>
-                <EduInstitution>{item.EduInstitution}</EduInstitution>
-                <Edutitle>{item.Edutitle}</Edutitle>
+                <EduInstitution>{item.company}</EduInstitution>
+                <Edutitle>{item.title}</Edutitle>
                 <div>
 
                 <EduInfo style={eduInfoStyle}>
-                  <p>{item.EduAbout}</p>
-                  <p>{item.fee}</p>
+                  <p>{item.address}</p>
+                  <p>{item.expense}</p>
                   <p>{item.onoff}</p>
                 </EduInfo>
                 </div>
@@ -160,7 +188,7 @@ const EduList = () => {
               <div style={durationStyle}>
                 <div style={eduDurationStyle}>
                   <EduDurationHeader>교육기간</EduDurationHeader>
-                  <EduDuration>{item.Duration}</EduDuration>
+                  <EduDuration>{item.period}</EduDuration>
                 </div>
                 <div style={buttonContainerStyle}>
                   <ReserveButton>상담예약</ReserveButton>

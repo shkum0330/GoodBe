@@ -1,6 +1,9 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import myconsulting from '../../assets/MyConsulting/myconsulting.svg'
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:8080';
 
 const AllButton = styled.button`
     width: 50px;
@@ -15,7 +18,7 @@ const AllButton = styled.button`
     border-radius: 10px;
     background: #E7F4FD;
     font-size: 15px;
-    margin-left: 350px;
+    margin-left: 410px;
     margin-top: 100px;
     margin-right: 10px;
     border :#E7F4FD;
@@ -70,6 +73,7 @@ const LinkStyle = styled.a`
     margin-right: 10px;
     cursor: pointer;
     text-decoration: none;
+
 `
 
 const ConsultImg = styled.img`
@@ -85,10 +89,12 @@ const ConsultItemContainer = styled.div`
     border-radius: 10px;
     border: 1px solid #858585;
     background: #FFF;
-    width: 850px;
+    width: 800px;
     margin-left: 350px;
     margin-top: 30px;
     height: 200px;
+    margin-bottom : 50px;
+    
 
 `
 const EduDetailsContainer = styled.div`
@@ -96,6 +102,7 @@ const EduDetailsContainer = styled.div`
     display: flex;
     align-items: left;
     flex-direction: column;
+    margin-left : 40px;
 `;
 
 const EduDate = styled.p`
@@ -138,34 +145,47 @@ const ReservaionButton = styled.button`
     line-height: normal;
     text-transform: capitalize;
     margin-left : auto;
-    margin-right : 25px;
+    margin-right : 30px;
     margin-top :-120px;
 
 `
 
-const MyConsultingReservation = () => {
-    const dummyData = [
-        { id: 1, Edutitle: '자바/스프링 개발자 양성과정', EduInstitution: '이젠아카데미컴퓨터학원', reservationDate: '2023-07-26 15:30', image:myconsulting},
-        { id: 2, Edutitle: '자바/스프링 개발자 양성과정', EduInstitution: '이젠아카데미컴퓨터학원', reservationDate: '2023-07-26 15:30', image:myconsulting},
-        { id: 3, Edutitle: '자바/스프링 개발자 양성과정', EduInstitution: '이젠아카데미컴퓨터학원', reservationDate: '2023-07-26 15:30', image:myconsulting },
-        { id: 4, Edutitle: '자바/스프링 개발자 양성과정', EduInstitution: '이젠아카데미컴퓨터학원', reservationDate: '2023-07-26 15:30', image:myconsulting},
-       
+const Container = styled.div`
+    margin-bottom : 100px;
+    margin-left : 60px;
+`
 
-      ];
+const MyConsultingReservation = () => {
+    const [myconsulting, setmyconsulting] = useState([]); 
+    
+
+    useEffect(() => {
+      axios
+        .get(`${API_BASE_URL}/api/mypage/consulting`)
+        .then(function (response) {
+          console.log(response.data);
+          setmyconsulting(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }, []); 
+   
     return (
         <div>
             <AllButton>전체</AllButton>
             <DateButton>예약일 빠른순</DateButton>
-  
-            {dummyData.map((item) => (
+            <Container>
+
+            {myconsulting.map((item) => (
                 <ConsultItemContainer key={item.id}>
-                    <ConsultImg src={item.image} />
+                    {/* <ConsultImg src={item.image} /> */}
                     <EduDetailsContainer>
                         <LinkStyle>교육과정 상세 확인하기 ></LinkStyle>
-                        <EduTite>{item.Edutitle}</EduTite>
-                        <EduInstitution>{item.EduInstitution}</EduInstitution>
+                        <EduTite>{item.title}</EduTite>
+                        <EduInstitution>{item.subTitle}</EduInstitution>
                     <DateBox>
-                        <EduDate>예약시간 {item.reservationDate}</EduDate>
+                        <EduDate>예약시간 {item.reserveTime}</EduDate>
 
                     </DateBox>
   
@@ -173,6 +193,7 @@ const MyConsultingReservation = () => {
                     </EduDetailsContainer>
                 </ConsultItemContainer>
             ))}
+            </Container>
      
 
         </div>
