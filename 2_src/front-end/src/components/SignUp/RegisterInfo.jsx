@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081/';
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081';
 
 const Container = styled.div`
   position: absolute;
@@ -109,21 +109,39 @@ const InputWrapper = styled.div`
 `;
 
 const SignUpForm = () => {
+  const handleGoogleClick = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const accessToken = urlSearchParams.get('accessToken');
+    const refreshToken = urlSearchParams.get('refreshToken');
+
+    if (accessToken && refreshToken) {
+      console.log('Access token:', accessToken);
+      console.log('Refresh token:', refreshToken);
+      alert('로그인 성공!');
+
+      // 받아온 토큰을 로컬 스토리지에 저장
+      sessionStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('refreshToken', refreshToken);
+    } else {
+      console.log('Tokens not found in local storage.');
+    }
+
+    window.location.href =
+      // 'http://i9a801.p.ssafy.io:8089/auth/login/google'; // 구글 로그인 페이지로 이동
+      'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
+      
+  };
+
   const [formData, setFormData] = useState({
     name: '',
+    age: '',
     birth: '',
     nickname: '',
-    favoriteCompany: '',
-    favoriteJob: '',
+    favorite_company: '',
+    favorite_Job: '',
+    address: ''
   });
-  
-  // const userData = {
-  //     name: formData.name,
-  //     birth: formData.birth,
-  //     nickname: formData.nickname,
-  //     favoriteCompany: formData.favoriteCompany,
-  //     favoriteJob: formData.favoriteJob,
-  // }
+
     const handleInputChange = (event) => {
       const { name, value } = event.target;
       setFormData((prevData) => ({
@@ -134,7 +152,7 @@ const SignUpForm = () => {
   
     const handleSignUp = () => {
       axios
-        .post(`${API_BASE_URL}/api/member/register`, formData)
+        .post(`${API_BASE_URL}/api/member/register${formData}`, {formData})
         .then((response) => {
           console.log('회원가입 성공:', response.data);
           alert('회원가입 성공!')
@@ -142,12 +160,12 @@ const SignUpForm = () => {
         .catch((error) => {
           console.error('회원가입 실패:', error);
            alert('회원가입 실패: ' + error.message);
-        
+          console.log(formData)
         });
     };
   return (
     <Container>
-      <LogoImage alt="logo_01" src={logo} />
+      <LogoImage alt="logo_01" src={logo} onClick={handleGoogleClick}/>
       <Title>굿비에서 여러분의 미래를 그려보세요!</Title>
       <FormItem>
         <Label>* 이름</Label>
@@ -155,7 +173,7 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>
-        <Input type="text" value={formData.birth} name="birth" onChange={handleInputChange}/>
+        <Input type="date" placeholder="생년월일을 입력해주세요" value={formData.birth} name="birth" onChange={handleInputChange}/>
       </FormItem>
       <FormItem>
           <Label>* 닉네임</Label>
@@ -165,11 +183,15 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 관심회사</Label>
-          <Input type="text" placeholder="관심회사를 입력해주세요" value={formData.favoriteCompany} name="favoriteCompany" onChange={handleInputChange}/>
+          <Input type="text" placeholder="관심회사를 입력해주세요" value={formData.favorite_company} name="favorite_company" onChange={handleInputChange}/>
       </FormItem>
       <FormItem>
         <Label>* 관심직무</Label>
-          <Input type="text" placeholder="관심직무를 입력해주세요" value={formData.favoriteJob} name="favoriteJob" onChange={handleInputChange}/>
+          <Input type="text" placeholder="관심직무를 입력해주세요" value={formData.favorite_job} name="favorite_job" onChange={handleInputChange}/>
+      </FormItem>
+      <FormItem>
+        <Label>* 주소</Label>
+          <Input type="text" placeholder="주소를 입력해주세요" value={formData.address} name="address" onChange={handleInputChange}/>
       </FormItem>
   
       <Button onClick={handleSignUp}>가입하기</Button>

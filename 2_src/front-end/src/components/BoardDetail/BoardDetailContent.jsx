@@ -5,7 +5,7 @@ import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081/';
 const ArticleBox = styled.div`
     // 전체박스
     display: flex;

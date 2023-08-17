@@ -5,6 +5,7 @@ import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.training.Edu;
+import com.goodbe.business.web.dto.edu.EduListResponse;
 import com.goodbe.business.web.dto.mypage.*;
 import com.goodbe.business.web.service.MemberService;
 import com.goodbe.business.web.service.MyPageService;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8082") // 요청을 인증 서버로 보냄
+            .baseUrl("http://localhost:8089/auth") // 요청을 인증 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
 
@@ -121,6 +123,10 @@ public class MyPageController {
     }
 
     private Boolean authorization(HttpServletRequest request){
-        return true;
+        String token=request.getHeader("Authorization");
+        String email=client.get().uri("/jwt/decoding").retrieve()
+                .bodyToMono(String.class).block();
+
+        return memberService.findByEmail(email) != null;
     }
 }

@@ -110,7 +110,8 @@ export default function CustomNavbar() {
         </NavbarLink>
 
         <div style={navbarIconStyle}>
-          <NavbarLink href="#">
+          <NavbarLink href="http://localhost:8092">  {/* 채팅으로 이동 */}
+          
             <MessageIcon />
           </NavbarLink>
         </div>

@@ -65,6 +65,14 @@ public class Post extends BaseTimeEntity {
         this.likeCount = likeCount;
     }
 
+    public Post(Member member, String boardType, String nickname, String title, String content) {
+        this.member = member;
+        this.boardType = boardType;
+        this.nickname = nickname;
+        this.title = title;
+        this.content = content;
+        likeCount=0;
+    }
     @Builder
     public Post(Member member, List<UploadFile> files, UploadFile attachFile,
                 String boardType, String nickname, String title, String content, int likeCount) {
