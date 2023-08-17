@@ -1,9 +1,9 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081';
+const API_BASE_URL = 'http://localhost:8080';
 
 const Container = styled.div`
   position: absolute;
@@ -113,15 +113,20 @@ const SignUpForm = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const accessToken = urlSearchParams.get('accessToken');
     const refreshToken = urlSearchParams.get('refreshToken');
+    const email = urlSearchParams.get('email');
+    
 
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && email) {
       console.log('Access token:', accessToken);
       console.log('Refresh token:', refreshToken);
-      alert('로그인 성공!');
+      console.log('email:', email);
+
+      // alert('로그인 성공!');
 
       // 받아온 토큰을 로컬 스토리지에 저장
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
+      sessionStorage.setItem('email', email);
     } else {
       console.log('Tokens not found in local storage.');
     }
@@ -131,14 +136,13 @@ const SignUpForm = () => {
       'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
       
   };
-
+    
   const [formData, setFormData] = useState({
     name: '',
-    age: '',
     birth: '',
     nickname: '',
     favorite_company: '',
-    favorite_Job: '',
+    favorite_job: '',
     address: ''
   });
 
@@ -151,8 +155,13 @@ const SignUpForm = () => {
     };
   
     const handleSignUp = () => {
+      const accessToken = sessionStorage.getItem('accessToken') || '';
       axios
-        .post(`${API_BASE_URL}/api/member/register${formData}`, {formData})
+        .post(`${API_BASE_URL}/api/member/register`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+        },
+        })
         .then((response) => {
           console.log('회원가입 성공:', response.data);
           alert('회원가입 성공!')
@@ -163,13 +172,22 @@ const SignUpForm = () => {
           console.log(formData)
         });
     };
+    useEffect(() => {
+      handleGoogleClick();
+    }, []);
+
+    const storedEmail = sessionStorage.getItem('email');
   return (
     <Container>
-      <LogoImage alt="logo_01" src={logo} onClick={handleGoogleClick}/>
+      <LogoImage alt="logo_01" src={logo}/>
       <Title>굿비에서 여러분의 미래를 그려보세요!</Title>
       <FormItem>
         <Label>* 이름</Label>
         <Input type="text" placeholder="이름을 입력해주세요" value={formData.name} name="name" onChange={handleInputChange}/>
+      </FormItem>
+      <FormItem>
+        <Label>* 이메일</Label>
+        <Input type="text" placeholder="이메일을 입력해주세요" value={storedEmail} name="myemail" readOnly/>
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>
@@ -198,5 +216,6 @@ const SignUpForm = () => {
     </Container>
   );
 };
+
 
 export default SignUpForm;

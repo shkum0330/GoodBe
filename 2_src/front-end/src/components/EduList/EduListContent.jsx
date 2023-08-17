@@ -4,7 +4,7 @@ import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
 
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const EduInstitution = styled.p`
     color: #919191;
@@ -92,7 +92,7 @@ const EduList = ({searchKeyword}) => {
     useEffect(() => {
       if (searchKeyword) {
         axios
-          .get(`${API_BASE_URL}/api/search/edu/${searchKeyword}`)
+          .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
           .then(function (response) {
             console.log(response.data);
             setEduList(response.data);
