@@ -12,6 +12,7 @@ import com.goodbe.business.web.dto.board.post.PostWriteRequest;
 import com.goodbe.business.web.dto.board.post.PostsResponse;
 import com.goodbe.business.web.service.AuthService;
 import com.goodbe.business.web.service.BoardService;
+import com.goodbe.business.web.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,7 @@ public class BoardController {
     private final BoardService boardService;
     private final FileStore fileStore;
     private final AuthService authService;
+    private final MemberService memberService;
 
     WebClient client = WebClient.builder()
             .baseUrl("http://localhost:8082") // 요청을 인증 서버로 보냄
@@ -77,7 +79,9 @@ public class BoardController {
     public Long writePost(@RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
             @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
             @RequestPart(value = "postWriteRequest") PostWriteRequest postWriteRequest,HttpServletRequest request) throws IOException {
-
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        log.info("닉네임 = {}",member.getNickname());
         return boardService.writePost(imageFiles,singleAttachFile,postWriteRequest);
     }
 
