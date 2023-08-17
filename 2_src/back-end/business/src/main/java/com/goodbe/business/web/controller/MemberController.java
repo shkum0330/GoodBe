@@ -37,6 +37,10 @@ public class MemberController {
         return email;
     }
 
+    =======return authService.getEmail(request);
+
+    }
+
     @PostMapping("/register")
     public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
                                                           HttpServletRequest request){
@@ -45,6 +49,7 @@ public class MemberController {
         }
         memberService.register(memberRegisterRequest);
         return "회원가입 성공";
+>>>>>>> cb3ba7f4d6b02ed54d05273b4449e2e31c7083f1
     }
 
     @PostMapping("/logout")
@@ -52,6 +57,11 @@ public class MemberController {
 //        String encryptedRefreshToken = jwtTokenProvider.resolveRefreshToken(request);
 //        String accessToken = jwtTokenProvider.resolveAccessToken(request);
 
+
+    }
+
+    @PostMapping("/update")
+    public void update(){ // 회원정보 수정
 
     }
 }

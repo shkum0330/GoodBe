@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 const Container = styled.div`
   position: absolute;
@@ -127,23 +127,25 @@ const SignUpForm = () => {
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
       sessionStorage.setItem('email', email);
+
+    
     } else {
       console.log('Tokens not found in local storage.');
     }
-
-    window.location.href =
-      // 'http://i9a801.p.ssafy.io:8089/auth/login/google'; // 구글 로그인 페이지로 이동
-      'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
-      
-  };
     
+    
+  };
+  
+  const storedEmail = sessionStorage.getItem('email');
   const [formData, setFormData] = useState({
     name: '',
     birth: '',
     nickname: '',
     favorite_company: '',
     favorite_job: '',
-    address: ''
+    address: '',
+    email:storedEmail,
+
   });
 
     const handleInputChange = (event) => {
@@ -156,27 +158,43 @@ const SignUpForm = () => {
   
     const handleSignUp = () => {
       const accessToken = sessionStorage.getItem('accessToken') || '';
-      axios
-        .post(`${API_BASE_URL}/api/member/register`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
-        },
-        })
-        .then((response) => {
-          console.log('회원가입 성공:', response.data);
-          alert('회원가입 성공!')
-        })
-        .catch((error) => {
-          console.error('회원가입 실패:', error);
-           alert('회원가입 실패: ' + error.message);
-          console.log(formData)
-        });
+    //   axios
+    //     .post(`${API_BASE_URL}/api/member/register`, formData, {
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+    //     },
+    //     })
+    //     .then((response) => {
+    //       console.log('회원가입 성공:', response.data);
+    //       alert('회원가입 성공!')
+
+    //             회원가입 성공 후 PUT 요청
+    //  실제 access 토큰 값으로 대체
+    
+    //  const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnb29nbGVfMTA4MjY5OTUyMzUwOTI2Mjg5MjAxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2OTIzNjIxMDB9.y9IEKru04aG7rE6uSY6kH7MOabGJQ0zn4_7ZTQ6qmMY'; // 실제 access 토큰 값으로 대체
+
+     const url = `https://i9a801.p.ssafy.io/auth/signup?accessToken=${accessToken}`;
+
+   
+    
+    axios
+      .put(url)
+      .then(response => {
+        console.log('PUT 요청이 성공적으로 처리되었습니다.');
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('PUT 요청 실패:', error);
+      });
+
     };
+
+
+
     useEffect(() => {
       handleGoogleClick();
     }, []);
 
-    const storedEmail = sessionStorage.getItem('email');
   return (
     <Container>
       <LogoImage alt="logo_01" src={logo}/>
@@ -187,7 +205,7 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 이메일</Label>
-        <Input type="text" placeholder="이메일을 입력해주세요" value={storedEmail} name="myemail" readOnly/>
+        <Input type="text" placeholder="이메일을 입력해주세요" value={formData.email} name="myemail" readOnly/>
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>

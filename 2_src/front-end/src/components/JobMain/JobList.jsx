@@ -20,7 +20,7 @@ const StyledButton = styled(Link)`
 
 
 
-const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 
 // 페이지네이션 버튼 생성을 위한 함수
@@ -109,18 +109,20 @@ const renderPageNumbers = (currentPage, totalPages, setCurrentPage) => {
 };
 
 
+
+
+
+
+
+
 const JobList = ({ searchKeyword }) => {
 
-
-
-  const [inputPage, setInputPage] = useState('');
+  const [inputPage, setInputPage] = useState([]);
 
   // Function to handle input change
   const handleInputChange = (e) => {
     setInputPage(e.target.value);
   };
-
-
 
   const [activeTab, setActiveTab] = useState('전체');
   const [currentPage, setCurrentPage] = useState(1);
@@ -156,7 +158,7 @@ const JobList = ({ searchKeyword }) => {
           console.error('Error fetching data:', error);
         });
       }
-    }, []); 
+    }, [searchKeyword]); 
 
   // 현재 페이지에 해당하는 데이터 계산
   const indexOfLastItem = currentPage * itemsPerPage;

@@ -151,7 +151,7 @@ export default function JobDetailContent() {
           
         </ContentContainer>
       </CustomBox>
-      <Image src={NaverInc} alt="NaverInc" />
+      {/* <Image src={NaverInc} alt="NaverInc" /> */}
       <br/>
       <br/>
       <br/>

@@ -2,8 +2,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-const API_BASE_URL = 'https://i9a801.p.ssafy.io';
+
+
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const EduInstitution = styled.p`
     color: #919191;

@@ -33,6 +33,7 @@ import  TeamInfo   from './pages/TeamInfo';
 import  UserWithdraw   from './pages/UserWithdraw';
 import  BoardDetail   from './pages/BoardDetail';
 import Loading from './components/Loading/Loading';
+import RecommendEdu from './components/Recommend/RecommendEdu';
 
 export default function App() {
   return (
@@ -74,6 +75,7 @@ export default function App() {
       <Route path="/TeamInfo" element={<TeamInfo/>} />
       <Route path="/UserWithdraw" element={<UserWithdraw/>} />
       <Route path="/BoardDetail" element={<BoardDetail/>} />
+      <Route path="/RecommendEdu" element={<RecommendEdu/>} />
     </Routes>
   );
 };

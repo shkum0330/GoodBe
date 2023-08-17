@@ -160,20 +160,19 @@ const CustomLink = styled(Link)`
 
 
 function TabContent(props) {
-    const [data, setBoardData] = useState([]); 
-    
-
+    const [data, setBoardData] = useState([]);
     useEffect(() => {
         axios
-        .get(`${API_BASE_URL}/api/board/`)
+        .get(`${API_BASE_URL}` + `/api/board/`)
         .then(function (response) {
-          console.log(response.data);
           setBoardData(response.data);
+          console.log(data);
         })
         .catch(function (error) {
-          console.error('Error fetching data:', error);
+            console.log(data);
+          console.error(error);
         });
-    }, []); 
+    }, []);
 
 
     useEffect(() => {
@@ -324,7 +323,27 @@ function TabContent(props) {
 
 
 
-export default function BoardList() {
+export default function BoardList({token}) {
+
+//토큰부분
+    const handleWriteButtonClick = () => {
+        if (!token) {
+          // 토큰이 있다면 글쓰기 페이지로 이동
+          window.location.href = '/BoardWrite';
+        } else {
+          // 토큰이 없다면 알림 띄우고 네이버 홈페이지로 이동
+          alert('로그인이 필요한 화면입니다.');
+          window.location.href = '../'; // 원하는 URL로 변경
+        }
+      };
+
+
+
+
+
+
+
+
     let [clickedTab, setClickedTab] = useState(0);
     let [onOff, setOnOff] = useState(false);
 
@@ -347,7 +366,7 @@ export default function BoardList() {
                 <TabItem className="nav-item" eventKey="4" onClick={() => { setOnOff(false); setClickedTab(4) }}>
                     <Tab className={4 === clickedTab ? 'selected' : 'not-selected'}>취뽀후기</Tab>
                 </TabItem>
-            <WriteButton href="/BoardWrite">글쓰기</WriteButton>
+                <WriteButton onClick={handleWriteButtonClick}>글쓰기</WriteButton>
             </Nav>
         <Line />
 

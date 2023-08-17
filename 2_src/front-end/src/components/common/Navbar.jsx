@@ -43,7 +43,7 @@ const MessageIcon = styled(BiMessageDetail)`
 `;
 
 export default function CustomNavbar() {
-
+  
   const navbarIconStyle = {
     marginRight: '6px', 
   
@@ -91,6 +91,7 @@ export default function CustomNavbar() {
           <NavbarLink href="/JobMain">채용공고</NavbarLink>
           <NavbarLink href="/EduList">국비교육</NavbarLink>
           <NavbarLink href="/BoardMain">게시판</NavbarLink>
+          <NavbarLink href="/RecommendEdu">국비 추천</NavbarLink>
         </Nav>
 
         <div style={navbarIconStyle}>
