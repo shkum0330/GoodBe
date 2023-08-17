@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import myconsulting from '../../assets/MyConsulting/myconsulting.svg'
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const AllButton = styled.button`
     width: 50px;
@@ -188,7 +188,7 @@ const MyConsultingReservation = () => {
                         
                     </DateBox>
                            
-                        <ReservaionButton href='http://localhost:8091'>입장하기</ReservaionButton>
+                        <ReservaionButton href='https://goodbeconsult.du.r.appspot.com'>입장하기</ReservaionButton>
                         
                     </EduDetailsContainer>
                 </ConsultItemContainer>
