@@ -5,18 +5,103 @@ import axios from 'axios';
 
 const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
 
+
+// 페이지네이션 버튼 생성을 위한 함수
+const generatePageNumbers = (currentPage, totalPages, displayRange = 5) => {
+  const pageNumbers = [];
+  // 현재 페이지를 중심으로 양쪽으로 일정 범위 내의 페이지 숫자를 생성
+  const startPage = Math.max(1, currentPage - Math.floor(displayRange / 2));
+  const endPage = Math.min(totalPages, startPage + displayRange - 1);
+  for (let i = startPage; i <= endPage; i++) {  
+    pageNumbers.push(i);
+  }
+  return pageNumbers;
+};
+
+
+const renderPageNumbers = (currentPage, totalPages, setCurrentPage) => {
+
+
+  const handlePageClick = (pageNumber) => {
+    if (pageNumber >= 3 && pageNumber <= totalPages - 2) {
+    setCurrentPage(pageNumber);
+  } else if (pageNumber < 3) {
+    setCurrentPage(3);
+  } else if (pageNumber > totalPages - 2) {
+    setCurrentPage(totalPages - 2);
+  }
+  };
+
+  const pageNumbers = generatePageNumbers(currentPage, totalPages);
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      {currentPage > 1 && (
+        <button
+          style={{
+            padding: '5px 10px',
+            margin: '0 5px',
+            backgroundColor: '#EBEBEB',
+            color: 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          onClick={() => handlePageClick(currentPage - 1)}
+        >
+          &lt;
+        </button>
+      )}
+      {pageNumbers.map((pageNumber) => (
+        <button
+          key={pageNumber}
+          style={{
+            padding: '5px 10px',
+            margin: '0 5px',
+            backgroundColor: currentPage === pageNumber ? '#60A0EF' : '#EBEBEB',
+            color: currentPage === pageNumber ? 'white' : 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          onClick={() => handlePageClick(pageNumber)}
+        >
+          {pageNumber}
+        </button>
+      ))}
+      {currentPage < totalPages && (
+        <button
+          style={{
+            padding: '5px 10px',
+            margin: '0 5px',
+            backgroundColor: '#EBEBEB',
+            color: 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          onClick={() => handlePageClick(currentPage + 1)}
+        >
+          &gt;
+        </button>
+      )}
+    </div>
+  );
+};
+
+
 const JobList = ({searchKeyword}) => {
   const [activeTab, setActiveTab] = useState('전체');
   const [currentPage, setCurrentPage] = useState(1);
   const [JobList, setJobList] = useState([]); 
-  const itemsPerPage = 5;
+  const itemsPerPage = 20;
 
 
  
   useEffect(() => {
     if (searchKeyword) {
       axios
-        .get(`${API_BASE_URL}/search/jobPost/${searchKeyword}`)
+        .get(`${API_BASE_URL}/api/search/jobPost/${searchKeyword}`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
@@ -27,7 +112,7 @@ const JobList = ({searchKeyword}) => {
 
     } else {
       axios
-        .get(`${API_BASE_URL}/search/jobPost/all`)
+        .get(`${API_BASE_URL}/api/search/jobPost/all`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
@@ -129,31 +214,14 @@ return (
   </div>
 
     {/* 페이지네이션 버튼 */}
-    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-      {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-        <button
-          key={pageNumber}
-          style={{
-            padding: '5px 10px',
-            margin: '0 5px',
-            backgroundColor: currentPage === pageNumber ? '#60A0EF' : '#EBEBEB',
-            color: currentPage === pageNumber ? 'white' : 'black',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-          onClick={() => handlePageClick(pageNumber)}
-        >
-          {pageNumber}
-        </button>
-      ))}
+    {renderPageNumbers(currentPage, totalPages, setCurrentPage)}
       </div>
-    </div>
+    
 
       
       
 );
         }
-
+        
 
 export default JobList; 

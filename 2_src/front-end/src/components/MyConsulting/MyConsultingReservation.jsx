@@ -114,11 +114,8 @@ const EduDate = styled.p`
     line-height: normal;
     text-transform: capitalize;
     display: flex;
-    width: 240px;
-    height: 40px;
     flex-direction: column;
     justify-content: center;
-    flex-shrink: 0;
     margin-left : 15px;
 `
 
@@ -129,7 +126,7 @@ const DateBox = styled.div`
     border-radius: 10px;
     background: #E7F4FD;
 `
-const ReservaionButton = styled.button`
+const ReservaionButton = styled.a`
     width: 132px;
     height: 150px;
     flex-shrink: 0;
@@ -137,18 +134,20 @@ const ReservaionButton = styled.button`
     background: #E7F4FD99;
     border: #E7F4FD99;
     color: #4B93C5;
-    text-align: center;
+    display: flex; /* Flex 컨테이너로 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center; /* 수평 가운데 정렬 */
     font-family: Istok Web;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    line-height: normal;
     text-transform: capitalize;
     margin-left : auto;
     margin-right : 30px;
-    margin-top :-120px;
-
-`
+    margin-top :-95px;
+    line-height: normal;
+    text-decoration: none;
+`;
 
 const Container = styled.div`
     margin-bottom : 100px;
@@ -185,11 +184,12 @@ const MyConsultingReservation = () => {
                         <EduTite>{item.title}</EduTite>
                         <EduInstitution>{item.subTitle}</EduInstitution>
                     <DateBox>
-                        <EduDate>예약시간 {item.reserveTime}</EduDate>
-
+                        <EduDate>예약시간 {item.reserveTime} &nbsp; &nbsp;  방번호  {item.id}</EduDate>
+                        
                     </DateBox>
-  
-                        <ReservaionButton>입장하기</ReservaionButton>
+                           
+                        <ReservaionButton href='http://localhost:8091'>입장하기</ReservaionButton>
+                        
                     </EduDetailsContainer>
                 </ConsultItemContainer>
             ))}
