@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const API_BASE_URL = 'http://localhost:8080';
 const ArticleBox = styled.div`
@@ -304,39 +305,50 @@ const BtnOutlineGray = styled.a`
         text-decoration-line: none;
 `
 
+function getId(location) {
+    var searchString = location.search;
+    const params = new URLSearchParams(searchString);
+    const keyword = params.get('id');
+    return keyword
+}
+
+const BoardDetailContent = ({ match }) => {
+
+const location = useLocation();
+const keyword = getId(location);
+    const [boardData, setBoardData] = useState(null);
+
+  /* const boardId = match.params.id; // 동적으로 URL에서 추출한 id 값 */
+
+  useEffect(() => {
+  const keyword = getId(location);
+  axios.get(`${API_BASE_URL}/api/board`,{
+      params : {
+          id : parseInt(keyword)
+      }
+  })
+  .then(function (response) {
+    console.log(response.data);
+    setBoardData(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
+}, [location]);
 
 
 
+  if (!boardData) {
+    return <div>{boardData}</div>;
+  }
 
-
-export default function BoardDetailContent() {
-    const [data, setBoardData] = useState([]); 
-    
-
-    useEffect(() => {
-      axios
-        .get(`${API_BASE_URL}/api/board/`)
-        
-
-
-
-        .then(function (response) {
-          console.log(response.data);
-          setBoardData(response.data);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }, []); 
-
-
-    return (
+  return (
         <>
             <ArticleBox>
                 {/* 게시글 헤더 */}
                 <Header>
-                    <BoardType href="#" >게시판>취업준비</BoardType>
-                    <Title > 취업준비 고민 막막합니다 ㅜㅜ 하소연 들어주세요</Title>
+                    <BoardType href="../BoardMain" >게시판 - 취업준비</BoardType>
+                    <Title > {boardData.title}  </Title>
                     <ArticleDetails>
 
                         <TempDiv1>
@@ -371,7 +383,7 @@ export default function BoardDetailContent() {
                     <Line/>
                 
                     <Content>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt augue nec justo fermentum, ac dapibus quam tincidunt. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean bibendum tempus ex, ac volutpat enim gravida eu. Sed id quam ut ipsum imperdiet condimentum ut tincidunt arcu. Donec leo lacus, gravida at tellus vitae, euismod vulputate odio. Nunc commodo mauris quis pretium eleifend. Donec ultrices tellus nunc, ac fermentum libero faucibus sit amet. Nulla metus ligula, suscipit vestibulum arcu et, pellentesque pellentesque nisi. Vestibulum lobortis eu nisi nec congue. Aliquam erat volutpat. Vivamus in nisi fermentum, interdum dui nec, aliquet metus. In in bibendum velit. Praesent vehicula pulvinar orci, sed porta augue accumsan eget.
+                    {boardData.id}
                     </Content>
                     <Cnts>
                         
@@ -450,3 +462,4 @@ export default function BoardDetailContent() {
     )
 }
 
+export default BoardDetailContent
