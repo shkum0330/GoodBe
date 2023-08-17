@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group';

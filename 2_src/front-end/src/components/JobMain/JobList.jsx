@@ -2,21 +2,144 @@ import {AiOutlineHeart} from 'react-icons/ai';
 import {AiFillHeart} from 'react-icons/ai';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+
+const StyledButton = styled(Link)`
+  background-color: #a4c3ff;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  width: 100%;
+  text-decoration: none; /* Add this line to make it look like a link */
+`;
+
+
 
 const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
 
+
+// 페이지네이션 버튼 생성을 위한 함수
+const generatePageNumbers = (currentPage, totalPages, displayRange = 5) => {
+  const pageNumbers = [];
+  // 현재 페이지를 중심으로 양쪽으로 일정 범위 내의 페이지 숫자를 생성
+  const startPage = Math.max(1, currentPage - Math.floor(displayRange / 2));
+  const endPage = Math.min(totalPages, startPage + displayRange - 1);
+  for (let i = startPage; i <= endPage; i++) {  
+    pageNumbers.push(i);
+  }
+  return pageNumbers;
+};
+
+
+const renderPageNumbers = (currentPage, totalPages, setCurrentPage) => {
+
+
+  const handlePageClick = (pageNumber) => {
+    if (pageNumber >= 3 && pageNumber <= totalPages - 2) {
+    setCurrentPage(pageNumber);
+  } else if (pageNumber < 3) {
+    setCurrentPage(3);
+  } else if (pageNumber > totalPages - 2) {
+    setCurrentPage(totalPages - 2);
+  }
+  };
+
+  const pageNumbers = generatePageNumbers(currentPage, totalPages);
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      {currentPage > 1 && (
+        <button
+          style={{
+            padding: '5px 10px',
+            margin: '0 5px',
+            backgroundColor: '#EBEBEB',
+            color: 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          onClick={() => handlePageClick(currentPage - 1)}
+        >
+          &lt;
+        </button>
+      )}
+      {pageNumbers.map((pageNumber) => (
+        <button
+          key={pageNumber}
+          style={{
+            padding: '5px 10px',
+            margin: '0 5px',
+            backgroundColor: currentPage === pageNumber ? '#60A0EF' : '#EBEBEB',
+            color: currentPage === pageNumber ? 'white' : 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          onClick={() => handlePageClick(pageNumber)}
+        >
+          {pageNumber}
+        </button>
+      ))}
+      {currentPage < totalPages && (
+        <button
+          style={{
+            padding: '5px 10px',
+            margin: '0 5px',
+            backgroundColor: '#EBEBEB',
+            color: 'black',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+          onClick={() => handlePageClick(currentPage + 1)}
+        >
+          &gt;
+        </button>
+      )}
+    </div>
+  );
+};
+
+
 const JobList = ({searchKeyword}) => {
+
+
+  
+const [inputPage, setInputPage] = useState('');
+
+// Function to handle input change
+const handleInputChange = (e) => {
+  setInputPage(e.target.value);
+};
+
+
+
   const [activeTab, setActiveTab] = useState('전체');
   const [currentPage, setCurrentPage] = useState(1);
   const [JobList, setJobList] = useState([]); 
-  const itemsPerPage = 5;
+  const itemsPerPage = 20;
 
+  const handleInputSubmit = () => {
+    // Convert the input value to a number
+    const newPage = parseInt(inputPage);
 
+    // Validate the newPage value
+    if (!isNaN(newPage) && newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      setInputPage(''); // Clear the input box
+    }
+  };
  
   useEffect(() => {
     if (searchKeyword) {
       axios
-        .get(`${API_BASE_URL}/search/jobPost/${searchKeyword}`)
+        .get(`${API_BASE_URL}/api/search/jobPost/${searchKeyword}`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
@@ -27,7 +150,7 @@ const JobList = ({searchKeyword}) => {
 
     } else {
       axios
-        .get(`${API_BASE_URL}/search/jobPost/all`)
+        .get(`${API_BASE_URL}/api/search/jobPost/all`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
@@ -89,6 +212,8 @@ return (
       <div
         key={job.id}
         style={{
+          paddingBottom : '30px',
+          paddingTop : '30px',
           borderBottom: '1px solid #ccc',
           padding: '10px',
           display: 'flex',
@@ -99,13 +224,10 @@ return (
         <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
         <div style={{ flex: 1, textAlign: 'center' }}>
           <h5 style={{ marginBottom: '5px' }}>{job.wantedTitle}</h5>
-          <p style={{ marginBottom: '3px' }}>위치: {job.address}</p>
-  
+          <p style={{ marginBottom: '5px' }}>위치: {job.address}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button style={{ backgroundColor: '#A4C3FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer', marginBottom: '5px', width : '100%'}}>상세보기</button>
-          <button style={{ backgroundColor: '#EBD2FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer' }}>채팅방 입장</button>
-          
+        <StyledButton to={`/JobDetail?id=${job.id}`}>상세보기</StyledButton>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
                <div
@@ -129,31 +251,14 @@ return (
   </div>
 
     {/* 페이지네이션 버튼 */}
-    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-      {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-        <button
-          key={pageNumber}
-          style={{
-            padding: '5px 10px',
-            margin: '0 5px',
-            backgroundColor: currentPage === pageNumber ? '#60A0EF' : '#EBEBEB',
-            color: currentPage === pageNumber ? 'white' : 'black',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-          onClick={() => handlePageClick(pageNumber)}
-        >
-          {pageNumber}
-        </button>
-      ))}
+    {renderPageNumbers(currentPage, totalPages, setCurrentPage)}
       </div>
-    </div>
+    
 
       
       
 );
         }
-
+        
 
 export default JobList; 
