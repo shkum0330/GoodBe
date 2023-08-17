@@ -158,8 +158,8 @@ const GoLogin = ({ closeModal }) => {
     }
 
     window.location.href =
-      // 'http://i9a801.p.ssafy.io:8089/auth/login/google'; // 구글 로그인 페이지로 이동
-      'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
+      'http://i9a801.p.ssafy.io:8089/auth/login/google'; // 구글 로그인 페이지로 이동
+      // 'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
       
   };
 

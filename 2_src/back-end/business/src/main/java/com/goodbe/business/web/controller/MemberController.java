@@ -29,8 +29,16 @@ public class MemberController {
     @GetMapping("/register")
     @Operation(summary = "[GET] 회원가입 페이지", description = "이메일 반환하면 readOnly로")
     public String register(HttpServletRequest request){
-        return authService.getEmail(request);
+<<<<<<< HEAD
+        String email = authService.getEmail(request);
+        System.out.println(email);
+        return email;
     }
+
+    =======return authService.getEmail(request);
+
+    }
+
     @PostMapping("/register")
     public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
                                                           HttpServletRequest request){
@@ -39,6 +47,7 @@ public class MemberController {
         }
         memberService.register(memberRegisterRequest);
         return "회원가입 성공";
+>>>>>>> cb3ba7f4d6b02ed54d05273b4449e2e31c7083f1
     }
 
     @PostMapping("/logout")
@@ -48,6 +57,7 @@ public class MemberController {
 
 
     }
+
     @PostMapping("/update")
     public void update(){ // 회원정보 수정
 
