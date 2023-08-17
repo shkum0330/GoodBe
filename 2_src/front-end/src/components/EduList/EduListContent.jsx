@@ -92,7 +92,7 @@ const EduList = ({searchKeyword}) => {
     useEffect(() => {
       if (searchKeyword) {
         axios
-          .get(`${API_BASE_URL}/api/search/edu/${searchKeyword}`)
+          .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
           .then(function (response) {
             console.log(response.data);
             setEduList(response.data);
@@ -103,7 +103,7 @@ const EduList = ({searchKeyword}) => {
 
       } else {
         axios
-          .get(`${API_BASE_URL}/api/search/edu/all`)
+          .get(`${API_BASE_URL}/search/edu/all`)
           .then(function (response) {
             console.log(response.data);
             setEduList(response.data);
@@ -115,8 +115,6 @@ const EduList = ({searchKeyword}) => {
       }, [searchKeyword]); 
 
       
-    
-    
 
       const container = {
         width: '60%',
@@ -176,7 +174,7 @@ const EduList = ({searchKeyword}) => {
           {EduList.map((item) => (
             <div key={item.id} style={itemStyle}>
               <div style={lineStyle}>
-                <EduInstitution>{item.company}</EduInstitution>
+                <EduInstitution>{item.companyLink}</EduInstitution>
                 <Edutitle>{item.title}</Edutitle>
                 <div>
 
