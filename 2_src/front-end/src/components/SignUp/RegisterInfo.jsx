@@ -113,15 +113,20 @@ const SignUpForm = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const accessToken = urlSearchParams.get('accessToken');
     const refreshToken = urlSearchParams.get('refreshToken');
+    const email = urlSearchParams.get('email');
+    
 
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && email) {
       console.log('Access token:', accessToken);
       console.log('Refresh token:', refreshToken);
+      console.log('email:', email);
+
       // alert('로그인 성공!');
 
       // 받아온 토큰을 로컬 스토리지에 저장
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
+      sessionStorage.setItem('email', email);
     } else {
       console.log('Tokens not found in local storage.');
     }
@@ -131,27 +136,7 @@ const SignUpForm = () => {
       'http://localhost:8089/auth/login/google'; // 구글 로그인 페이지로 이동
       
   };
-
-  const [myemail, setmyemail] = useState([]); 
     
-  const accessTokenAgain = sessionStorage.getItem('accessToken') || '';
-  useEffect(() => {
-    axios
-      .get(`${API_BASE_URL}/api/member/register`, {
-        headers : {
-          Authorization: `Bearer ${accessTokenAgain}`,
-        }
-      })
-      .then(function (response) {
-        console.log(response.data);
-        setmyemail(response.data.email);
-      })
-      .catch(function (error) {
-        console.error('Error fetching data:', error);
-        console.log(accessTokenAgain)
-      });
-  }, [accessTokenAgain]); 
-
   const [formData, setFormData] = useState({
     name: '',
     birth: '',
@@ -170,8 +155,13 @@ const SignUpForm = () => {
     };
   
     const handleSignUp = () => {
+      const accessToken = sessionStorage.getItem('accessToken') || '';
       axios
-        .post(`${API_BASE_URL}/api/member/register`, formData)
+        .post(`${API_BASE_URL}/api/member/register`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+        },
+        })
         .then((response) => {
           console.log('회원가입 성공:', response.data);
           alert('회원가입 성공!')
@@ -185,6 +175,8 @@ const SignUpForm = () => {
     useEffect(() => {
       handleGoogleClick();
     }, []);
+
+    const storedEmail = sessionStorage.getItem('email');
   return (
     <Container>
       <LogoImage alt="logo_01" src={logo}/>
@@ -195,7 +187,7 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 이메일</Label>
-        <Input type="text" placeholder="이메일을 입력해주세요" value={myemail} name="myemail" readOnly/>
+        <Input type="text" placeholder="이메일을 입력해주세요" value={storedEmail} name="myemail" readOnly/>
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>
