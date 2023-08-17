@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 const SearchContainer = styled.div`
     display: flex;
@@ -26,6 +29,7 @@ const SearchInput = styled.input`
 
 const SearchMain = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate(); // useNavigate 인스턴스 생성
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -42,22 +46,25 @@ const SearchMain = () => {
     };
 
     const performSearch = () => {
-        // 여기에 실제 검색 로직을 추가하세요.
         console.log('검색어:', searchTerm);
-        // 예: 검색어를 서버로 보내서 검색 결과를 가져올 수 있습니다.
+        // 검색 로직 수행
+
+        // 검색 결과를 EduList 페이지로 전달하며 페이지 이동
+        navigate(`/EduList?searchKeyword=${searchTerm}`);
     };
+
 
     return (
         <SearchContainer>
-            <BsSearch size={30} onClick={handleSearchClick} style={{ cursor: 'pointer' }} />
-            <SearchInput
-                type="text"
-                placeholder="회사와 직무를 입력해서 국비교육을 검색해보세요"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                onKeyPress={handleKeyPress} // 이 부분을 추가합니다.
-            />
-        </SearchContainer>
+        <BsSearch size={30} onClick={handleSearchClick} style={{ cursor: 'pointer' }} />
+        <SearchInput
+            type="text"
+            placeholder="회사와 직무를 입력해서 국비교육을 검색해보세요"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onKeyPress={handleKeyPress}
+        />
+    </SearchContainer>
     );
 };
 

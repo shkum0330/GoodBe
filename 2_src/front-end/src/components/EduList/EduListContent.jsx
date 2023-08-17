@@ -2,8 +2,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
-
-
+import { useParams } from 'react-router-dom';
 const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const EduInstitution = styled.p`
@@ -102,34 +101,35 @@ const HeartEmoji = styled(BsFillHeartFill)`
 `;
 
 
-const EduList = ({searchKeyword}) => {
-    const [EduList, setEduList] = useState([]); 
+const EduList = () => {
+  const [eduList, setEduList] = useState([]);
+  const { searchKeyword } = useParams(); // URL 파라미터 가져오기
 
-
-    useEffect(() => {
+  useEffect(() => {
       if (searchKeyword) {
-        axios
-          .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
-          .then(function (response) {
-            console.log(response.data);
-            setEduList(response.data);
-          })
-          .catch(function (error) {
-            console.error('데이터 불러오기 오류:', error);
-          });
 
+        console.log("입력된 검색어 ",searchKeyword);
+          axios
+              .get(`${API_BASE_URL}/analysis/${searchKeyword}`)
+              .then(function (response) {
+                  console.log(response.data);
+                  setEduList(response.data);
+              })
+              .catch(function (error) {
+                  console.error('데이터 불러오기 오류:', error);
+              });
       } else {
-        axios
-          .get(`${API_BASE_URL}/search/edu/all`)
-          .then(function (response) {
-            console.log(response.data);
-            setEduList(response.data);
-          })
-          .catch(function (error) {
-            console.error('Error fetching data:', error);
-          });
-        }
-      }, [searchKeyword]); 
+          axios
+              .get(`${API_BASE_URL}/search/edu/all`)
+              .then(function (response) {
+                  console.log(response.data);
+                  setEduList(response.data);
+              })
+              .catch(function (error) {
+                  console.error('Error fetching data:', error);
+              });
+      }
+  }, [searchKeyword]);
 
       
 
@@ -195,7 +195,7 @@ const EduList = ({searchKeyword}) => {
 
       return (
         <div style={container}>
-          {EduList.map((item) => (
+          {eduList.map((item) => (
             <div key={item.id} style={itemStyle}>
               <div style={lineStyle}>
                 <EduInstitution>{item.company}</EduInstitution>
