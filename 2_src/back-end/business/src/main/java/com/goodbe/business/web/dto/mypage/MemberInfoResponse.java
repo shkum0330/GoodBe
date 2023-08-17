@@ -22,7 +22,6 @@ public class MemberInfoResponse {
     private String nickname;
     private LocalDate birth;
     private String address;
-    private String gender;
     private String favoriteCompany;
     private String favoriteJob;
 
