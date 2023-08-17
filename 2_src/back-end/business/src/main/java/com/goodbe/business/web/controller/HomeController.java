@@ -41,24 +41,27 @@ public class HomeController {
     @GetMapping("")
     @Operation(summary = "[GET] 검색어로 국비교육 불러오기")
     public List<HomeResponse> searchEduByKeyword(HttpServletRequest request) {
-        if(request.getHeader("Authorization").isEmpty()) return null;
-        Member member=authService.authorization(request);
-        if(member!=null) {
-            String keyword = member.getFavoriteJob();
-
-            Mono<List<EduListResponse>> responseMono = client.get().uri("/edu/{keyword}", keyword)
-                    .retrieve()
-                    .bodyToFlux(EduListResponse.class)
-                    .collectList();
-            List<EduListResponse> edus = responseMono.block();
-            List<HomeResponse> result = new ArrayList<>();
-            for (int i = 0; i < 3; i++) { // 3개만 출력
-                if (edus.get(i) == null) break;
-                result.add(new HomeResponse(edus.get(i).getTitle(), edus.get(i).getCompany()));
-            }
-            return result;
+        String keyword="";
+        if(request.getHeader("Authorization").isEmpty()) {
+            keyword = "현대자동차 SW";
         }
-        return null;
+        else {
+            Member member = authService.authorization(request);
+            if (member != null) {
+                keyword = member.getFavoriteJob();
+            }
+        }
+        Mono<List<EduListResponse>> responseMono = client.get().uri("/edu/{keyword}", keyword)
+                .retrieve()
+                .bodyToFlux(EduListResponse.class)
+                .collectList();
+        List<EduListResponse> edus = responseMono.block();
+        List<HomeResponse> result = new ArrayList<>();
+        for (int i = 0; i < 3; i++) { // 3개만 출력
+            if (edus.get(i) == null) break;
+            result.add(new HomeResponse(edus.get(i).getTitle(), edus.get(i).getCompany()));
+        }
+        return result;
     }
 
 }
