@@ -5,8 +5,10 @@ import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Consulting;
 import com.goodbe.business.domain.member.Member;
 import com.goodbe.business.domain.training.Edu;
+import com.goodbe.business.exception.AccessDeniedException;
 import com.goodbe.business.web.dto.edu.EduListResponse;
 import com.goodbe.business.web.dto.mypage.*;
+import com.goodbe.business.web.service.AuthService;
 import com.goodbe.business.web.service.MemberService;
 import com.goodbe.business.web.service.MyPageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +24,6 @@ import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,29 +36,26 @@ import java.util.stream.Collectors;
 public class MyPageController {
     private final MemberService memberService;
     private final MyPageService myPageService;
+    private final AuthService authService;
 
     WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8089/auth") // 요청을 인증 서버로 보냄
+            .baseUrl("https://i9a801.p.ssafy.io/auth") // 요청을 인증 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
 
     @GetMapping("")
     @Operation(summary = "[GET] 마이페이지 초기 화면", description = "프로필 사진과 닉네임을 응답으로 보낸다.")
     public MyPageResponse myPageHome(HttpServletRequest request){ // JWT 갖고와야함
-        /*
-        인증 로직...
-         */
-        Member member=memberService.findById(1L); // 임시 회원
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
         return new MyPageResponse(member);
     }
 
     @GetMapping("/memberinfo")
     @Operation(summary = "[GET] 마이페이지 개인정보 화면", description = "회원정보를 응답으로 보낸다.")
     public MemberInfoResponse memberInfo(HttpServletRequest request){ // JWT 갖고와야함
-        /*
-        인증 로직...
-         */
-        Member member=memberService.findById(1L); // 임시 회원
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
         return new MemberInfoResponse(member);
     }
 
@@ -66,11 +64,9 @@ public class MyPageController {
     public MemberInfoResponse memberInfoUpdate(@RequestPart(value = "profileImage",required = false) MultipartFile profileImage,
                                                @RequestPart(value = "memberUpdateRequest") MemberUpdateRequest memberUpdateRequest,
                                                HttpServletRequest request) throws IOException {
-        if(!authorization(request)){
-            throw new AccessDeniedException("로그인하세요.");
-        }
-        Member member=memberService.findById(1L); // 임시 회원, id는 jwt에서 따올거임
-        memberService.update(1L,profileImage,memberUpdateRequest);
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        memberService.update(member.getId(), profileImage,memberUpdateRequest);
         return new MemberInfoResponse(member);
     }
 
@@ -78,11 +74,9 @@ public class MyPageController {
     @GetMapping("/consulting")
     @Operation(summary = "[GET] 마이페이지 교육 상담 관리", description = "예약한 교육 상담들을 응답으로 보낸다.")
     public List<MyConsultingResponse> myConsulting(HttpServletRequest request){ // JWT 갖고와야함
-        /*
-        인증 로직...
-         */
-        Member member=memberService.findById(1L); // 회원 정보를 가져온다.
-        List<Consulting> consultings=myPageService.myConsultings(1L);
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        List<Consulting> consultings=myPageService.myConsultings(member.getId());
         List<MyConsultingResponse> result=new ArrayList<>();
 
         for (Consulting c:consultings) {
@@ -95,10 +89,8 @@ public class MyPageController {
     @GetMapping("/edu")
     @Operation(summary = "[GET] 마이페이지 관심 교육 관리", description = "회원의 관심 교육들을 응답으로 보낸다.")
     public List<MyEduResponse> interestedEdu(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
-        if(!authorization(request)){
-            throw new AccessDeniedException("로그인하세요.");
-        }
-        Member member=memberService.findById(1L); // 임시 회원
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
         List<Edu> myEdus= myPageService.myEdus(member.getId());
         return myEdus.stream().map(MyEduResponse::new).collect(Collectors.toList());
     }
@@ -107,26 +99,19 @@ public class MyPageController {
     @GetMapping("/job-post")
     @Operation(summary = "[GET] 마이페이지 관심 채용공고 관리", description = "회원의 관심 채용공고들을 응답으로 보낸다.")
     public List<MyJobPostResponse> interestedJobPost(HttpServletRequest request) throws AccessDeniedException { // JWT 갖고와야함
-        if(!authorization(request)){
-            throw new AccessDeniedException("로그인하세요.");
-        }
-        Member member=memberService.findById(1L); // 임시 회원
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
         List<JobPost> myJobPosts=myPageService.myJobPosts(member.getId());
         return myJobPosts.stream().map(MyJobPostResponse::new).collect(Collectors.toList());
     }
 
     @GetMapping("/posts")
     @Operation(summary = "[GET] 내가 쓴 글 목록", description = "내가 쓴 글들을 응답으로 보낸다.")
-    public List<MyPostsResponse> myPosts(){
-        List<Post> posts=myPageService.myPosts(1L);
+    public List<MyPostsResponse> myPosts(HttpServletRequest request){
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
+        List<Post> posts=myPageService.myPosts(member.getId());
         return posts.stream().map(MyPostsResponse::new).collect(Collectors.toList());
     }
 
-    private Boolean authorization(HttpServletRequest request){
-        String token=request.getHeader("Authorization");
-        String email=client.get().uri("/jwt/decoding").retrieve()
-                .bodyToMono(String.class).block();
-
-        return memberService.findByEmail(email) != null;
-    }
 }
