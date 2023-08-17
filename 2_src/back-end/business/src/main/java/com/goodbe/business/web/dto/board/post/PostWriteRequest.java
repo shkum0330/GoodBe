@@ -37,7 +37,7 @@ public class PostWriteRequest {
 
     public Post toEntity(){
         //todo: 작성한 유저 정보를 인증 서버에서 가져오기
-        return Post.builder().files(files).attachFile(attachFile)
+        return Post.builder().member(member).files(files).attachFile(attachFile)
                 .boardType(boardType).nickname(nickname).title(title).content(content).likeCount(0).build();
     }
 

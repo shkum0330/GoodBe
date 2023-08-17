@@ -2,10 +2,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 
-const API_BASE_URL = 'https://i9a801.p.ssafy.io';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 
 const EduInstitution = styled.p`
     color: #919191;
@@ -104,67 +103,35 @@ const HeartEmoji = styled(BsFillHeartFill)`
 
 
 const EduList = ({ searchKeyword }) => {
-    const [eduList, setEduList] = useState([]);
-    const location = useLocation();
-    const query = new URLSearchParams(location.search);
-    const Keyword = query.get('searchKeyword');
-    
+  const [eduList, setEduList] = useState([]);
+ 
 
+ 
+  useEffect(() => {
 
-    useEffect(() => {
-      if (searchKeyword) {
-          axios
-              .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
-              .then(function (response) {
-                  console.log(response.data);
-                  setEduList(response.data);
-              })
-              .catch(function (error) {
-                  console.error('데이터 불러오기 오류dididii:', error);
-              });
-      } else {
-          axios
-              .get(`${API_BASE_URL}/search/edu/all`)
-              .then(function (response) {
-                  console.log(response.data);
-                  // setEduList(response.data);
-              })
-              .catch(function (error) {
-                  console.error('Error fetching data:', error);
-              });
-      }
-  }, [searchKeyword]); 
-
-    useEffect(() => {
-      const query = new URLSearchParams(location.search);
-      const Keyword = query.get('searchKeyword');
-      if (Keyword) {
-          console.log('검색어 있음');
-          axios
-              .get(`${API_BASE_URL}/analysis/${Keyword}`)
-              .then(function (response) {
-                  console.log(response.data);
-                  console.log('데이터 받아옴');
-                  setEduList(response.data);
-              })
-              .catch(function (error) {
-                console.log(Keyword)
-                  console.error('데이터 불러오기 오류:', error);
-              });
-      } else {
-          console.log('검색어 없음');
-          axios
-              .get(`${API_BASE_URL}/search/edu/all`)
-              .then(function (response) {
-                  console.log(response.data);
-                  // setEduList(response.data);
-                  console.log('전체 데이터 받아옴');
-              })
-              .catch(function (error) {
-                  console.error('데이터 불러오기 오류:', error);
-              });
-      }
-  }, [Keyword]);
+    console.log("검색검색 검색검색 : ",searchKeyword);
+    if (searchKeyword) {
+      axios
+        .get(`${API_BASE_URL}/anaysis/${searchKeyword}`)
+        .then(function (response) {
+          console.log("검색 결과 1번 : ", response.data[0]);
+          setEduList(response.data);
+        })
+        .catch(function (error) {
+          console.error('데이터 불러오기 오류:', error);
+        });
+    } else {
+      axios
+        .get(`${API_BASE_URL}/search/edu/all`)
+        .then(function (response) {
+          console.log(response.data);
+          setEduList(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, [searchKeyword]);
 
       
 

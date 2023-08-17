@@ -21,17 +21,15 @@ public class MemberUpdateRequest {
     private String nickname;
     private LocalDate birth;
     private String address;
-    private String gender;
     private String favoriteCompany;
     private String favoriteJob;
 
     public MemberUpdateRequest(String name, String nickname, LocalDate birth,
-                               String address, String gender, String favoriteCompany, String favoriteJob) {
+                               String address, String favoriteCompany, String favoriteJob) {
         this.name = name;
         this.nickname = nickname;
         this.birth = birth;
         this.address = address;
-        this.gender = gender;
         this.favoriteCompany = favoriteCompany;
         this.favoriteJob = favoriteJob;
     }

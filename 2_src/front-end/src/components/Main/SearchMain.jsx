@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 const SearchContainer = styled.div`
     display: flex;
@@ -25,32 +27,31 @@ const SearchInput = styled.input`
     }
 `;
 
-const SearchMain = () => {
+const SearchMain = ({setSearchKeyword}) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const navigate = useNavigate(); // useHistory 초기화
+    
+  const handleSearchChange = (event) => {
+      setSearchTerm(event.target.value);
+  };
 
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+        setSearchKeyword(searchTerm); // 검색어 업데이트
+    }
+};
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            // 검색어를 edulist 페이지로 전달하면서 페이지 이동
-            navigate(`/RecommendEdu?searchKeyword=${searchTerm}`);
-        }
-    };
 
     return (
         <SearchContainer>
-            <BsSearch size={30} style={{ cursor: 'pointer' }} />
-            <SearchInput
-                type="text"
-                placeholder="회사와 직무를 입력해서 국비교육을 검색해보세요"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                onKeyPress={handleKeyPress}
-            />
-        </SearchContainer>
+        <BsSearch size={30}  style={{ cursor: 'pointer' }} />
+        <SearchInput
+            type="text"
+            placeholder="회사와 직무를 입력해서 국비교육을 검색해보세요"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onKeyPress={handleKeyPress} 
+        />
+    </SearchContainer>
     );
 };
 

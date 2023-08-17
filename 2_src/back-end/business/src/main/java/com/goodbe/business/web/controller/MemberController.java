@@ -1,5 +1,7 @@
 package com.goodbe.business.web.controller;
 
+import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.exception.AccessDeniedException;
 import com.goodbe.business.exception.AlreadyExistedMemberException;
 import com.goodbe.business.web.dto.member.MemberLoginRequest;
 import com.goodbe.business.web.dto.member.MemberRegisterRequest;
@@ -29,7 +31,7 @@ public class MemberController {
     @GetMapping("/register")
     @Operation(summary = "[GET] 회원가입 페이지", description = "이메일 반환하면 readOnly로")
     public String register(HttpServletRequest request){
-<<<<<<< HEAD
+
         String email = authService.getEmail(request);
         System.out.println(email);
         return email;

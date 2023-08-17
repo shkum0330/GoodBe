@@ -20,7 +20,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
 
     private final WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8089/auth") // 요청을 인증 서버로 보냄
+            .baseUrl("https://i9a801.p.ssafy.io/auth") // 요청을 인증 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
 

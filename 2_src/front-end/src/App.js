@@ -64,8 +64,8 @@ export default function App() {
       <Route path = "/MyInfoChange" element={<MyInfoChange/>} />
       <Route path = "/MyJobLike" element={<MyJobLike/>} />
       <Route path = "/MyEduLike" element={<MyEduLike/>} />
-      <Route path = "/MyEduLike" element={<MyEduLike/>} />
-      <Route path = "/MyEduLike" element={<MyEduLike/>} />
+
+
       <Route path="/MyPageHome" element={<MyPageHome/>} />
       <Route path="/PasswordFind" element={<PasswordFind/>} />
       <Route path="/PasswordResult" element={<PasswordResult/>} />
