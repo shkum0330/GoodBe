@@ -5,6 +5,9 @@ import CatProfile_Circle from '../../assets/MyInfoChange/CatProfile_Circle.svg'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081';
+
 const Title = styled.p`
     color: #000;
     text-align: center;
@@ -14,6 +17,7 @@ const Title = styled.p`
     font-weight: 700;
     line-height: normal;
     text-transform: capitalize;
+    margin-top : 30px;
 `;
 
 const TitleDetail = styled.p`
@@ -183,7 +187,7 @@ const MyPageInformationHeader = () => {
         const fetchUserInfo = async () => {
             try {
                 const response = await axios.get(
-                    'http://localhost:8080/api/mypage/memberinfo'
+                `${API_BASE_URL}/mypage/memberinfo`
                 );
                 setUserInfo(response.data);
             } catch (error) {
@@ -195,6 +199,8 @@ const MyPageInformationHeader = () => {
     }, []);
 
     const handleSaveChanges = async () => {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const accessToken = urlSearchParams.get('accessToken');
         try {
             const memberUpdateData = {
                 name: userInfo.name,
@@ -217,16 +223,19 @@ const MyPageInformationHeader = () => {
 
             try {
                 const response = await axios.post(
-                    'http://localhost:8080/api/mypage/memberinfo/update',
+                    'http://i9a801.p.ssafy.io:8081/mypage/memberinfo/update',
                     formData,
                     {
                         headers: {
-                            'Content-Type': 'multipart/form-data' 
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${localStorage.getItem(accessToken)}`
+                            
                         }
                     }
                 );
 
                 console.log('User information updated:', response.data);
+                console.log(accessToken)
                 alert('정상적으로 수정되었습니다!')
                 // setUserInfo(response.data);
             } catch (error) {
@@ -237,8 +246,6 @@ const MyPageInformationHeader = () => {
             console.error("오류:", error);
         }
     };
-
-
 
     const containerStyle = {
         display: 'flex',

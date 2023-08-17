@@ -4,6 +4,7 @@ import Building from '../../assets/main/Building.svg';
 import SamsungLogo from '../../assets/main/SamsungLogo.svg';
 
 const Container1 = styled.div`
+margin-top: 5%;
     width: 90%;
     flex-direction : column;
     display : flex;
@@ -18,6 +19,7 @@ const Container1 = styled.div`
 `
 
 const Container2 = styled.div`
+
     width: 95%;
     flex-direction : row;
     align-items: center;
@@ -33,6 +35,7 @@ const Container2 = styled.div`
 `
 
 const Container3 = styled.div`
+
     width: 30%;
     flex-direction : column;
     display : flex;
@@ -84,10 +87,10 @@ const LogoImage2 = styled.img`
 
 `;
 const Title = styled.h3`
-  font-family: 'Istok Web';
+margin-left: 10%;
   font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: bold;
+  font-size: 2rem;
   line-height: 47px;
   color: #070707;
   justify-content: space-evenly;
@@ -111,7 +114,7 @@ export default function EnterpriseIntroduction() {
         <Title>
         ✈ 기업을 소개합니다
         </Title>
-
+        <br/>
         <Container2>
 
         <Container3>

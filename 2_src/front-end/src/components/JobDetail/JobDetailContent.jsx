@@ -51,6 +51,22 @@ const Image = styled.img`
   height: auto; /* 높이 자동 조정 */
 `;
 
+const StyledLink = styled.a`
+  display: inline-block;
+  margin-left: auto;
+  font-size: 1.5rem;
+  color: grey;
+  text-decoration: underline;
+  text-align: right; 
+  font-family : Istok Web;
+`;
+
+const RightAlignedContainer = styled.div`
+  display: flex;
+  margin-right: 25%; 
+`;
+
+
 export default function JobDetailContent() {
   return (
     <CustomDiv>
@@ -74,6 +90,12 @@ export default function JobDetailContent() {
         </ContentContainer>
       </CustomBox>
       <Image src={NaverInc} alt="NaverInc" />
+      <br/>
+      <br/>
+      <br/>
+      <RightAlignedContainer>
+      <StyledLink href='http://www.naver.com'>채용 바로 가기  >> </StyledLink>
+      </RightAlignedContainer>
     </CustomDiv>
   );
 }

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { AiOutlineLike, AiOutlineEye } from 'react-icons/ai';
 import { BiMessageDots } from 'react-icons/bi';
 import React, { useEffect, useState } from 'react';
+import { Container } from 'react-bootstrap';
 
 
 const API_BASE_URL = 'http://localhost:8080';
@@ -12,10 +13,11 @@ const BoardContainer = styled.div`
     border-radius: 10px;
     border: 1px solid #858585;
     background: #FFF;
-    margin-left: 350px;
+    margin-left: 380px;
     margin-top: 30px;
-    width: 600px;
+    width: 900px;
     margin-bottom: 30px;
+    padding-bottom : -20px;
 
 `
 const BoardType = styled.p`
@@ -70,6 +72,7 @@ const LikeCount = styled.p`
     line-height: normal;
     text-transform: capitalize;
     align-items: center;
+    margin-top:20px;
 `;
 
 const CommentCount = styled.p`
@@ -81,12 +84,13 @@ const CommentCount = styled.p`
     font-weight: 400;
     line-height: normal;
     text-transform: capitalize;
-    margin-left: 5px;
+    // margin-left: 5px;
+    margin-top:20px;
 `;
 
 const ViewCount = styled.div`
-    // padding : 10px;
-    margin-left: 5px;
+    padding : 5px;
+    // margin-left: 5px;
     color: #757575;
     font-family: Inter;
     font-size: 15px;
@@ -94,6 +98,12 @@ const ViewCount = styled.div`
     font-weight: 400;
     line-height: normal;
     text-transform: capitalize;
+    margin-top : 5px;
+`
+
+const Box = styled.div`
+  margin-bottom : 100px;
+
 `
 
 const MyBoardContainer = () => {
@@ -113,7 +123,7 @@ const MyBoardContainer = () => {
     }, []); 
   
     return (
-      <div>
+      <Box>
         {boardData.map((item) => (
           <BoardContainer key={item.postId}>
             <BoardBox>
@@ -123,15 +133,15 @@ const MyBoardContainer = () => {
               <IconContainer>
                 <AiOutlineLike size={26} />
                 <LikeCount>{item.likes}개</LikeCount>
-                <BiMessageDots size={26} />
+                <BiMessageDots size={26} style={{ marginTop: '5px' }} />
                 <CommentCount>{item.comments}개</CommentCount>
-                <AiOutlineEye size={26} />
+                <AiOutlineEye size={26} style={{ marginTop: '5px' }}/>
                 <ViewCount>{item.hits}개</ViewCount>
               </IconContainer>
             </BoardBox>
           </BoardContainer>
         ))}
-      </div>
+      </Box>
     );
 };
 

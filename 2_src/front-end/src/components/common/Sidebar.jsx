@@ -18,8 +18,9 @@ const SidebarContainer = styled.div`
   z-index: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* 왼쪽 정렬로 변경 */
+  align-items: flex-start;
   padding-top: 100px;
+  margin-top: -29px;
 `;
 
 
