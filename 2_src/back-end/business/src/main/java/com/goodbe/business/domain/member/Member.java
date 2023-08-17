@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,14 +66,8 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Column
     private LocalDate birth; // 생년월일
 
-    @Embedded
-    private Address address;
-
     @Column
-    private int age;
-
-    @Column
-    private String gender;
+    private String address;
 
     @Column
     private String favoriteCompany; // 관심 회사
@@ -83,28 +78,35 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
     @Column
     private boolean isWithdrawn; // 탈퇴 여부
 
-    @Builder
+
     public Member(String email, String name, String nickname) {
         this.email = email;
         this.name = name;
         this.nickname = nickname;
     }
 
-    @Builder
     public Member(String email, String name, String nickname, LocalDate birth,
-                  Address address, String gender, String favoriteCompany, String favoriteJob, boolean isWithdrawn) {
+                  String address, String favoriteCompany, String favoriteJob, boolean isWithdrawn) {
         this.email = email;
         this.name = name;
         this.nickname = nickname;
         this.birth = birth;
         this.address = address;
-        this.gender = gender;
         this.favoriteCompany = favoriteCompany;
         this.favoriteJob = favoriteJob;
         this.isWithdrawn = isWithdrawn;
     }
 
-
+    @Builder // 회원가입 전용
+    public Member(String email, String name, String nickname, String birth, String address, String favoriteCompany, String favoriteJob) {
+        this.email = email;
+        this.name = name;
+        this.nickname = nickname;
+        this.birth = LocalDate.parse(birth, DateTimeFormatter.ISO_DATE);
+        this.address = address;
+        this.favoriteCompany = favoriteCompany;
+        this.favoriteJob = favoriteJob;
+    }
 
     public void update(MemberUpdateRequest request) {
         this.profileImage = request.getProfileImage();
@@ -112,7 +114,6 @@ public class Member extends BaseTimeEntity { // 일반회원 엔티티
         this.nickname = request.getNickname();
         this.birth = request.getBirth();
         this.address = request.getAddress();
-        this.gender = request.getGender();
         this.favoriteCompany = request.getFavoriteCompany();
         this.favoriteJob = request.getFavoriteJob();
     }
