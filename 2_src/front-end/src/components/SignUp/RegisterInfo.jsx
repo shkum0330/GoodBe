@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import logo from '../../assets/Logo/Logo.jpg';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081/';
 
 const Container = styled.div`
   position: absolute;
@@ -111,12 +111,19 @@ const InputWrapper = styled.div`
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
     name: '',
-    nickname: '',
     birth: '',
+    nickname: '',
     favoriteCompany: '',
     favoriteJob: '',
   });
   
+  // const userData = {
+  //     name: formData.name,
+  //     birth: formData.birth,
+  //     nickname: formData.nickname,
+  //     favoriteCompany: formData.favoriteCompany,
+  //     favoriteJob: formData.favoriteJob,
+  // }
     const handleInputChange = (event) => {
       const { name, value } = event.target;
       setFormData((prevData) => ({
@@ -130,9 +137,12 @@ const SignUpForm = () => {
         .post(`${API_BASE_URL}/api/member/register`, formData)
         .then((response) => {
           console.log('회원가입 성공:', response.data);
+          alert('회원가입 성공!')
         })
         .catch((error) => {
           console.error('회원가입 실패:', error);
+           alert('회원가입 실패: ' + error.message);
+        
         });
     };
   return (
@@ -145,17 +155,12 @@ const SignUpForm = () => {
       </FormItem>
       <FormItem>
         <Label>* 생년월일</Label>
-        <Input type="date" value={formData.birth} name="birth" onChange={handleInputChange}/>
+        <Input type="text" value={formData.birth} name="birth" onChange={handleInputChange}/>
       </FormItem>
-      {/* <FormItem>
-        <Label>* 거주지역</Label>
-        <Input type="text" placeholder="거주지역을 입력해주세요" value={formData.nickname} name="nickname" onChange={handleInputChange}/>
-      </FormItem> */}
       <FormItem>
           <Label>* 닉네임</Label>
         <InputWrapper>
           <InputNickname type="text" placeholder="닉네임을 입력해주세요" value={formData.nickname} name="nickname" onChange={handleInputChange}/>
-          <SignUpButton>중복확인</SignUpButton>
         </InputWrapper>
       </FormItem>
       <FormItem>

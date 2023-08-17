@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const NextQuarry ='';
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://localhost:8081';
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
