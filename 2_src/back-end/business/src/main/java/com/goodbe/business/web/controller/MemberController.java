@@ -32,30 +32,6 @@ public class MemberController {
         return authService.getEmail(request);
     }
     @PostMapping("/register")
-<<<<<<< HEAD
-    public ResponseEntity<MemberRegisterRequest> register(@RequestBody MemberRegisterRequest memberRegisterRequest){
-        log.info("business memberdto={}",memberRegisterRequest);
-        return client.post().uri(uriBuilder -> uriBuilder.path("/register").build())
-                .bodyValue(memberRegisterRequest)
-                .retrieve()
-                .toEntity(MemberRegisterRequest.class)
-                .block();
-    }
-
-    @GetMapping ("/login/google")
-    public void login(HttpServletResponse response){
-        // todo: 자체 로그인 구현..?
-//        return client.post().uri(uriBuilder -> uriBuilder.path("/member/login").build())
-//                .bodyValue(memberLoginRequest)
-//                .retrieve()
-//                .toEntity(String.class)
-//                .block();
-//        Mono<String> result=client.post().uri("/oauth2/authorization/google")
-//                .retrieve().bodyToMono(String.class); // JWT를 반환한다.
-//        String token=result.block();
-//        return token;
-        client.get().uri("/oauth2/authorization/google").retrieve().bodyToMono(String.class).block();
-=======
     public String register(@RequestBody MemberRegisterRequest memberRegisterRequest,
                                                           HttpServletRequest request){
         if(authService.authorization(request) != null){ // findByEmail을 했는데 회원이 있으면 가입시키지 않는다.
@@ -63,9 +39,7 @@ public class MemberController {
         }
         memberService.register(memberRegisterRequest);
         return "회원가입 성공";
->>>>>>> cb3ba7f4d6b02ed54d05273b4449e2e31c7083f1
     }
-
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest request){
