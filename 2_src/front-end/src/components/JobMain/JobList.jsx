@@ -223,7 +223,7 @@ return (
           <p style={{ marginBottom: '5px' }}>위치: {job.address}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <StyledButton to={`/JobDetail?id=${job.id}`}>상세보기</StyledButton>
+        <StyledButton to={`/JobDetail?id=${job.jobId}`}>상세보기</StyledButton>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {favoriteJobs.some((favJob) => favJob.id === job.id) ? (
                <div
