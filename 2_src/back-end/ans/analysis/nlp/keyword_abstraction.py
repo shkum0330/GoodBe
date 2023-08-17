@@ -13,6 +13,9 @@ def keyword_abstraction(keyword):
 
     text = ""
 
+    if not data_list:  
+        return data_list
+
     for d in data_list:
         text += d
     nouns = noun_extractor(text)

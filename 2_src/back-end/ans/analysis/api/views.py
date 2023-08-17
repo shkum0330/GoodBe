@@ -11,6 +11,9 @@ from nlp import json_data_parser as jp
 def get_keyword_abstraction(request, keyword):
     word_list = ka.keyword_abstraction(keyword)
 
+    if word_list == False:
+        return word_list
+
     word = ""
 
     for w in word_list:
