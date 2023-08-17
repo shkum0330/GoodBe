@@ -104,32 +104,32 @@ const HeartEmoji = styled(BsFillHeartFill)`
 
 const EduList = ({ searchKeyword }) => {
     const [EduList, setEduList] = useState([]); 
+    
 
 
     useEffect(() => {
       if (searchKeyword) {
-        axios
-          .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
-          .then(function (response) {
-            console.log(response.data);
-            setEduList(response.data);
-          })
-          .catch(function (error) {
-            console.error('데이터 불러오기 오류:', error);
-          });
-
+          axios
+              .get(`${API_BASE_URL}/search/edu/${searchKeyword}`)
+              .then(function (response) {
+                  console.log(response.data);
+                  setEduList(response.data);
+              })
+              .catch(function (error) {
+                  console.error('데이터 불러오기 오류:', error);
+              });
       } else {
-        axios
-          .get(`${API_BASE_URL}/search/edu/all`)
-          .then(function (response) {
-            console.log(response.data);
-            setEduList(response.data);
-          })
-          .catch(function (error) {
-            console.error('Error fetching data:', error);
-          });
-        }
-      }, [searchKeyword]); 
+          axios
+              .get(`${API_BASE_URL}/search/edu/all`)
+              .then(function (response) {
+                  console.log(response.data);
+                  setEduList(response.data);
+              })
+              .catch(function (error) {
+                  console.error('Error fetching data:', error);
+              });
+      }
+  }, [searchKeyword]); 
 
       
 
