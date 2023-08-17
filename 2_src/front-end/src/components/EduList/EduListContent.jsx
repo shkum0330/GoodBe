@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BsFillHeartFill } from "react-icons/bs";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 const EduInstitution = styled.p`
     color: #919191;
@@ -101,34 +101,35 @@ const HeartEmoji = styled(BsFillHeartFill)`
 `;
 
 
-const EduList = () => {
+const EduList = ({ searchKeyword }) => {
   const [eduList, setEduList] = useState([]);
-  const { searchKeyword } = useParams(); // URL 파라미터 가져오기
+ 
 
+ 
   useEffect(() => {
-      if (searchKeyword) {
 
-        console.log("입력된 검색어 ",searchKeyword);
-          axios
-              .get(`${API_BASE_URL}/analysis/${searchKeyword}`)
-              .then(function (response) {
-                  console.log(response.data);
-                  setEduList(response.data);
-              })
-              .catch(function (error) {
-                  console.error('데이터 불러오기 오류:', error);
-              });
-      } else {
-          axios
-              .get(`${API_BASE_URL}/search/edu/all`)
-              .then(function (response) {
-                  console.log(response.data);
-                  setEduList(response.data);
-              })
-              .catch(function (error) {
-                  console.error('Error fetching data:', error);
-              });
-      }
+    console.log("검색검색 검색검색 : ",searchKeyword);
+    if (searchKeyword) {
+      axios
+        .get(`${API_BASE_URL}/anaysis/${searchKeyword}`)
+        .then(function (response) {
+          console.log("검색 결과 1번 : ", response.data[0]);
+          setEduList(response.data);
+        })
+        .catch(function (error) {
+          console.error('데이터 불러오기 오류:', error);
+        });
+    } else {
+      axios
+        .get(`${API_BASE_URL}/search/edu/all`)
+        .then(function (response) {
+          console.log(response.data);
+          setEduList(response.data);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
   }, [searchKeyword]);
 
       

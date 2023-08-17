@@ -27,42 +27,29 @@ const SearchInput = styled.input`
     }
 `;
 
-const SearchMain = () => {
+const SearchMain = ({setSearchKeyword}) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const navigate = useNavigate(); // useNavigate 인스턴스 생성
+    
+  const handleSearchChange = (event) => {
+      setSearchTerm(event.target.value);
+  };
 
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
-
-    const handleSearchClick = () => {
-        performSearch();
-    };
-
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            performSearch();
-        }
-    };
-
-    const performSearch = () => {
-        console.log('검색어:', searchTerm);
-        // 검색 로직 수행
-
-        // 검색 결과를 EduList 페이지로 전달하며 페이지 이동
-        navigate(`/EduList?searchKeyword=${searchTerm}`);
-    };
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+        setSearchKeyword(searchTerm); // 검색어 업데이트
+    }
+};
 
 
     return (
         <SearchContainer>
-        <BsSearch size={30} onClick={handleSearchClick} style={{ cursor: 'pointer' }} />
+        <BsSearch size={30}  style={{ cursor: 'pointer' }} />
         <SearchInput
             type="text"
             placeholder="회사와 직무를 입력해서 국비교육을 검색해보세요"
             value={searchTerm}
             onChange={handleSearchChange}
-            onKeyPress={handleKeyPress}
+            onKeyPress={handleKeyPress} 
         />
     </SearchContainer>
     );
