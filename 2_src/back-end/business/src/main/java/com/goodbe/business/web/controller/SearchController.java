@@ -27,7 +27,7 @@ public class SearchController {
     private String ip;
 
     private WebClient client = WebClient.builder()
-            .baseUrl("http://localhost:8083/api/search") // 요청을 검색 서버로 보냄
+            .baseUrl("https://i9a801.p.ssafy.io/search") // 요청을 검색 서버로 보냄
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // 기본 해더
             .build();
 

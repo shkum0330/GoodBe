@@ -3,8 +3,10 @@ package com.goodbe.business.web.controller;
 
 import com.goodbe.business.domain.company.JobPost;
 import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.exception.AccessDeniedException;
 import com.goodbe.business.web.dto.jobpost.JobPostDetailResponse;
 import com.goodbe.business.web.dto.jobpost.JobPostListResponse;
+import com.goodbe.business.web.service.AuthService;
 import com.goodbe.business.web.service.JobPostService;
 import com.goodbe.business.web.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -34,6 +35,7 @@ import static java.util.stream.Collectors.toList;
 public class JobPostController {
     private final MemberService memberService;
     private final JobPostService jobPostService;
+    private final AuthService authService;
 
 //    public List<PostsResponse> postList(@PageableDefault(sort = "id", size = 10, direction = Sort.Direction.DESC) Pageable pageable){
 //        Page<Post> posts=boardService.postList(pageable);
@@ -67,11 +69,9 @@ public class JobPostController {
     @GetMapping("/like/{jobPostId}")
     @Operation(summary = "[GET] 관심 채용공고 등록", description = "Pathvariable로 jobPostId를 넘기면 해당 교육을 관심목록에 등록한다.")
     public String likeEdu(@PathVariable String jobPostId, HttpServletRequest request) throws Exception {
-        if(!authorization(request)){
-            throw new AccessDeniedException("로그인하세요.");
-        }
+        Member member=authService.authorization(request);
+        if(member==null) throw new AccessDeniedException("로그인하세요");
 
-        Member member=memberService.findById(1L); // 임시 회원, id는 jwt에서 따올거임
         if(!jobPostService.isLike(member.getId(),jobPostId)){
             jobPostService.likeJobPost(member,jobPostId);
             return "관심 채용공고 목록에 등록하였습니다.";
@@ -81,7 +81,4 @@ public class JobPostController {
         }
     }
 
-    private Boolean authorization(HttpServletRequest request){
-        return true;
-    }
 }

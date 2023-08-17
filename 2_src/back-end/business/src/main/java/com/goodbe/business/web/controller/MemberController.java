@@ -1,5 +1,7 @@
 package com.goodbe.business.web.controller;
 
+import com.goodbe.business.domain.member.Member;
+import com.goodbe.business.exception.AccessDeniedException;
 import com.goodbe.business.exception.AlreadyExistedMemberException;
 import com.goodbe.business.web.dto.member.MemberLoginRequest;
 import com.goodbe.business.web.dto.member.MemberRegisterRequest;
@@ -46,10 +48,6 @@ public class MemberController {
 //        String encryptedRefreshToken = jwtTokenProvider.resolveRefreshToken(request);
 //        String accessToken = jwtTokenProvider.resolveAccessToken(request);
 
-
-    }
-    @PostMapping("/update")
-    public void update(){ // 회원정보 수정
 
     }
 }
