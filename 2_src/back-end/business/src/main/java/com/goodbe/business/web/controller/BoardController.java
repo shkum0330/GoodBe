@@ -79,9 +79,9 @@ public class BoardController {
     public Long writePost(@RequestPart(value = "imageFiles",required = false) List<MultipartFile> imageFiles,
             @RequestPart(value = "attachFile",required = false) MultipartFile singleAttachFile,
             @RequestPart(value = "postWriteRequest") PostWriteRequest postWriteRequest,HttpServletRequest request) throws IOException {
-        Member member=authService.authorization(request);
-        if(member==null) throw new AccessDeniedException("로그인하세요");
-        log.info("닉네임 = {}",member.getNickname());
+        // Member member=authService.authorization(request);
+        // if(member==null) throw new AccessDeniedException("로그인하세요");
+        // log.info("닉네임 = {}",member.getNickname());
         return boardService.writePost(imageFiles,singleAttachFile,postWriteRequest);
     }
 
