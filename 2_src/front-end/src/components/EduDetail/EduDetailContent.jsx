@@ -63,7 +63,7 @@ const EduDetailContent = () => {
   return (
     <Container>
 
-      <Container>
+    
         {/* Check if eduData is available before rendering */}
         {eduData && (
           <div>
@@ -90,7 +90,7 @@ const EduDetailContent = () => {
           </div>
  
         )}
-      </Container>
+      
       
 
       <InfoHeader><img src={notepad} alt="notepad" style={imgStyle} />지원절차</InfoHeader>
