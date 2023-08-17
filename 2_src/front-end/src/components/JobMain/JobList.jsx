@@ -12,15 +12,11 @@ const JobList = ({searchKeyword}) => {
   const itemsPerPage = 5;
 
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    setCurrentPage(1); // 탭을 변경하면 첫 번째 페이지로 초기화
-  };
-
+ 
   useEffect(() => {
     if (searchKeyword) {
       axios
-        .get(`${API_BASE_URL}/api/search/jobPost/${searchKeyword}`)
+        .get(`${API_BASE_URL}/search/jobPost/${searchKeyword}`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
@@ -31,7 +27,7 @@ const JobList = ({searchKeyword}) => {
 
     } else {
       axios
-        .get(`${API_BASE_URL}/api/search/jobPost/all`)
+        .get(`${API_BASE_URL}/search/jobPost/all`)
         .then(function (response) {
           console.log(response.data);
           setJobList(response.data);
@@ -77,7 +73,7 @@ return (
   <div
     style={{
       fontFamily: 'Istok Web, sans-serif',
-      width: '65%',
+      width: '75%',
       border: '1px solid #ccc',
       borderRadius: '10px',
       padding: '20px',
@@ -86,30 +82,6 @@ return (
       marginTop: '50px',
     }}
   >
-
-    <div style={{ fontSize: '18px', color: '#676060', borderBottom:'1px solid #ccc', display: 'flex', marginBottom: '10px', justifyContent: 'space-between' }}>
-      {['전체', '대기업', '중견중소', '공기업공사', '외국계'].map((tab) => (
-        <div
-          key={tab}
-          style={{
-            padding: '8px 16px',
-            cursor: 'pointer',
-            color: activeTab === tab ? '#60A0EF' : '#000',
-          }}
-          onClick={() => handleTabClick(tab)}
-        >
-          {tab}
-          <div
-            style={{
-              width: '100%',
-              height: '4px',
-              backgroundColor: activeTab === tab ? '#60A0EF' : '#ccc',
-              visibility: activeTab === tab ? 'visible' : 'hidden',
-            }}
-          />
-        </div>
-      ))}
-    </div>
 
     
       <div style={{ padding: '10px', marginBottom: '10px' }}>
@@ -124,11 +96,11 @@ return (
           justifyContent: 'space-between',
         }}
       >
-        <p style={{ marginRight: '10px', fontWeight: 'bold' }}>{job.company}</p>
+        <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '17px' }}>{job.companyName}</p>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <h3 style={{ marginBottom: '5px' }}>{job.title}</h3>
-          <p style={{ marginBottom: '3px' }}>Location: {job.location}</p>
-          <p>Category: {job.category}</p>
+          <h5 style={{ marginBottom: '5px' }}>{job.wantedTitle}</h5>
+          <p style={{ marginBottom: '3px' }}>위치: {job.address}</p>
+  
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <button style={{ backgroundColor: '#A4C3FF', color: '#000000', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer', marginBottom: '5px', width : '100%'}}>상세보기</button>
