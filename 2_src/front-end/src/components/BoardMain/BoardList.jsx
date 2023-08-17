@@ -5,11 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
-<<<<<<< HEAD
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8083/';
-=======
-const API_BASE_URL = 'http://localhost:8080';
->>>>>>> 11531a536f96cca869dbd5ead7cff16c0a2cf5fe
+const API_BASE_URL = 'https://i9a801.p.ssafy.io/';
 let TabContentTitle = styled.div`
   font-size: 30px;
   font-weight: bold;

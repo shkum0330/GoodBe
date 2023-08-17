@@ -40,9 +40,9 @@ exports.createRoom = async (req, res, next) => {
     });
 
     const io = req.app.get('io');
-    io.of('/room').emit('newRoom', newRoom);
+    io.of('/chat/room').emit('newRoom', newRoom);
     
-      res.redirect(`/room/${newRoom._id}`);
+      res.redirect(`/chat/room/${newRoom._id}`);
     
   } catch (error) {
     console.error(error);
@@ -72,7 +72,7 @@ exports.enterRoom = async (req, res, next) => {
     // }
 
     if (room.max <= numConnected) {
-      return res.redirect('/?error=허용 인원이 초과하였습니다.');
+      return res.redirect('/chat/?error=허용 인원이 초과하였습니다.');
     }
 
     const chats = await Chat.find({ room: room._id }).sort('createdAt');
@@ -106,7 +106,7 @@ exports.sendChat = async (req, res, next) => {
       user: req.session.color,
       chat: req.body.chat,
     });
-    req.app.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+    req.app.get('io').of('/chat/chat').to(req.params.id).emit('chat', chat);
     res.send('ok');
   } catch (error) {
     console.error(error);
@@ -121,7 +121,7 @@ exports.sendGif = async (req, res, next) => {
       user: req.session.color,
       gif: req.file.filename,
     });
-    req.app.get('io').of('/chat').to(req.params.id).emit('chat', chat);
+    req.app.get('io').of('/chat/chat').to(req.params.id).emit('chat', chat);
     res.send('ok');
   } catch (error) {
     console.error(error);

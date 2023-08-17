@@ -9,21 +9,21 @@ const {
 
 const router = express.Router();
 
-router.get('/', renderMain);
+router.get('/chat', renderMain);
 
-router.get('/room', renderRoom);
+router.get('/chat/room', renderRoom);
 
 
 
-router.get('/room/:id', enterRoom);
+router.get('/chat/room/:id', enterRoom);
 
-router.delete('/room/:id', removeRoom);
+router.delete('/chat/room/:id', removeRoom);
 
-router.post('/room/:id/chat', sendChat);
+router.post('/chat/room/:id/chat', sendChat);
 
 
 // 검색 기능을 위한 GET 라우트
-router.get('/search', searchRooms);
+router.get('/chat/search', searchRooms);
 
 try {
   fs.readdirSync('uploads');
@@ -59,8 +59,8 @@ const uploadChatroomImg = multer({
 });
 
 
-router.post('/room/:id/gif', upload.single('gif'), sendGif);
-router.post('/room', uploadChatroomImg.single('image'), createRoom);
+router.post('/chat/room/:id/gif', upload.single('gif'), sendGif);
+router.post('/chat/room', uploadChatroomImg.single('image'), createRoom);
 
 
 module.exports = router;
