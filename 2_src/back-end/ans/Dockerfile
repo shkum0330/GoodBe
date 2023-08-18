@@ -9,6 +9,7 @@ RUN pip install krwordrank
 RUN pip install kiwipiepy
 RUN pip install lxml
 RUN pip install keybert
+RUN pip install django-cors-headers
 
 WORKDIR /usr/src/app
 
