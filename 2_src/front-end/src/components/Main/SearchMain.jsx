@@ -36,7 +36,7 @@ const SearchMain = () => {
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             // 검색어를 edulist 페이지로 전달하면서 페이지 이동
-            navigate(`/RecommendEdu?searchKeyword=${searchTerm}`);
+            navigate(`/EduList?searchKeyword=${searchTerm}`);
         }
     };
 
