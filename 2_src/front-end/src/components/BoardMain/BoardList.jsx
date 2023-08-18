@@ -200,7 +200,7 @@ function TabContent(props) {
                           <Content>{item.content}</Content>
                           <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
                       </Left>
-                      <Img src={item.img} />
+                      {/* <Img src={item.img} /> */}
                   </Article>
                    </CustomLink>
                 ))}
@@ -229,7 +229,7 @@ function TabContent(props) {
                             <Content>{item.content}</Content>
                             <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
                         </Left>
-                        <Img src={item.img} />
+                        {/* <Img src={item.img} /> */}
                     </Article>
                     </CustomLink>
                     ) : null
@@ -256,7 +256,7 @@ function TabContent(props) {
                             <Content>{item.content}</Content>
                             <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
                         </Left>
-                        <Img src={item.img} />
+
                     </Article>
                     </CustomLink>
                     ) : null
@@ -285,7 +285,7 @@ function TabContent(props) {
                             <Content>{item.content}</Content>
                             <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
                         </Left>
-                        <Img src={item.img} />
+                        {/* <Img src={item.img} /> */}
                     </Article>
                     </CustomLink>
                     ) : null
@@ -312,7 +312,7 @@ function TabContent(props) {
                             <Content>{item.content}</Content>
                             <AboutArticle>{item.nickname} 조회수 {item.hits} 댓글수 {item.commentCount} 좋아요 {item.likeCount}</AboutArticle>
                         </Left>
-                        <Img src={item.img} />
+                        {/* <Img src={item.img} /> */}
                     </Article>
                     </CustomLink>
                     ) : null

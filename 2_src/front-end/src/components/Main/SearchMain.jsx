@@ -29,17 +29,19 @@ const SearchInput = styled.input`
 
 const SearchMain = ({setSearchKeyword}) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate()
     
   const handleSearchChange = (event) => {
       setSearchTerm(event.target.value);
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-        setSearchKeyword(searchTerm); // 검색어 업데이트
-    }
-};
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            // 검색어를 edulist 페이지로 전달하면서 페이지 이동
+            navigate(`/EduList?searchKeyword=${searchTerm}`);
+        }
+    };
 
     return (
         <SearchContainer>

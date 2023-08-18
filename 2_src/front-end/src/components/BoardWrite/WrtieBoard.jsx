@@ -1,10 +1,14 @@
-import React from 'react';
-import styled from 'styled-components'
+import React, {useState, useEffect} from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
+
+const  API_BASE_URL = 'https://i9a801.p.ssafy.io';
 const Container = styled.div`
   margin: auto;
   padding: 20px;
-  width: 1200px;
+  width: 1200px;    
 `;
 
 const Header = styled.p`
@@ -90,25 +94,79 @@ const Box = styled.div`
 `
 
 const WrtieBoard = () => {
+
+  const [boardWrite, setBoardWrite] = useState(null);
+
+  const [selectedBoard, setSelectedBoard] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [shouldNavigate, setShouldNavigate] = useState(false); // Add this state
+
+  const handleSelectChange = (event) => {
+    
+    setSelectedBoard(event.target.value);
+  };
+
+  const handleRegistClick = async () =>  {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnb29nbGVfMTA4MDA1NDgyOTExODE3NzI4MDA1IiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2OTIzNDQwNDV9.zAosniWvVjPawZCaeAr7f3M7TTkaorArIHAdvmBQ4ik';
+    try {
+      const boardPost = {
+        boardType: selectedBoard,
+        title: title,
+        content: content,
+      };
+
+        const formData = new FormData();
+        formData.append('postWriteRequest', new Blob([JSON.stringify(boardPost)], {
+            type: "application/json"
+        }));
+
+        try {
+            const response = await axios.post(
+              `https://i9a801.p.ssafy.io/api/board/write`,
+                formData,
+                {   
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `${accessToken}`
+                    }
+                }
+            );
+
+            // console.log('User information updated:', response.data);
+            console.log(accessToken)
+            alert('정상적으로 수정되었습니다!')
+            setBoardWrite(response.data);
+            setShouldNavigate(true); // Set the state to trigger navigation
+        } catch (error) {
+            console.error("수정 실패:", error);
+            alert("수정 실패");
+        }
+    } catch (error) {
+        console.error("오류:", error);
+    }
+};
     return (
 
     <Container>
       <Header>GoodBe 글 쓰기</Header>
       <BlueLine />
 
-      <Select className="selectform form-select form-select-lg mb-3 select">
-        <option selected>게시판을 선택해주세요.</option>
-        <option value="1">취업 준비</option>
-        <option value="2">국비 교육</option>
-        <option value="3">학습 공유</option>
-        <option value="3">취뽀 후기</option>
-      </Select>
+      <Select className='tmp' onChange={handleSelectChange} value={selectedBoard}>
+  <option value="">게시판을 선택해주세요.</option>
+  <option value="취업준비">취업 준비</option>
+  <option value="국비교육">국비 교육</option>
+  <option value="학습공유">학습 공유</option>
+  <option value="취뽀후기">취뽀 후기</option>
+</Select>
 
       <Input
         type="text"
         className="titleform form-control"
         placeholder="제목을 입력해주세요"
-      />
+        value={title} 
+        onChange={(e) => setTitle(e.target.value)}  />
 
       <form action="insertStudentInfoForm" method="post">
         <div id="smarteditor">
@@ -118,6 +176,8 @@ const WrtieBoard = () => {
             rows="20"
             placeholder="내용을 입력해주세요"
             className="writeform"
+            value={content}  // Bind the textarea value to the content state
+            onChange={(e) => setContent(e.target.value)}
           ></TextArea>
         </div>
 
@@ -128,6 +188,8 @@ const WrtieBoard = () => {
             type="button"
             className="regist-btn"
             value="글 등록"
+            onClick={handleRegistClick}
+            
           />
 
           {/* 작성 취소 버튼 */}
@@ -137,6 +199,7 @@ const WrtieBoard = () => {
         </Box>
         </div>
       </form>
+      {shouldNavigate && <Navigate to="/BoardMain" />}
     </Container>
 
     );
