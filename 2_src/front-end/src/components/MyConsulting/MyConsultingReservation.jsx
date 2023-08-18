@@ -189,7 +189,7 @@ const MyConsultingReservation = () => {
                 <ConsultItemContainer key={item.id}>
                     {/* <ConsultImg src={item.image} /> */}
                     <EduDetailsContainer>
-                        <LinkStyle>교육과정 상세 확인하기 > </LinkStyle>
+                        <LinkStyle>교육과정 상세 확인하기 </LinkStyle>
                         <EduTite>{item.title}</EduTite>
                         <EduInstitution>{item.subTitle}</EduInstitution>
                     <DateBox>
@@ -197,11 +197,7 @@ const MyConsultingReservation = () => {
                         
                     </DateBox>
                            
-<<<<<<< HEAD
-                        <ReservaionButton href='https://goodbeconsult.du.r.appspot.com'>입장하기</ReservaionButton>
-=======
                         <ReservaionButton href='https://goodbeconsult.du.r.appspot.com/'>입장하기</ReservaionButton>
->>>>>>> front-end
                         
                     </EduDetailsContainer>
                 </ConsultItemContainer>
