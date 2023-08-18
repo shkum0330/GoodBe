@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
-const API_BASE_URL = 'http://i9a801.p.ssafy.io:8081';
+const API_BASE_URL = 'https://i9a801.p.ssafy.io';
 
 const Title = styled.p`
     color: #000;
@@ -187,7 +187,7 @@ const MyPageInformationHeader = () => {
         const fetchUserInfo = async () => {
             try {
                 const response = await axios.get(
-                `${API_BASE_URL}/mypage/memberinfo`
+                `${API_BASE_URL}/api/mypage/memberinfo`
                 );
                 setUserInfo(response.data);
             } catch (error) {
@@ -200,17 +200,13 @@ const MyPageInformationHeader = () => {
 
     const handleSaveChanges = async () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
-        const accessToken = urlSearchParams.get('accessToken');
+        const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnb29nbGVfMTA4MDA1NDgyOTExODE3NzI4MDA1IiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2OTIzNDQwNDV9.zAosniWvVjPawZCaeAr7f3M7TTkaorArIHAdvmBQ4ik';
         try {
             const memberUpdateData = {
                 name: userInfo.name,
                 nickname: userInfo.nickname,
                 birth: userInfo.birth,
-                address: {
-                    city: userInfo.address.city,
-                    street: userInfo.address.street,
-                    zipcode: userInfo.address.zipcode
-                },
+                address: userInfo.address,
                 gender: userInfo.gender,
                 favoriteCompany: userInfo.favoriteCompany,
                 favoriteJob: userInfo.favoriteJob
@@ -223,21 +219,20 @@ const MyPageInformationHeader = () => {
 
             try {
                 const response = await axios.post(
-                    'http://i9a801.p.ssafy.io:8081/mypage/memberinfo/update',
+                    'https://i9a801.p.ssafy./mypage/memberinfo/update',
                     formData,
-                    {
+                    {   
                         headers: {
                             'Content-Type': 'multipart/form-data',
-                            'Authorization': `Bearer ${localStorage.getItem(accessToken)}`
-                            
+                            'Authorization': `${accessToken}`
                         }
                     }
                 );
 
-                console.log('User information updated:', response.data);
+                // console.log('User information updated:', response.data);
                 console.log(accessToken)
                 alert('정상적으로 수정되었습니다!')
-                // setUserInfo(response.data);
+                setUserInfo(response.data);
             } catch (error) {
                 console.error("수정 실패:", error);
                 alert("수정 실패");
