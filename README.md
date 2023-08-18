@@ -1,5 +1,5 @@
 # GoodBE
-국비교육 검색 서비스 GoodBE <br/>
+국비교육 검색 서비스 GoodBE <br/ width="500">
 가고싶은 회사와 직무를 검색하여 알맞는 국비교육을 찾아보자!
 
 ## 😊팀원 소개
@@ -17,17 +17,21 @@
 + 회사 & 직무를 검색하면 채용공고 속 중요 내용과 일치하는 국비교육을 연결하여 알맞은 교육을 받을 수 있는 검색 서비스
 ## ✏ 주요 기능 소개
 ### 국비교육 검색
-![image](https://github.com/56unbreakable/TIL/assets/74917346/7a755c1c-4c1e-4e0c-9038-179b42064ec0)
+<img src="https://github.com/56unbreakable/TIL/assets/74917346/7a755c1c-4c1e-4e0c-9038-179b42064ec0" width="500">
+
 ### 채용공고 검색
-![image](https://github.com/56unbreakable/TIL/assets/74917346/3546849a-8577-4c17-811f-065d3aa44ed2)
+<img src="https://github.com/56unbreakable/TIL/assets/74917346/3546849a-8577-4c17-811f-065d3aa44ed2" width="500">
+
 ### 화상통화
-![image](https://github.com/56unbreakable/TIL/assets/74917346/ea1d9115-a097-428a-b2d9-544da23bd2d4)
+<img src="https://github.com/56unbreakable/TIL/assets/74917346/ea1d9115-a097-428a-b2d9-544da23bd2d4" width="500">
+
 ### 채팅
-![image](https://github.com/56unbreakable/TIL/assets/74917346/5e9263e9-ca0f-4747-968f-360045a04d95)
+<img src="https://github.com/56unbreakable/TIL/assets/74917346/5e9263e9-ca0f-4747-968f-360045a04d95" width="500">
+
 ## 📂 설계
 ### 아키텍처
-![image](https://github.com/56unbreakable/TIL/assets/74917346/983b9b96-e068-4c79-8bda-a91c87189af7)
-### ERD
+<img src="https://github.com/56unbreakable/TIL/assets/74917346/983b9b96-e068-4c79-8bda-a91c87189af7" width="500">
+
 
 ### 기술 명세서
 https://docs.google.com/spreadsheets/d/1wR6wm5hLauauvdlMhpn2Ze2gGXfd3LKQXdIopL0U0Fs/edit#gid=0
@@ -54,7 +58,7 @@ https://docs.google.com/spreadsheets/d/1wR6wm5hLauauvdlMhpn2Ze2gGXfd3LKQXdIopL0U
 + Nginx
 
 ## 후기
-### 부족한.
+### 부족했던 부분.
 1. 깃 플로우, 깃 컨벤션을 제대로 설정하고 서로의 깃 플로우를 추적하면서 개발해야한다
 2. api명세서를 만들어야한다. swagger는 테스트용도로만 사용하고 따로 명세서를 만들어야겠다.
 3. 모든 문서가 한군데 모여있게 해야한다
@@ -64,7 +68,7 @@ https://docs.google.com/spreadsheets/d/1wR6wm5hLauauvdlMhpn2Ze2gGXfd3LKQXdIopL0U
 7. 서로 자주 소통하며 프로젝트를 연결해야한다.
 8. CI/CD를 미리 구축하고, 빠르게 개발/테스트하는 과정을 거쳐야한다.
 
-### 만족스러운.
+### 만족스러웠던 부분.
 
 1. MSA 구조를 잘 설계하여 개발 시에 아키텍처에 대한 어려움이 없었다.
 2. django, spring boot, Node,js 등 여러 개발환경을 동시에 사용해보는 경험을 할 수 있었다.
