@@ -117,6 +117,7 @@ const EduDate = styled.p`
     flex-direction: column;
     justify-content: center;
     margin-left : 15px;
+    margin-top: 5px;
 `
 
 const DateBox = styled.div`
@@ -125,6 +126,7 @@ const DateBox = styled.div`
     flex-shrink: 0;
     border-radius: 10px;
     background: #E7F4FD;
+    
 `
 const ReservaionButton = styled.a`
     width: 132px;
@@ -144,7 +146,7 @@ const ReservaionButton = styled.a`
     text-transform: capitalize;
     margin-left : auto;
     margin-right : 30px;
-    margin-top :-95px;
+    margin-top :-125px;
     line-height: normal;
     text-decoration: none;
 `;
@@ -153,22 +155,29 @@ const Container = styled.div`
     margin-bottom : 100px;
     margin-left : 60px;
 `
-
+const dummyData = [
+    {
+      id: 1,
+      title: '자바/스프링 개발자 양성과정',
+      subTitle: '이젠아카데미컴퓨터학원',
+      reserveTime: '2023-07-26 15:30',
+    },
+]
 const MyConsultingReservation = () => {
-    const [myconsulting, setmyconsulting] = useState([]); 
+    // const [myconsulting, setmyconsulting] = useState([]); 
     
 
-    useEffect(() => {
-      axios
-        .get(`${API_BASE_URL}/api/mypage/consulting`)
-        .then(function (response) {
-          console.log(response.data);
-          setmyconsulting(response.data);
-        })
-        .catch(function (error) {
-          console.error('Error fetching data:', error);
-        });
-    }, []); 
+    // useEffect(() => {
+    //   axios
+    //     .get(`${API_BASE_URL}/api/mypage/consulting`)
+    //     .then(function (response) {
+    //       console.log(response.data);
+    //       setmyconsulting(response.data);
+    //     })
+    //     .catch(function (error) {
+    //       console.error('Error fetching data:', error);
+    //     });
+    // }, []); 
    
     return (
         <div>
@@ -176,7 +185,7 @@ const MyConsultingReservation = () => {
             <DateButton>예약일 빠른순</DateButton>
             <Container>
 
-            {myconsulting.map((item) => (
+            {dummyData.map((item) => (
                 <ConsultItemContainer key={item.id}>
                     {/* <ConsultImg src={item.image} /> */}
                     <EduDetailsContainer>
@@ -188,7 +197,7 @@ const MyConsultingReservation = () => {
                         
                     </DateBox>
                            
-                        <ReservaionButton href='http://localhost:8091'>입장하기</ReservaionButton>
+                        <ReservaionButton href='https://goodbeconsult.du.r.appspot.com/'>입장하기</ReservaionButton>
                         
                     </EduDetailsContainer>
                 </ConsultItemContainer>
